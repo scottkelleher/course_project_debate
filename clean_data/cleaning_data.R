@@ -11,3 +11,12 @@ getLines <- function(person){
 }
 
 debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines)
+
+#trying to break whole text into individual words
+library(tidytext)
+library(tokenizers)
+
+clinton_lines <- debate_lines[1]
+trump_lines <- debate_lines[2]
+
+
