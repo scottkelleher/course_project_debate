@@ -20,6 +20,11 @@ library(dplyr)
 text_df <- data_frame(text_c = clinton_lines[[1]])
 text_df
 
+
+
+
+
+
 text_debate1 %>%
   unnest_tokens(word, text_c)
 text_debate1
