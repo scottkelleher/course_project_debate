@@ -32,8 +32,7 @@ db2 <- ymd_hms(161009020000, tz = "UTC")
 db3 <-ymd_hms(161029020000, tz = "UTC")
 date_time <-c(db1, db2, db3)
 
-for (i in (1:3)) {    
-  
+for (i in (1:3)){    
   
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person){
@@ -50,9 +49,6 @@ for (i in (1:3)) {
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
-  
-  
-  
   
   
   #break into clinton lines
@@ -100,6 +96,7 @@ for (i in (1:3)) {
     all_debate_words_clinton<- clinton_words
   } else{
     all_debate_words_clinton <- bind_rows(all_debate_words_clinton, clinton_words)
+  } 
   }
   
   
@@ -117,7 +114,9 @@ for (i in (1:3)) {
   ##Object that has word frequencies sorted from least to most for trump
   trump_most_words <- sort(trump_word_frequency)
   
+  #making data frame
+  clinton_word_frequency <- as.data.frame(clinton_word_frequency)
   
-  
-  
-}  
+  clinton_word_top <- clinton_word_frequency %>%
+  filter(Freq > 10) %>%
+  select(word, debate, Freq)
