@@ -73,7 +73,7 @@ for (i in (1:3)){
   trump_words<- filter(trump_words, trump_words$elim == TRUE)
   trump_words <- select(trump_words, -elim)
   if(i == 1){
-    all_debate_words_trump<- trump_words
+    all_debate_words_trump <- trump_words
   } else{
     all_debate_words_trump <- bind_rows(all_debate_words_trump, trump_words)
   }
