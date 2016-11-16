@@ -1,3 +1,4 @@
+
 ##Loading libraries
 library(rvest)
 #library(tidyverse)
@@ -10,6 +11,23 @@ library(tm)
 library(SnowballC)
 library(wordcloud)
 library(lubridate)
+library(ggplot2)
+library(readr)
+library(gtrendsR)
+ls("package:gtrendsR")
+
+library(RTextTools)
+
+
+
+install.packages("devtools")
+require(devtools)
+install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
+install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
+install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
+
+#the function necessary is still at the bottom of this and should go into a seperate script
+
 
 ##Loading debate texts
 text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
@@ -32,7 +50,7 @@ db2 <- ymd_hms(161009020000, tz = "UTC")
 db3 <-ymd_hms(161029020000, tz = "UTC")
 date_time <-c(db1, db2, db3)
 
-for (i in (1:3)){    
+for (i in (1:3)) {    
   
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person){
@@ -73,7 +91,7 @@ for (i in (1:3)){
   trump_words<- filter(trump_words, trump_words$elim == TRUE)
   trump_words <- select(trump_words, -elim)
   if(i == 1){
-    all_debate_words_trump <- trump_words
+    all_debate_words_trump<- trump_words
   } else{
     all_debate_words_trump <- bind_rows(all_debate_words_trump, trump_words)
   }
@@ -96,7 +114,6 @@ for (i in (1:3)){
     all_debate_words_clinton<- clinton_words
   } else{
     all_debate_words_clinton <- bind_rows(all_debate_words_clinton, clinton_words)
-  } 
   }
   
   
@@ -114,9 +131,8 @@ for (i in (1:3)){
   ##Object that has word frequencies sorted from least to most for trump
   trump_most_words <- sort(trump_word_frequency)
   
-  #making data frame
-  clinton_word_frequency <- as.data.frame(clinton_word_frequency)
   
-  clinton_word_top <- clinton_word_frequency %>%
-  filter(Freq > 10) %>%
-  select(word, debate, Freq)
+  
+  
+  
+

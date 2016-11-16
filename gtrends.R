@@ -1,5 +1,5 @@
 
-#making gtrends plots
+
 getwd()
 usr <- ("smkellehermt@gmail.com")
 psw <- ("science16")
@@ -43,10 +43,8 @@ data <- trump_lines
 #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
 
 df <- data.frame(trump_lines)
-#f <- colnames(df)
-#df <- rename(df, 
-#            data = f)
-#textdata <- df[df, ] 
+colnames(df) <- c("col1")
+textdata <- df[df$col1, ] 
 textdata = gsub("[[:punct:]]", "", textdata) 
 
 textdata = gsub("[[:punct:]]", "", textdata)
@@ -84,11 +82,10 @@ sent_df = within(sent_df,
 
 detach("package:sentiment", unload=TRUE)                
 
-pdf(file.pdf,width=6,height=4,paper='special') 
+# pdf(plots.pdf) 
 ggplot(sent_df, aes(x=emotion)) +
   geom_bar(aes(y=..count.., fill=emotion)) +
   scale_fill_brewer(palette="Dark2") +
   labs(x="emotion categories", y="", title = paste0("trump_words_from_debate_",i))
-dev.off()
-
-} 
+# dev.off()
+}

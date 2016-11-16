@@ -1,30 +1,37 @@
 
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
 library(shiny)
 
-shinyUI(fluidPage(
+##example from gtrends shiny app
+library(shinydashboard)
 
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+dashboardPage(
+  dashboardHeader(title = "Google Trends"),
+  dashboardSidebar(sidebarMenu(
+    menuItem("Chart", tabName = "chart", icon = icon("bar-chart")),
+    menuItem("Data", tabName = "data", icon = icon("table")),
+    selectInput("country", label = h5("Select Country"),
+                choices = list("DE"="DE","AT"="AT","CH"="CH"), selected = "DE"),
+    dateRangeInput("daterange", label=h5("Date range:"),
+                   start = "2016-01-01",
+                   end = Sys.Date()-1
     ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
+    textInput("queries", label = h5("Search Queries"),
+              width = "100%", 
+              value = "women", "undocumented", "security", "espionage"),
+    downloadButton("downloadData", label = "Download Data", class = NULL),
+    tags$style(type="text/css", "#downloadData {padding: 10px; margin: 20px;}")
+  )
+  ),
+  dashboardBody(
+    tabItems(
+      # First tab content
+      tabItem(tabName = "chart",
+              plotOutput("plot1", height = 500)
+      ),
+      # Second tab content
+      tabItem(tabName = "data",
+              dataTableOutput('data')
+      )
     )
   )
-))
+)
