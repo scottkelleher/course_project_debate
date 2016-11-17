@@ -1,13 +1,25 @@
+##Loading libraries
+library(rvest)
+#library(tidyverse)
+library(stringr)
+library(tidytext)
+library(gtrendsR)
+library(dplyr)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(lubridate)
+library(RColorBrewer)
+library(shiny)
+library(shinydashboard)
 
-
+#making gtrends plots
 getwd()
 usr <- ("smkellehermt@gmail.com")
 psw <- ("science16")
 ch <- gconnect(usr, psw)
 
 #enter data frame and save as
-
-
 
 some_trump_words <- gtrends(c("deals", "catastrophically", "borders", "amendment"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
 plot(some_trump_words)
@@ -16,21 +28,9 @@ plot(some_trump_words)
 some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
 plot(some_clinton_words)
 
-
-
-
-
-
-
-
-
 # https://www.r-bloggers.com/intro-to-text-analysis-with-r/
 
-
-
 #library(RTextTools)
-
-
 
 #install.packages("devtools")
 #require(devtools)
@@ -43,8 +43,10 @@ data <- trump_lines
 #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
 
 df <- data.frame(trump_lines)
-colnames(df) <- c("col1")
-textdata <- df[df$col1, ] 
+#f <- colnames(df)
+#df <- rename(df, 
+#            data = f)
+#textdata <- df[df, ] 
 textdata = gsub("[[:punct:]]", "", textdata) 
 
 textdata = gsub("[[:punct:]]", "", textdata)
@@ -82,10 +84,44 @@ sent_df = within(sent_df,
 
 detach("package:sentiment", unload=TRUE)                
 
-# pdf(plots.pdf) 
+pdf(file.pdf,width=6,height=4,paper='special') 
 ggplot(sent_df, aes(x=emotion)) +
   geom_bar(aes(y=..count.., fill=emotion)) +
   scale_fill_brewer(palette="Dark2") +
   labs(x="emotion categories", y="", title = paste0("trump_words_from_debate_",i))
-# dev.off()
+dev.off()
+
+
+##Clinton words into shiny output
+usr <- ("smkellehermt@gmail.com")
+psw <- ("science16")
+ch <- gconnect(usr, psw)
+
+function(input, output) {
+  yesterday <- Sys.Date()-1
+  #place your google credentials in gconnect
+  gconnect(usr = "smkellehermt@gmail.com", psw = "science16")
+  
+  dataInput <- reactive({
+    gtrends(query = input$queries,
+            geo = input$country,
+            start_date = text_debate1,
+            end_date = text_debate_2)
+  })
+  
+  output$plot1 <- renderPlot({
+    res <- dataInput()
+    plot(res)
+  })
+  
+  output$data <- renderDataTable({
+    res <- dataInput()
+    res$trend
+  })
+  
+  output$downloadData <- downloadHandler(
+    filename = function() { paste(input$dataset, '.csv', sep='') },
+    content = function(file) {
+      write.csv(res$trend, file, row.names = F, sep=",")
+    })
 }
