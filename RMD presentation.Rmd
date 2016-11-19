@@ -55,13 +55,25 @@ The Presidential debates are most popular program in US and every body cares abo
 
 
 
-## Slide with R Output
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
+##
+**Methods**
 
-## Slide with Plot
+We retrieve all three debates data  from the [American Presidential Project](http://www.presidency.ucsb.edu/ws/index.php?pid=119038) and follow the online tutorial of [Tidy Text Mining](http://tidytextmining.com/) with R to create the algorithum and sytax.
+
+
+These data are appropriate because the data has scripts of each candidates speech such that we can extract the common words and measure their frequencies.
+
+To determine the frequency of the words used by each candidate, we use the gtrend R packages to create trends. We see the spikes over a set words that each presidential candidate used for the debates.
+
+We  create an intereactive graphics the shiny apps  to illustrate our study findings.
+
+
+
+
+
+
+
 
 ```{r pressure, message = FALSE, warning = FALSE}
 library(plotly)
