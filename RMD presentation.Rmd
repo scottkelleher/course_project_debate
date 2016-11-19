@@ -1,6 +1,6 @@
 ---
 title: "What is the trend of vocabulary use among the presidential candidates during
-  the debates in 2016 election ?"
+  the 2016 election debates ?"
 author: Janalee Thompson, Scott Kelleher,Tulsi Ram Gompo
 date: "11/16/2016"
 output: ioslides_presentation
