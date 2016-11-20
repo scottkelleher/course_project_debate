@@ -1,7 +1,7 @@
 
 library(shiny)
 
-##example from gtrends shiny app
+##example from gtrends shiny app- we should work on using this as a template
 library(shinydashboard)
 
 dashboardPage(
