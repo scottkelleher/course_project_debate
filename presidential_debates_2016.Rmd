@@ -1,0 +1,63 @@
+---
+title: What is the trend of vocabulary use among the presidential candidates during
+  the presidential debates in 2016 election ?
+author: "Janalee Thompson,Scott Kelleher,Tulsi Ram Gompo,"
+date: "11/15/2016"
+output: html_document
+---
+
+**Introduction**
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo=FALSE,message=FALSE}
+library(rvest)
+library(tidyverse)
+library(stringr)
+library(tidytext)
+library(gtrendsR)
+library(tokenizers)
+library(dplyr)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(lubridate)
+library(ggplot2)
+library(readr)
+library(gtrendsR)
+library(gtrendsR)
+library(RTextTools)
+
+
+```{r,echo=FALSE, message=FALSE }
+text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971")  # load the first debate page
+text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")   # load the second debate page
+text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")  # load the third debate page 
+    
+text_debate1 <- html_nodes(text_debate1, ".displaytext") %>%   # isloate the text
+html_text()    # get the text
+  
+text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
+html_text() # get the text
+      
+text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
+html_text() # get the text
+
+w <- c(text_debate1, text_debate2, text_debate3)
+```
+
+
+
+``` {r, echo=FALSE,message=FALSE}
+ #dates of debate
+db1 <- ymd_hms(160927020000, tz = "UTC")
+db2 <- ymd_hms(161009020000, tz = "UTC")
+db3 <-ymd_hms(161029020000, tz = "UTC")
+date_time <-c(db1, db2, db3)
+```
+
+
