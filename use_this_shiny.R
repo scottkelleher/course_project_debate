@@ -143,8 +143,8 @@ for (i in (1:3)) {
 
 
 getwd()
-usr <- ("smkellehermt@gmail.com")
-psw <- ("science16")
+usr <- ("535rprogram@gmail.com")
+psw <- ("groupproject")
 ch <- gconnect(usr, psw)
 
 #enter data frame and save as
