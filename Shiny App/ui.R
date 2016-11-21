@@ -1,13 +1,10 @@
 
 library(shiny)
 library(ggplot2)
-
-##example from gtrends shiny app- we should work on using this as a template
 library(shinydashboard)
 
-#start user interface
-
-dashboardPage(
+##start user interface
+ui <- dashboardPage(
   dashboardHeader(title = "By Term"),
   dashboardSidebar(
     br(),
@@ -16,16 +13,13 @@ dashboardPage(
              Use comma to separate terms", style="text-align:center"),
     
     textInput('terms', ''),
-    sidebarLayout(
-      sidebarPanel("Please select from the following options"),
       selectInput("speakerInput", "Speaker", choices = c("Hillary Clinton","Donald Trump"),
-                  selectInput("debateInput", "Debate", choices = c("First debate","Second Debate", "Third Debate"),
+                  selectInput("debateInput", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate"),
                               textInput("termInput", 'terms', ''),
                               mainPanel(
                                 plotOutput("terms"),
         tags$h1(submitButton("Update!"),style="text-align:center"),
         helpText("To get results, click the 'Update!' button",style="text-align:center"),
-                                
                                 br(),
                                 br(),
                                 br(),
@@ -44,11 +38,16 @@ dashboardPage(
       br(),
       plotOutput("emotion_plot"),
       plotOutput("myplot2")
-  )))
+  ))
+  )
+  ))
 
 
   
   
+
+
+
   #might need this as skeleton code later
   server <- function(input, output, session){
 output$terms <- renderPlot({
