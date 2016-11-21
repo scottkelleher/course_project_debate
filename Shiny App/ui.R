@@ -13,7 +13,7 @@ ui <- dashboardPage(
              Use comma to separate terms", style="text-align:center"),
     
     textInput('terms', ''),
-      selectInput("speakerInput", "Speaker", choices = c("Hillary Clinton","Donald Trump"),
+      selectInput("speakerInput", "Speaker", choices = c("Hillary_Clinton","Donald_Trump"),
                   selectInput("debateInput", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate"),
                               textInput("termInput", 'terms', ''),
                               mainPanel(
@@ -37,7 +37,7 @@ ui <- dashboardPage(
       plotOutput("term_plot"),
       br(),
       plotOutput("emotion_plot"),
-      plotOutput("myplot2")
+      plotOutput("frequency_plot")
   ))
   )
   ))
