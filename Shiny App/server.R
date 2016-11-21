@@ -13,6 +13,14 @@ library(RColorBrewer)
 library(shiny)
 library(shinydashboard)
 
+ui <- fluidPage()
+server <- function(input, output) {}
+shinyApp(ui = ui, server = server)
+
+
+
+
+
 #making gtrends plots
 getwd()
 usr <- ("smkellehermt@gmail.com")
