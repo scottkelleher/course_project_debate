@@ -4,7 +4,7 @@ library(ggplot2)
 
 ##start user interface
 shinyUI(fluidPage(  
-  #titlePanel("By Term"),
+  titlePanel("By Term"),
   #sidebarLayout(   
     #sidebarPanel(  
     #selectInput(""),
@@ -37,4 +37,5 @@ shinyUI(fluidPage(
 #   plot(rnorm(input$speakerInput))
 # 
     
+
  
