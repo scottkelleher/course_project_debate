@@ -74,7 +74,7 @@ library(xml2)
 library(shiny)
 library(devtools)
 ls("package:gtrendsR")
-<<<<<<< HEAD
+
 #library(shinydashboard)
 library(RTextTools)
 library(googleVis)
@@ -82,8 +82,7 @@ source("classify_emotion.R")
 =======
 library(RTextTools)
 library(googleVis)
-source("function/classify_emotion.R")
->>>>>>> 71b6b38a42054146a9d612396a05272f681d5364
+
 
 #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
