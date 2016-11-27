@@ -210,7 +210,7 @@ shinyServer(function(input, output) {
   
   
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
-  else if (input$Debate=="Hilary_Clinton"){top_used_words<- clinton_most_words}
+  else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
   
   output$high_frequency_words <- top_used_words
   
