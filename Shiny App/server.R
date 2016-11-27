@@ -255,7 +255,7 @@ shinyServer(function(input, output) {
     try_error = tryCatch(tolower(x), error=function(e) e)
     if (!inherits(try_error, "error"))
       y = tolower(x)
-    return(y)
+    return(y) 
   }
   textdata = sapply(textdata, try.error)
   textdata = textdata[!is.na(textdata)]
