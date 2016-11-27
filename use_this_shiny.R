@@ -245,7 +245,7 @@ plot(some_trump_words)
 
   
   
-  
+
   
   
   
