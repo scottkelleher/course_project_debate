@@ -12,7 +12,7 @@ shinyUI(fluidPage(
              #Use comma to separate terms"), 
     ##textInput('terms', ''),
   selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate"),
-       selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump"),
+  selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump"),
                               #textInput("termInput", 'terms', ''), 
   #####
   ##  Main Panel
