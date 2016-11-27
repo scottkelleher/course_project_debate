@@ -15,17 +15,12 @@ ui <- dashboardPage(
     textInput('terms', ''),
       selectInput("speakerInput", "Speaker", choices = c("Hillary_Clinton","Donald_Trump"),
                   selectInput("debateInput", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate"),
-                              textInput("termInput", 'terms', ''),
-                              mainPanel(
-                                plotOutput("terms"),
-        tags$h1(submitButton("Update!"),style="text-align:center"),
-        helpText("To get results, click the 'Update!' button",style="text-align:center"),
-                                br(),
-                                br(),
-                                br(),
-                                br(),
-                                br(),
-                                br())),
+                              #textInput("termInput", 'terms', ''),
+                              #mainPanel(
+                               # plotOutput("terms"),
+        #tags$h1(submitButton("Update!"),style="text-align:center"),
+        #helpText("To get results, click the 'Update!' button",style="text-align:center"),
+                             
   
   #####
   ##  Main Panel
@@ -34,13 +29,13 @@ ui <- dashboardPage(
       br(),
       h5(em(strong("Google Trends Analytics", style="color:darkblue;font-size:210%")),align = "center"),
       
-      plotOutput("term_plot"),
+      #plotOutput("term_plot"),
       br(),
-      plotOutput("emotion_plot"),
-      plotOutput("frequency_plot")
+      plotOutput("emotion"),
+      plotOutput("high_frequency_words")
   ))
   )
-  ))
+  )
 
 
   
@@ -49,10 +44,10 @@ ui <- dashboardPage(
 
 
   #might need this as skeleton code later
-  server <- function(input, output, session){
-output$terms <- renderPlot({
-  plot(rnorm(input$speakerInput))
-})
-}
+#   server <- function(input, output, session){
+# output$terms <- renderPlot({
+#   plot(rnorm(input$speakerInput))
+# })
+# }
     
  

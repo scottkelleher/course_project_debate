@@ -12,37 +12,48 @@ if(!require(ggplot2)){
   install.packages('ggplot2')
 }
 
-library(shiny)
-library(gtrendsR)
-library(reshape2)
-library(ggplot2)
-
-
-
-
-##Loading libraries
-library(rvest)
-#library(tidyverse)
-library(stringr)
-library(tidytext)
-library(gtrendsR)
-library(dplyr)
-library(tm)
-library(SnowballC)
-library(wordcloud)
-library(lubridate)
-library(RColorBrewer)
-library(shiny)
-library(shinydashboard)
-
-ui <- fluidPage()
-server <- function(input, output) {}
-shinyApp(ui = ui, server = server)
-
-<<<<<<< HEAD
-=======
-
-
+if(!require(rvest)){
+  install.packages('rvest')
+}
+if(!require(gtrendsR)){
+  install.packages('gtrendsR')
+}
+if(!require(stringr)){
+  install.packages('stringr')
+}
+if(!require(dplyr)){
+  install.packages('dplyr')
+}
+if(!require(tm)){
+  install.packages('tm')
+}
+if(!require(lubridate)){
+  install.packages('lubridate')
+}
+if(!require(RColorBrewer)){
+  install.packages('RColorBrewer')
+}
+if(!require(shinydashbaord)){
+  install.packages('shinydashboard')
+}
+if(!require(tokenizers)){
+  install.packages('tokenizers')
+}
+if(!require(tidytext)){
+  install.packages('tidytext')
+}
+if(!require(xml2)){
+  install.packages('tokenizers')
+}
+if(!require(RTextTools)){
+  install.packages('RTextTools')
+}
+if(!require(devtools)){
+  install.packages('devtools')
+}
+if(!require(googleVis)){
+  install.packages('googleVis')
+}
 
 ##Loading libraries
 library(rvest)
@@ -59,50 +70,63 @@ library(lubridate)
 library(ggplot2)
 library(readr)
 library(gtrendsR)
+library(xml2)
+library(shiny)
+library(devtools)
 ls("package:gtrendsR")
-
+library(shinydashboard)
 library(RTextTools)
-source("functions/classify_emotion.R")
+library(googleVis)
+source("../classify_emotion.R")
 
-
-
-
-install.packages("devtools")
-require(devtools)
 install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-#the function necessary is still at the bottom of this and should go into a seperate script
-
-
-##Loading debate texts
-text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
-text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")  # load the second debate page
-text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")# load the third debate page 
-
-text_debate1 <- html_nodes(text_debate1, ".displaytext") %>% # isloate the text
-  html_text() # get the text
-
-text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
-  html_text() # get the text
-
-text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
-  html_text() # get the text
-w <- c(text_debate1, text_debate2, text_debate3)
-
-#dates of debate
-db1 <- ymd_hms(160927020000, tz = "UTC")
-db2 <- ymd_hms(161009020000, tz = "UTC")
-db3 <-ymd_hms(161029020000, tz = "UTC")
-date_time <-c(db1, db2, db3)
-
-for (i in (1:3)) {    
+shinyServer(function(input, output) {
   
+  usr <- ("535rprogram@gmail.com")
+  psw <- ("groupproject")
+  ch <- gconnect(usr, psw)
+
+  
+  
+  
+  text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
+  text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")  # load the second debate page
+  text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")# load the third debate page 
+  
+  text_debate1 <- html_nodes(text_debate1, ".displaytext") %>% # isloate the text
+    html_text() # get the text
+  
+  text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
+    html_text() # get the text
+  
+  text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
+    html_text() # get the text
+  
+  
+  #dates of debate
+  db1 <- ymd_hms(160927020000, tz = "UTC")
+  db2 <- ymd_hms(161009020000, tz = "UTC")
+  db3 <-ymd_hms(161029020000, tz = "UTC")
+  date_time <-c(db1, db2, db3)
+  
+  
+  ###loop was here 
+  if(input$Debate=="First_Debate"){text <- text_debate
+  words_t <-c("trump first", "test 1")
+  words_c <- c("clinton first")}
+  else if (input$Debate=="Second_Debate"){text<- text_debate2
+  words_t <- c("trump second")
+  words_c <- c("clinton second")}
+  else if (input$Debate=="Third_Debate"){text<- text_debate3
+  words_t <- c("trump third")
+  words_c <- c("clinton third")}
   
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person){
-    text <- w[i]
+    
     id <- unlist(stringr::str_extract_all(text, "[A-Z]+:")) # get the speaker
     Lines <- unlist(strsplit(text, "[A-Z]+:"))[-1]  # split by speaker (and get rid of a pesky empty line)
     Lines[id %in% person] # retain speech by relevant speaker
@@ -113,6 +137,8 @@ for (i in (1:3)) {
   
   
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
+  
+  
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
   
@@ -138,14 +164,9 @@ for (i in (1:3)) {
   
   #filter out the stopwords, add which debate it was and the day and time
   trump_words_unique <- !(trump_words$word %in% stopwords())
-  trump_words <- mutate(trump_words, elim = trump_words_unique, debate = i, date = date_time[i])
+  trump_words <- mutate(trump_words, elim = trump_words_unique)
   trump_words<- filter(trump_words, trump_words$elim == TRUE)
   trump_words <- select(trump_words, -elim)
-  if(i == 1){
-    all_debate_words_trump<- trump_words
-  } else{
-    all_debate_words_trump <- bind_rows(all_debate_words_trump, trump_words)
-  }
   
   
   ##Breaking clinton lines into individual words
@@ -153,19 +174,12 @@ for (i in (1:3)) {
     unnest_tokens(word, text_c)  
   #clinton_words
   
-  
-  
   #filter out the stopwords, add which debate it was and what day and time
   clinton_words_unique <- !(clinton_words$word %in% stopwords())
-  clinton_words <- mutate(clinton_words, elim = clinton_words_unique, debate = i, date = date_time[i])
+  clinton_words <- mutate(clinton_words, elim = clinton_words_unique)
   clinton_words<- filter(clinton_words, clinton_words$elim == TRUE)
   clinton_words <- select(clinton_words, -elim)
   
-  if(i == 1){
-    all_debate_words_clinton<- clinton_words
-  } else{
-    all_debate_words_clinton <- bind_rows(all_debate_words_clinton, clinton_words)
-  }
   
   
   ##Counting the number of times each word is said for clinton
@@ -185,28 +199,20 @@ for (i in (1:3)) {
   
   
   
-  
-  
-  getwd()
-  usr <- ("535rprogram@gmail.com")
-  psw <- ("groupproject")
-  ch <- gconnect(usr, psw)
-  
-  #enter data frame and save as
-  
-  
-  
-  some_trump_words <- gtrends(c("deals", "catastrophically", "borders", "amendment"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-  plot(some_trump_words)
-  
-  
-  some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-  plot(some_clinton_words)
+  google_results <- gtrends(words_c, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+ output$term_plot <- renderPlot({
+   plot(google_results)
+ })
+  #should be filtered down to which candidate and which debate at this point
+  #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  #plot(some_clinton_words)
   
   
   
+  if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
+  else if (input$Debate=="Hilary_Clinton"){top_used_words<- clinton_most_words}
   
-  
+  output$high_frequency_words<- top_used_words
   
   
   
@@ -225,11 +231,15 @@ for (i in (1:3)) {
   #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
   #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
   
-  data <- trump_lines
   
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
-  df <- data.frame(trump_lines)
+  
+  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
+  words_gtrends <- words_t}
+  else if (input$Debate=="Hilary_Clinton"){lines_go<- clinton_lines
+  words_gtrends <- words_c}
+  df <- data.frame(lines_go)
   colnames(df) <- c("col1")
   textdata <- df[df$col1, ] 
   textdata = gsub("[[:punct:]]", "", textdata) 
@@ -270,21 +280,14 @@ for (i in (1:3)) {
   detach("package:sentiment", unload=TRUE)                
   
   # pdf(plots.pdf) 
-  ggplot(sent_df, aes(x=emotion)) +
+  output$emotions <- renderPlot({
+    
+    ggplot(sent_df, aes(x=emotion)) +
     geom_bar(aes(y=..count.., fill=emotion)) +
     scale_fill_brewer(palette="Dark2") +
-    labs(x="emotion categories", y="", title = paste0("trump_words_from_debate_",i))
+    labs(x="emotion categories", y="")
   # dev.off()
+  })
   
-  
-}
+})
 
-
-
-only_trump_said <- filter(all_debate_words_trump,  !(all_debate_words_trump$word %in% all_debate_words_clinton$word))
-only_hilary_said <- filter(all_debate_words_clinton,  !(all_debate_words_clinton$word %in% all_debate_words_trump$word))
-
-
-some_trump_words <- gtrends(c("deals", "catastrophically", "borders", "amendment"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-plot(some_trump_words)
->>>>>>> de394f06965b9a118209de407b87a78b804f4384

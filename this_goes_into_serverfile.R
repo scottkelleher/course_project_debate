@@ -51,7 +51,9 @@ if(!require(RTextTools)){
 if(!require(devtools)){
   install.packages('devtools')
 }
-
+if(!require(googleVis)){
+  install.packages('googleVis')
+}
 
 ##Loading libraries
 library(rvest)
@@ -74,7 +76,8 @@ library(devtools)
 ls("package:gtrendsR")
 library(shinydashboard)
 library(RTextTools)
-source("functions/classify_emotion.R")
+library(googleVis)
+source("../functions/classify_emotion.R")
 
 install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
@@ -112,10 +115,15 @@ server <- function(input, output) {
   
   
   ###loop was here 
-  if(input$Debate=="First_Debate"){text <- text_debate1
-  debate =1}
-  else if (input$Debate=="Second_Debate"){text<- text_debate2}
-  else if (input$Debate=="Third_Debate"){text<- text_debate3}
+  if(input$Debate=="First_Debate"){text <- text_debate
+  words_t <-c("trump first", "test 1")
+  words_c <- c("clinton first")}
+  else if (input$Debate=="Second_Debate"){text<- text_debate2
+  words_t <- c("trump second")
+  words_c <- c("clinton second")}
+  else if (input$Debate=="Third_Debate"){text<- text_debate3
+  words_t <- c("trump third")
+  words_c <- c("clinton third")}
   
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person){
@@ -169,7 +177,7 @@ server <- function(input, output) {
   
   #filter out the stopwords, add which debate it was and what day and time
   clinton_words_unique <- !(clinton_words$word %in% stopwords())
-  clinton_words <- mutate(clinton_words, elim = clinton_words_unique, debate = i, date = date_time[i])
+  clinton_words <- mutate(clinton_words, elim = clinton_words_unique)
   clinton_words<- filter(clinton_words, clinton_words$elim == TRUE)
   clinton_words <- select(clinton_words, -elim)
 
@@ -192,12 +200,12 @@ server <- function(input, output) {
   
   
   
-  some_trump_words <- gtrends(input$Terms, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-  plot(some_trump_words)
+  google_results <- gtrends(words_c, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+ plot(google_results, type ="geo")
   
-  
-  some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-  plot(some_clinton_words)
+  #should be filtered down to which candidate and which debate at this point
+  #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  #plot(some_clinton_words)
   
   
   
@@ -227,8 +235,10 @@ server <- function(input, output) {
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
   
-  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines}
-  else if (input$Debate=="Hilary_Clinton"){lines_go<- clinton_lines}
+  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
+  words_gtrends <- words_t}
+  else if (input$Debate=="Hilary_Clinton"){lines_go<- clinton_lines
+  words_gtrends <- words_c}
   df <- data.frame(lines_go)
   colnames(df) <- c("col1")
   textdata <- df[df$col1, ] 
@@ -282,9 +292,14 @@ server <- function(input, output) {
   
   
   
-jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 
 
+
+
+c("Trump Words",
+"Country",
+"Mexico",
+"piggy")
 
 
 
