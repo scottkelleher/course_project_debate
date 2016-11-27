@@ -14,6 +14,7 @@ library(lubridate)
 library(ggplot2)
 library(readr)
 library(gtrendsR)
+library(xml2)
 ls("package:gtrendsR")
 
 library(RTextTools)
@@ -180,11 +181,11 @@ some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"
   #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
   #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
   
-  data <- trump_lines
+  data <- clinton_lines
   
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
-  df <- data.frame(trump_lines)
+  df <- data.frame(clinton_lines)
   colnames(df) <- c("col1")
   textdata <- df[df$col1, ] 
   textdata = gsub("[[:punct:]]", "", textdata) 
