@@ -76,6 +76,7 @@ library(devtools)
 ls("package:gtrendsR")
 library(RTextTools)
 library(googleVis)
+library(sentimentr)
 source("classify_emotion.R")
 
 #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
