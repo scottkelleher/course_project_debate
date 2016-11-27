@@ -33,9 +33,9 @@ if(!require(lubridate)){
 if(!require(RColorBrewer)){
   install.packages('RColorBrewer')
 }
-if(!require(shinydashbaord)){
-  install.packages('shinydashboard')
-}
+#if(!require(shinydashbaord)){
+ # install.packages('shinydashboard')
+#}
 if(!require(tokenizers)){
   install.packages('tokenizers')
 }
@@ -277,7 +277,7 @@ shinyServer(function(input, output) {
   sent_df = within(sent_df,
                    emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
   
-  detach("package:sentiment", unload=TRUE)                
+ # detach("package:sentiment", unload=TRUE)                
   
   # pdf(plots.pdf) 
   output$emotions <- renderPlot({
