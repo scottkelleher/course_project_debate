@@ -212,7 +212,7 @@ shinyServer(function(input, output) {
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
   else if (input$Debate=="Hilary_Clinton"){top_used_words<- clinton_most_words}
   
-  output$high_frequency_words<- top_used_words
+  output$high_frequency_words <- top_used_words
   
   
   
@@ -285,7 +285,7 @@ shinyServer(function(input, output) {
     ggplot(sent_df, aes(x=emotion)) +
     geom_bar(aes(y=..count.., fill=emotion)) +
     scale_fill_brewer(palette="Dark2") +
-    labs(x="emotion categories", y="")
+    labs(x="emotion categories", y = "")
   # dev.off()
   })
   
