@@ -70,7 +70,7 @@ library(lubridate)
 library(ggplot2)
 library(readr)
 library(gtrendsR)
-library(xml2)
+#library(xml2)
 library(shiny)
 library(devtools)
 ls("package:gtrendsR")
@@ -80,8 +80,8 @@ library(sentimentr)
 source("classify_emotion.R")
 
 #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
-install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
-install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
+#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
+#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
 shinyServer(function(input, output) {
   
