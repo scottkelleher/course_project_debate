@@ -4,15 +4,15 @@ library(ggplot2)
 
 ##start user interface
 shinyUI(fluidPage(  
-  titlePanel("By Term"),
+  #titlePanel("By Term"),
   #sidebarLayout(   
     #sidebarPanel(  
     #selectInput(""),
     #helpText("Give one or more terms that you want R to retrieve data from the Google Trends API.
              #Use comma to separate terms"), 
     ##textInput('terms', ''),
+  selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate"),
        selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump"),
-       selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate"),
                               #textInput("termInput", 'terms', ''), 
   #####
   ##  Main Panel
