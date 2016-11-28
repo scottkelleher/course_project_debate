@@ -95,9 +95,6 @@ shinyServer(function(input, output) {
   psw <- ("groupproject")
   ch <- gconnect(usr, psw)
 
-  
-  
-  
   text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
   text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")  # load the second debate page
   text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")# load the third debate page 
@@ -218,10 +215,7 @@ shinyServer(function(input, output) {
   
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
   else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
-<<<<<<< HEAD
-  })
-=======
->>>>>>> 8399789ddc0a1e9907a7c771464d4e1ccb4b53d4
+
   
   #output$high_frequency_words <- top_used_words
   
@@ -300,6 +294,5 @@ shinyServer(function(input, output) {
     labs(x="emotion categories", y = "")
   # dev.off()
   })
-  
 })
 

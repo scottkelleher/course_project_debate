@@ -20,7 +20,7 @@ shinyUI(fluidPage(
   mainPanel(
     plotOutput("emotions")
     #plotOutput("term_plot"))
-    )))))
+    )))
 
 
 
