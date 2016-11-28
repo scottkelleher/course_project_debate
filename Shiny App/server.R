@@ -70,7 +70,7 @@ library(lubridate)
 library(ggplot2)
 library(readr)
 library(gtrendsR)
-library(xml2)
+#library(xml2)
 library(shiny)
 library(devtools)
 ls("package:gtrendsR")
@@ -78,6 +78,7 @@ ls("package:gtrendsR")
 #library(shinydashboard)
 library(RTextTools)
 library(googleVis)
+library(sentimentr)
 source("classify_emotion.R")
 
 library(RTextTools)
@@ -85,8 +86,8 @@ library(googleVis)
 
 
 #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
-install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
-install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
+#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
+#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
 shinyServer(function(input, output) {
   
@@ -217,7 +218,10 @@ shinyServer(function(input, output) {
   
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
   else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
+<<<<<<< HEAD
   })
+=======
+>>>>>>> 8399789ddc0a1e9907a7c771464d4e1ccb4b53d4
   
   #output$high_frequency_words <- top_used_words
   
