@@ -3,39 +3,30 @@ library(shiny)
 library(ggplot2)
 
 ##start user interface
-<<<<<<< HEAD
-shinyUI(fluidPage(   
-  #titlePanel("By Term"),
-=======
+
 shinyUI(fluidPage(  
   
   #application title
   titlePanel("Google Trends"),
 
 #Sidebar with options
->>>>>>> 8399789ddc0a1e9907a7c771464d4e1ccb4b53d4
+
   #sidebarLayout(   
     #sidebarPanel(
       selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate"),
       selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump"),
     #helpText("Give one or more terms that you want R to retrieve data from the Google Trends API. Use comma to separate terms"),
     ##textInput('terms', ''),
-<<<<<<< HEAD
+
   selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate")),
   selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump")),
                               #textInput("termInput", 'terms', ''), 
   #####
   ##  Main Panel
     mainPanel(plotOutput("emotions") 
-    )))
-=======
->>>>>>> 8399789ddc0a1e9907a7c771464d4e1ccb4b53d4
-
-  ##  Main Panel, show the plots
-  mainPanel(
-    plotOutput("emotions")
-    #plotOutput("term_plot"))
     )))))
+
+
 
 
 
