@@ -89,15 +89,12 @@ library(googleVis)
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output){
   
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
   ch <- gconnect(usr, psw)
 
-  
-  
-  
   text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
   text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")  # load the second debate page
   text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")# load the third debate page 
@@ -299,6 +296,5 @@ shinyServer(function(input, output) {
     labs(x="emotion categories", y = "")
   # dev.off()
   })
-  
 })
 
