@@ -78,6 +78,8 @@ library(shinydashboard)
 library(RTextTools)
 library(googleVis)
 source("../functions/classify_emotion.R")
+library(choroplethr)
+library(choroplethrMaps)
 
 install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
@@ -201,7 +203,12 @@ server <- function(input, output) {
   
   
   google_results <- gtrends(words_c, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
- plot(google_results, type ="geo")
+  by_state <- as.data.frame(google_results$Top.subregions.for.United.States)
+  by_state$Subregion <- tolower(by_state$Subregion)%>%
+    rename(region = subregion)
+    
+  state_choropleth(by_state)
+  #plot(google_results, type ="region") 
   
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")

@@ -79,7 +79,7 @@ ls("package:gtrendsR")
 library(RTextTools)
 library(googleVis)
 source("classify_emotion.R")
-=======
+
 library(RTextTools)
 library(googleVis)
 
@@ -119,16 +119,17 @@ shinyServer(function(input, output) {
   
   
   ###loop was here 
+  reactive({
   if(input$Debate=="First_Debate"){text <- text_debate
-  words_t <-c("trump first", "test 1")
-  words_c <- c("clinton first")}
+  words_t <-c("trump")
+  words_c <- c("clinton")}
   else if (input$Debate=="Second_Debate"){text<- text_debate2
-  words_t <- c("trump second")
-  words_c <- c("clinton second")}
+  words_t <- c("trump")
+  words_c <- c("clinton")}
   else if (input$Debate=="Third_Debate"){text<- text_debate3
-  words_t <- c("trump third")
-  words_c <- c("clinton third")}
-  
+  words_t <- c("trump")
+  words_c <- c("clinton")}
+  })
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person){
     
@@ -205,19 +206,20 @@ shinyServer(function(input, output) {
   
   
   google_results <- gtrends(words_c, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
- output$term_plot <- renderPlot({
-   plot(google_results)
- })
+ #output$term_plot <- renderPlot({
+  # plot(google_results)
+ #})
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   #plot(some_clinton_words)
   
-  
+  reactive({
   
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
-  else if (input$Debate=="Hilary_Clinton"){top_used_words<- clinton_most_words}
+  else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
+  })
   
-  output$high_frequency_words <- top_used_words
+  #output$high_frequency_words <- top_used_words
   
   
   
@@ -239,11 +241,12 @@ shinyServer(function(input, output) {
   
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
-  
+  reactive({
   if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
   words_gtrends <- words_t}
   else if (input$Debate=="Hilary_Clinton"){lines_go<- clinton_lines
   words_gtrends <- words_c}
+  })
   df <- data.frame(lines_go)
   colnames(df) <- c("col1")
   textdata <- df[df$col1, ] 
