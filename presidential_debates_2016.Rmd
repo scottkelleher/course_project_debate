@@ -19,8 +19,9 @@ is available to the general public with the purpose of displaying trends in glob
 Google searches. Google Trends adjusts Google searches by dividing each individual data
 point by total searches, geography and time range. Trends in the data are graphed by
 country or city. Terms such as “second amendment” and “Isis” were some of the first
-terms we tried that we knew would probably prompt some pretty drastic search trends. We read through each debate and  
+terms we tried that we knew would probably prompt some pretty drastic search trends. We read through each debate script and found some terminology that stood out. 
 
+**5 Phrases that had particularly interesting search trends with respect to their debate**
 ```{r echo = FALSE, message = FALSE}
 ```
 
