@@ -1,20 +1,19 @@
 ---
-title: What is the trend of vocabulary use among the presidential candidates during
-  the presidential debates in 2016 election ?
-author: "Janalee Thompson,Scott Kelleher,Tulsi Ram Gompo,"
+title: What Do People Google During Debates?
+author: "Janalee Thompson, Scott Kelleher, Tulsi Ram Gompo"
 date: "11/15/2016"
 output: html_document
 ---
 
 **Introduction**
-
+  The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the bittersweet end trying to convince the American people that they were the better-suited candidate to lead our country. According to CNN.com, over 84 million people tuned in to watch Hillary Clinton and Donald Trump debate.The three debates were amusing to say the least, such that terminology never before used in political discussions was used to deflate the opponent. Though after each debate, we were left wondering what types of terms used by the candidates were “Googled” by the American people. 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r, echo=FALSE,message=FALSE}
+##```{r, echo=FALSE,message=FALSE}
 library(rvest)
 library(tidyverse)
 library(stringr)
@@ -33,7 +32,7 @@ library(gtrendsR)
 library(RTextTools)
 
 
-```{r,echo=FALSE, message=FALSE }
+##```{r,echo=FALSE, message=FALSE }
 text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971")  # load the first debate page
 text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")   # load the second debate page
 text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")  # load the third debate page 
@@ -52,7 +51,7 @@ w <- c(text_debate1, text_debate2, text_debate3)
 
 
 
-``` {r, echo=FALSE,message=FALSE}
+##``` {r, echo=FALSE,message=FALSE}
  #dates of debate
 db1 <- ymd_hms(160927020000, tz = "UTC")
 db2 <- ymd_hms(161009020000, tz = "UTC")
