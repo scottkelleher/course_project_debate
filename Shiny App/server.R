@@ -312,9 +312,9 @@ shinyServer(function(input, output){
   emotion = class_emo[,7]
   emotion[is.na(emotion)] = "unknown"
   
-  download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
-  install.packages("sentiment.tar.gz", repos=NULL, type="source")
-  library(sentiment)
+  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
+  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
+  library(sentimentr)
   class_pol = classify_polarity(textdata, algorithm="bayes")
   polarity = class_pol[,4]
   
