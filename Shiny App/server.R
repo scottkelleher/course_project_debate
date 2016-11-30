@@ -234,13 +234,13 @@ shinyServer(function(input, output){
   # })    
   
  
-  text <-renderPrint({ input$text})
-  
-  google_results <- gtrends("trump", geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  textr <-renderPrint({ input$text})
+  output$value <- renderPrint({ input$text })
+  google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   
  output$term_plot <- renderPlot({
    plot(google_results)
- })
+ }) 
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   #plot(some_clinton_words)
