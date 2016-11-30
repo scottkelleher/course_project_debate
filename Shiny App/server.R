@@ -53,8 +53,8 @@ if(!require(devtools)){
 }
 if(!require(googleVis)){
   install.packages('googleVis')
-}
-
+} 
+ 
 ##Loading libraries
 library(rvest)
 #library(tidyverse)
@@ -90,12 +90,8 @@ library(DT)
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-<<<<<<< HEAD
 shinyServer(function(input, output) { 
-=======
-shinyServer(function(input, output){
->>>>>>> ce54a5663ebb13f83f81ba6ac2d7adf97f9c2342
-  
+
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
   ch <- gconnect(usr, psw)

@@ -19,8 +19,6 @@ textInput("text", label = h3("show me Google"), value = "Enter text..."),
 
 hr(),
 fluidRow(column(3, verbatimTextOutput("value"))),
-
-
       
   ##  Main Panel
     mainPanel(plotOutput("emotions"), 
