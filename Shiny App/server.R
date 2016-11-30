@@ -53,8 +53,8 @@ if(!require(devtools)){
 }
 if(!require(googleVis)){
   install.packages('googleVis')
-}
-
+} 
+ 
 ##Loading libraries
 library(rvest)
 #library(tidyverse)
@@ -90,8 +90,8 @@ library(DT)
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-shinyServer(function(input, output){
-  
+shinyServer(function(input, output) { 
+
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
   ch <- gconnect(usr, psw)
@@ -267,8 +267,6 @@ shinyServer(function(input, output){
   
   #library(RTextTools)
   
-  
-  
   #install.packages("devtools")
   #require(devtools)
   #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
@@ -335,5 +333,6 @@ shinyServer(function(input, output){
     labs(x="emotion categories", y = "")
   # dev.off()
   })
-})
+  
+}) 
 
