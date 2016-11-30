@@ -312,7 +312,11 @@ shinyServer(function(input, output) {
   
   #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
   #install.packages("sentiment.tar.gz", repos=NULL, type="source")
+<<<<<<< HEAD
   library(sentiment)
+=======
+  library(sentimentr)
+>>>>>>> 78a86ab56aea9835307e90e7cec3931757bd08a2
   class_pol = classify_polarity(textdata, algorithm="bayes")
   polarity = class_pol[,4]
   
