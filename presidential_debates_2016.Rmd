@@ -6,14 +6,39 @@ output: html_document
 ---
 
 **Introduction**
-  The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the bittersweet end trying to convince the American people that they were the better-suited candidate to lead our country. According to CNN.com, over 84 million people tuned in to watch Hillary Clinton and Donald Trump debate.The three debates were amusing to say the least, such that terminology never before used in political discussions was used to deflate the opponent. Though after each debate, we were left wondering what types of terms used by the candidates were “Googled” by the American people. 
+The 2016 presidential debates unfolded slowly as November approached. We watched
+candidates battle to the bittersweet end trying to convince the American people that
+they were the better-suited candidate to lead our country. According to CNN.com, over 84
+million people tuned in to watch Hillary Clinton and Donald Trump debate. The three
+debates were amusing to say the least, such that terminology never before used in
+political discussions was used to deflate the opponent. Though after each debate, we
+were left wondering how this debate was broken down according to Google. Thus, we
+generated an analysis utilizing debate content and Google search terms. 
+	  We started checking out Google Trends and tried out some search terms. Google Trends
+is available to the general public with the purpose of displaying trends in global
+Google searches. Google Trends adjusts Google searches by dividing each individual data
+point by total searches, geography and time range. Trends in the data are graphed by
+country or city. Terms such as “second amendment” and “Isis” were some of the first
+terms we tried that we knew would probably prompt some pretty drastic search trends. We read through each debate script and found some terminology that stood out. 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+**5 Phrases that had particularly interesting search trends with respect to their debate**
+```{r echo = FALSE, message = FALSE}
 ```
 
 
-##```{r, echo=FALSE,message=FALSE}
+
+gtrends with time: 5 interesting phrases
+
+plots by state pick phrase to plot by state
+
+emotions
+
+
+
+
+
+
+```{r, echo=FALSE,message=FALSE}
 library(rvest)
 library(tidyverse)
 library(stringr)
