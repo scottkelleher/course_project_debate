@@ -1,59 +1,59 @@
-
-if(!require(shiny)){
-  install.packages('shiny')
-}
-if(!require(gtrendsR)){
-  install.packages('gtrendsR')
-}
-if(!require(reshape2)){
-  install.packages('reshape2')
-}
-if(!require(ggplot2)){
-  install.packages('ggplot2')
-}
-
-if(!require(rvest)){
-  install.packages('rvest')
-}
-if(!require(gtrendsR)){
-  install.packages('gtrendsR')
-}
-if(!require(stringr)){
-  install.packages('stringr')
-}
-if(!require(dplyr)){
-  install.packages('dplyr')
-}
-if(!require(tm)){
-  install.packages('tm')
-}
-if(!require(lubridate)){
-  install.packages('lubridate')
-}
-if(!require(RColorBrewer)){
-  install.packages('RColorBrewer')
-}
-#if(!require(shinydashbaord)){
- # install.packages('shinydashboard')
-#}
-if(!require(tokenizers)){
-  install.packages('tokenizers')
-}
-if(!require(tidytext)){
-  install.packages('tidytext')
-}
-if(!require(xml2)){
-  install.packages('tokenizers')
-}
-if(!require(RTextTools)){
-  install.packages('RTextTools')
-}
-if(!require(devtools)){
-  install.packages('devtools')
-}
-if(!require(googleVis)){
-  install.packages('googleVis')
-} 
+# 
+# if(!require(shiny)){
+#   install.packages('shiny')
+# }
+# if(!require(gtrendsR)){
+#   install.packages('gtrendsR')
+# }
+# if(!require(reshape2)){
+#   install.packages('reshape2')
+# }
+# if(!require(ggplot2)){
+#   install.packages('ggplot2')
+# }
+# 
+# if(!require(rvest)){
+#   install.packages('rvest')
+# }
+# if(!require(gtrendsR)){
+#   install.packages('gtrendsR')
+# }
+# if(!require(stringr)){
+#   install.packages('stringr')
+# }
+# if(!require(dplyr)){
+#   install.packages('dplyr')
+# }
+# if(!require(tm)){
+#   install.packages('tm')
+# }
+# if(!require(lubridate)){
+#   install.packages('lubridate')
+# }
+# if(!require(RColorBrewer)){
+#   install.packages('RColorBrewer')
+# }
+# #if(!require(shinydashbaord)){
+#  # install.packages('shinydashboard')
+# #}
+# if(!require(tokenizers)){
+#   install.packages('tokenizers')
+# }
+# if(!require(tidytext)){
+#   install.packages('tidytext')
+# }
+# if(!require(xml2)){
+#   install.packages('tokenizers')
+# }
+# if(!require(RTextTools)){
+#   install.packages('RTextTools')
+# }
+# if(!require(devtools)){
+#   install.packages('devtools')
+# }
+# if(!require(googleVis)){
+#   install.packages('googleVis')
+# } 
  
 ##Loading libraries
 library(rvest)
@@ -310,8 +310,8 @@ shinyServer(function(input, output) {
   emotion = class_emo[,7]
   emotion[is.na(emotion)] = "unknown"
   
-  download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
-  install.packages("sentiment.tar.gz", repos=NULL, type="source")
+  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
+  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
   library(sentiment)
   class_pol = classify_polarity(textdata, algorithm="bayes")
   polarity = class_pol[,4]
