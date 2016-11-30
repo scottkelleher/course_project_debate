@@ -83,13 +83,18 @@ source("classify_emotion.R")
 
 library(RTextTools)
 library(googleVis)
+library(DT)
 
 
 #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
+<<<<<<< HEAD
 shinyServer(function(input, output) { 
+=======
+shinyServer(function(input, output){
+>>>>>>> ce54a5663ebb13f83f81ba6ac2d7adf97f9c2342
   
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -118,7 +123,7 @@ shinyServer(function(input, output) {
   
   ###loop was here 
   reactive({
-  if(input$Debate=="First_Debate"){text <- text_debate
+  if(input$Debate=="First_Debate"){text <- text_debate1
   words_t <-c("trump")
   words_c <- c("clinton")}
   else if (input$Debate=="Second_Debate"){text<- text_debate2
@@ -200,13 +205,46 @@ shinyServer(function(input, output) {
   ##Object that has word frequencies sorted from least to most for trump
   trump_most_words <- sort(trump_word_frequency)
   
+  # reactive({
+  #   
+  #   if(input$Speaker== "Donald_Trump" & input$Debate == "First_Debate"){google_words <- c("Mexico","piggy","sophisticated","tremendously","renegotiate","Secretary","Michigan","NAFTA","red tape","bureaucratic","onerous","braggadocious","squander",
+  #                                                                                         "tunnels","bridges","airport security","shooting","vigilant","Lester Holt","Hisapnic","Bloomberg","lawsuit","African American","Cyber","Doable")}
+  #   else if (input$Speaker=="Hilary_Clinton" & input$Debate == "First_Debate"){google_words <- c("adversaries","abyss","commander in chief","Profit sharing","transactions","recession","superpower","hoax","perpetrated","ISIS",
+  #                                                                                                "repartriation","trickle-down","bait and switch","prohibition","dishwashers","Charlotte","Vibrancy","touted","Kurdish","Caliphate","Al Qaida","Propagada")}
+  #   
+  #   else if (input$Speaker=="Donald_Trump" & input$Debate == "Second_Debate"){google_words <- c("make America great again","Obamacare", "terrorist state","trade deficit","Inner cities","locker room talk","ISIS chopping off heads","Medieval times","respect for women","Kathey Shelton","Paula Jhones",
+  #                                                                                               "own an apology","Wikileaks","Deborah Wasserman Schultz","super delegates","special prosecuter","clinton email scandal","daughter's wedding",
+  #                                                                                               "United States congress","monopolies","Johnathan Gurber","Islamphobia",
+  #                                                                                               "Trojan Horse","San baernandino","Radical Islamic terrorist","Muslim ban","extreme vetting",
+  #                                                                                               "criminal illegal aliens","Warren buffett","massive co-operation","Hillary as a senator","George soros","disaster as senator","Libya with gadhafi","Raqqua and Mosul","Sex Tape","people deplorable","Ambassador Steves",
+  #                                                                                               "EPA killing companies","20 trillion debt")}
+  #   
+  #   else if (input$Speaker=="Hilary_Clinton" & input$Debate == "Second_Debate"){google_words <- c("Michelle Obama","preschool education","Captain Khan","personal emails","prescription drugs","health Insurance","Small businessman","our grandchildren",
+  #                                                                                                 "Donald about women","embarras women on TV and twitter","targeted immigrants","gold star family",
+  #                                                                                                 "demagogic rhetoric","American Muslims","Homeland security","violent Jihadist terrorist",
+  #                                                                                                 "religious freedom and liberty","terrorist sites","intelligence community","Entanglement","foster care system",
+  #                                                                                                 "Bipartisan worker","Syria is catastrophic","aggressiveness of Russia","American Forces in syria","Kurdish Peshmerga fighters","Children defense fund","Texas registering Latinos",
+  #                                                                                                 "Great Depression","Wealthy American","Supreme court","Second Amendment","Gun show loopholes","Donald children")}
+  #   
+  #   else if (input$Speaker=="Donald_Trump" & input$Debate == "Third_Debate"){google_words <-  c("aleppo","African American rights","aligned","amendment","amnesty","arabia","beneficiary","border security","businesses","campaign","catastrophe",
+  #                                                                                               "china company","congressional","corrupt","crosstalk","depreciation","gdp","ginsburg","gun","haiti","hombres", "humanitarian", "illegal immigrants","imperative","isis","islamic terrorist",
+  #                                                                                               "Hilary for jail","unemployment","latinos","macarthur","mexico","migration","nafta","nasty woman","nightmare Trump")}
+  #   
+  #   else if (input$Speaker=="Hilary_Clinton" & input$Debate == "Third_Debate"){google_words <- c("aleppo","alicia","apprenticeships","Citizenship","Chinese","Catastrophic","Crocodile","Criminals","Cyberattacks","Denigrating","deportation","Discrimination","foundation","Espionage","Heartbreaking","Hurricanes","immigrants","Iranians","Jeopardy",
+  #                                                                                                "Laughingstock","Lgbt","mischaracterization","Negotiation","putin","Racketeering","Radicalization","Reagan","Recession",
+  #                                                                                                "Republicans","Russian","Saudi", "Steelworkers","Sunni","terrorism","Vladimir","Wikileaks")}
+  #   
+  #   
+  # })    
   
+ 
+  textr <-renderPrint({ input$text})
+  output$value <- renderPrint({ input$text })
+  google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   
-  
-  google_results <- gtrends(words_c, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
- #output$term_plot <- renderPlot({
-  # plot(google_results)
- #})
+ output$term_plot <- renderPlot({
+   plot(google_results)
+ }) 
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   #plot(some_clinton_words)
@@ -216,10 +254,15 @@ shinyServer(function(input, output) {
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
   else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
 
+  })
+
   
-  #output$high_frequency_words <- top_used_words
   
+  output$high_frequency_words <- DT::renderDataTable( 
+    DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
+  ) 
   
+  output$word_plot <- renderPlot({plot(top_used_words)})
   
   
   # https://www.r-bloggers.com/intro-to-text-analysis-with-r/
@@ -238,6 +281,8 @@ shinyServer(function(input, output) {
   
   
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
+  # the below function was developed from 
+  #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
   
   reactive({
   if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
