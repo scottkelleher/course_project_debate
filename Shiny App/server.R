@@ -66,11 +66,12 @@ library(dplyr)
 library(tm)
 library(SnowballC)
 library(wordcloud)
+library(sentimentr)
 library(lubridate)
 library(ggplot2)
 library(readr)
 library(gtrendsR)
-#library(xml2)
+library(xml2)
 library(shiny)
 library(devtools)
 ls("package:gtrendsR")
@@ -281,7 +282,7 @@ shinyServer(function(input, output) {
   reactive({
   if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
   words_gtrends <- words_t}
-  else if (input$Debate=="Hilary_Clinton"){lines_go<- clinton_lines
+  else if (input$Debate=="Hilary_Clinton"){lines_go <- clinton_lines
   words_gtrends <- words_c}
   })
   df <- data.frame(lines_go)
@@ -312,11 +313,7 @@ shinyServer(function(input, output) {
   
   #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
   #install.packages("sentiment.tar.gz", repos=NULL, type="source")
-<<<<<<< HEAD
-  library(sentiment)
-=======
-  library(sentimentr)
->>>>>>> 78a86ab56aea9835307e90e7cec3931757bd08a2
+
   class_pol = classify_polarity(textdata, algorithm="bayes")
   polarity = class_pol[,4]
   
