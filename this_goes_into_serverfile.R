@@ -203,10 +203,12 @@ server <- function(input, output) {
   
   
   
-  google_results <- gtrends(words_c, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  google_results <- gtrends("clinton foundation", geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  by_state <-google_results[[5]]
   by_state <- as.data.frame(google_results$Top.subregions.for.United.States)
-  by_state$Subregion <- tolower(by_state$Subregion)%>%
-    rename(region = subregion)
+  by_state$Subregion <- tolower(by_state$Subregion)
+  by_state <- rename(by_state, c(Subregion = "region", United.States = "value"))
+   # rename(region = subregion)
     
   state_choropleth(by_state)
   #plot(google_results, type ="region") 
