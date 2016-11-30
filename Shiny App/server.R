@@ -89,7 +89,7 @@ library(googleVis)
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output) { 
   
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -294,5 +294,6 @@ shinyServer(function(input, output) {
     labs(x="emotion categories", y = "")
   # dev.off()
   })
-})
+  
+}) 
 
