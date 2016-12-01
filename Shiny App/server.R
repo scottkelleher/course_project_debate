@@ -74,6 +74,7 @@ library(gtrendsR)
 library(xml2)
 library(shiny)
 library(devtools)
+library(sentiment)
 ls("package:gtrendsR")
 
 #library(shinydashboard)
@@ -147,6 +148,9 @@ shinyServer(function(input, output) {
   
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
+  
+  
+  
   
   
   #break into clinton lines

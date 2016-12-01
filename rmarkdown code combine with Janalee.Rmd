@@ -13,14 +13,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 #this chuck is libraries and brining in data
-```{r echo = False}
+```{r echo = FALSE}
 
 ################################################################################################################
 ## specify inputs
 
-  Speaker = "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
-  Debate = "Third_Debate"   # enter First_Debate or Second_Debate or Third_Debate
+  Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
+  Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
   google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
+  # enter one phrase you would like to see broken down by state
+  google_states = c("Clinton Foundation")
 
 ##Loading libraries
 library(rvest)
@@ -48,11 +50,14 @@ library(RTextTools)
 library(googleVis)
 library(sentimentr)
 library(sentiment)
-source("classify_emotion.R")
+source("functions/classify_emotion.R")
 
 library(RTextTools)
 library(googleVis)
 library(DT)
+library(choroplethr)
+library(choroplethrMaps)
+
 
 usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -204,6 +209,16 @@ usr <- ("535rprogram@gmail.com")
   # output$value <- renderPrint({ input$text })
   google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
    plot(google_results)
+   
+   google_breakdown <- gtrends(google_states, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+   
+   
+  by_state <-google_breakdown[[5]]
+  by_state$Subregion <- tolower(by_state$Subregion)
+  by_state <- rename(by_state, c(Subregion = "region", `United.States` = "value"))
+   # rename(region = subregion)
+    
+  state_choropleth(by_state)
   
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
@@ -240,15 +255,15 @@ usr <- ("535rprogram@gmail.com")
   #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
   
   
-  if(Speaker=="Donald_Trump"){lines_go <- trump_lines
-  words_gtrends <- words_t}
-  if(Debate =="Hilary_Clinton"){lines_go <- clinton_lines
-  words_gtrends <- words_c}
+  if(Speaker == "Donald_Trump"){
+    lines_go <- trump_lines
+  } else if(Speaker =="Hilary_Clinton"){
+    lines_go <- clinton_lines} 
   
   df <- data.frame(lines_go)
-  colnames(df) <- c("col1")
+  colnames(df) <- c("col1") 
   textdata <- df[df$col1, ] 
-  textdata = gsub("[[:punct:]]", "", textdata) 
+  textdata = gsub("[[:punct:]]", "", textdata)  
   
   textdata = gsub("[[:punct:]]", "", textdata)
   textdata = gsub("[[:digit:]]", "", textdata)
