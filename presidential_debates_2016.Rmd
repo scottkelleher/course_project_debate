@@ -1,6 +1,6 @@
 ---
 title: What Do People Google During Debates?
-author: "Janalee Thompson, Scott Kelleher, Tulsi Ram Gompo"
+author: "Scott Kelleher, Tulsi Ram Gompo"
 date: "11/15/2016"
 output: html_document
 ---
@@ -9,17 +9,123 @@ output: html_document
 
   The 2016 presidential debates unfolded slowly as November approached. We watched
 candidates battle to the bittersweet end trying to convince the American people that
-they were the better-suited candidate to lead our country. According to CNN.com, over 84
-million people tuned in to watch Hillary Clinton and Donald Trump debate. There were three debates in total and they were quite amusing to say the least, such that terminology never before used in political discussions was broadcasted live. "Piggy" and "deplorable" were just a couple words that were projected during the debates that caught the attention of some viewers. So what is it that we all do when we want to know more about something? We just "Google it" of course. 
+they were the better-suited candidate to lead our country. According to CNN.com, over
+84 million viewers tuned in to watch Hillary Clinton and Donald Trump debate. There
+were three debates in total spanning over a couple months. Some would consider these
+debates amusing (or scary) to say the least, such that terminology never before used in
+political discussions was broadcasted live for United States citizens and other
+countries to see in all its' glory. "Piggy" and "deplorable" were just a couple
+words that were projected during the debates that caught the attention of some viewers.
+So what is it that we all do when we want to know more about something? We just "Google
+it" of course. 
 
 **What were we thinking?**
 
-  As each debate unfolded, we wondered how many other people (like us) were using Google to search for termininology used in the debates- like the second amendment for example. Thus, we generated an analysis utilizing debate content and Google search terms. We started checking out Google Trends and tried trending some search terms ourselves. Google Trends is available to the general public with the purpose of displaying global search trends in Google. Google Trends adjusts Google searches by dividing each individual data point by total searches, geography and time range. In other words, this displays the term that was searched in relation to global search-volume. Trends in the data can be graphed by country or city. 
+  As each debate unfolded, we wondered how many other people (like us) were using
+Google to search for termininology used in the debates- like the second amendment for
+example. Thus, we generated an analysis utilizing debate content and Google search
+terms. We started checking out Google Trends and tried trending some search terms
+ourselves. Google Trends is available to the general public with the purpose of
+displaying global search trends in Google. Google Trends adjusts Google searches by
+dividing each individual data point by total searches, geography and time range. In
+other words, this displays the term that was searched in relation to global
+search-volume. Trends in the data can be graphed by country or city. 
   
-  Terms such as “second amendment” and “Isis” were some of the first terms we tried that we knew would probably prompt some pretty drastic search trends, which they did. Then, after using Google Trends to search what was intended to be a few words, we ended up searching a copious amount of terms (related and unrelated to the debates). It was time to locate debate scripts and take some terms for a spin in Google Trends. We read through each debate script and noted some terminology that stood out. As shown below,.....
+  Terms such as “second amendment” and “Isis” were some of the first terms we tried
+that we knew would probably prompt some pretty drastic search trends, which they did.
+Then, after using Google Trends to search what was intended to be a few words, we ended
+up searching a copious amount of terms (related and unrelated to the debates)! It was
+time to get down to business and locate the debate scripts and take some terms used by
+our candidates for a spin in Google Trends. 
 
-**Five Phrases that had particularly interesting Google search trends with respect to their debate**
-```{r echo = FALSE, message = FALSE}
+  We read through each debate script and noted some terminology that stood out.
+Displayed below are some terms used by our now President-Elect Donald Trump during the
+second debate. The terms `Melania`, `e-mail scandal`, `bigly`, `nasty woman`, and
+`benghazi' were searched using Google during and immediately following the second
+debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League." As a
+result of this confusion, Google Trends reported that "Bigly" had become the top
+trending search on all of Google. Check out the Tweet
+[here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
+idential-debate/21587735/). 
+
+**Five Phrases that had particularly interesting Google search trends with respect to
+their debate**
+
+```{r, loading libraries and debate data, echo = FALSE, message = FALSE}
+##Loading libraries
+library(rvest)
+#library(tidyverse)
+library(stringr)
+library(tidytext)
+library(gtrendsR)
+library(tokenizers)
+library(dplyr)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(sentimentr)
+library(lubridate)
+library(ggplot2)
+library(readr)
+library(gtrendsR)
+library(xml2)
+library(shiny)
+library(devtools)
+ls("package:gtrendsR")
+library(RTextTools)
+library(googleVis)
+library(sentimentr)
+library(sentiment)
+source("functions/classify_emotion.R")
+
+library(RTextTools)
+library(googleVis)
+library(DT)
+library(choroplethr)
+library(choroplethrMaps)
+
+usr <- ("535rprogram@gmail.com")
+  psw <- ("groupproject")
+  ch <- gconnect(usr, psw)
+  
+text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971")  # load the first debate page
+text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")   # load the second debate page
+text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")  # load the third debate page 
+    
+text_debate1 <- html_nodes(text_debate1, ".displaytext") %>%   # isloate the text
+html_text()    # get the text
+  
+text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
+html_text() # get the text
+      
+text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
+html_text() # get the text
+
+w <- c(text_debate1, text_debate2, text_debate3)
+
+#time stamp per debate
+   db1 <- ymd_hms(160927020000, tz = "UTC")
+  db2 <- ymd_hms(161009020000, tz = "UTC")
+  db3 <-ymd_hms(161029020000, tz = "UTC")
+  date_time <-c(db1, db2, db3)
+```
+
+```{r, echo = FALSE, message = FALSE}
+  Speaker <- "Donald Trump"  # enter Donald_Trump or Hilary_Clinton
+  Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
+  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
+  # enter one phrase you would like to see broken down by state
+
+```
+
+  Additionally, we were interested in specific terminology searched in Google at the
+state level. Specifically, which states were Googling more particular terms than
+others? The following graphic is categorized by state using Google Trends search term
+data. This time we used the search term "Clinton Foundation" and attained the following
+result. 
+
+```{r, echo = FALSE, message = FALSE}
+google_states = c("Clinton Foundation")
 ```
 
 
@@ -39,55 +145,5 @@ gtrends with time: 5 interesting phrases
 plots by state pick phrase to plot by state
 emotions
 
-
-
-
-
-
-```{r, echo=FALSE,message=FALSE}
-library(rvest)
-library(tidyverse)
-library(stringr)
-library(tidytext)
-library(gtrendsR)
-library(tokenizers)
-library(dplyr)
-library(tm)
-library(SnowballC)
-library(wordcloud)
-library(lubridate)
-library(ggplot2)
-library(readr)
-library(gtrendsR)
-library(gtrendsR)
-library(RTextTools)
-
-
-##```{r,echo=FALSE, message=FALSE }
-text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971")  # load the first debate page
-text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")   # load the second debate page
-text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")  # load the third debate page 
-    
-text_debate1 <- html_nodes(text_debate1, ".displaytext") %>%   # isloate the text
-html_text()    # get the text
-  
-text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
-html_text() # get the text
-      
-text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
-html_text() # get the text
-
-w <- c(text_debate1, text_debate2, text_debate3)
-```
-
-
-
-##``` {r, echo=FALSE,message=FALSE}
- #dates of debate
-db1 <- ymd_hms(160927020000, tz = "UTC")
-db2 <- ymd_hms(161009020000, tz = "UTC")
-db3 <-ymd_hms(161029020000, tz = "UTC")
-date_time <-c(db1, db2, db3)
-```
 
 
