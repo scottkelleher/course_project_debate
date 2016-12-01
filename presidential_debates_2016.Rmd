@@ -5,15 +5,46 @@ date: "11/15/2016"
 output: html_document
 ---
 
-**Introduction**
-  The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the bittersweet end trying to convince the American people that they were the better-suited candidate to lead our country. According to CNN.com, over 84 million people tuned in to watch Hillary Clinton and Donald Trump debate.The three debates were amusing to say the least, such that terminology never before used in political discussions was used to deflate the opponent. Though after each debate, we were left wondering what types of terms used by the candidates were “Googled” by the American people. 
+**##2016 Presidential Debate: Content Breakdown**
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+  The 2016 presidential debates unfolded slowly as November approached. We watched
+candidates battle to the bittersweet end trying to convince the American people that
+they were the better-suited candidate to lead our country. According to CNN.com, over 84
+million people tuned in to watch Hillary Clinton and Donald Trump debate. There were three debates in total and they were quite amusing to say the least, such that terminology never before used in political discussions was broadcasted live. "Piggy" and "deplorable" were just a couple words that were projected during the debates that caught the attention of some viewers. So what is it that we all do when we want to know more about something? We just "Google it" of course. 
+
+**What were we thinking?**
+
+  As each debate unfolded, we wondered how many other people (like us) were using Google to search for termininology used in the debates- like the second amendment for example. Thus, we generated an analysis utilizing debate content and Google search terms. We started checking out Google Trends and tried trending some search terms ourselves. Google Trends is available to the general public with the purpose of displaying global search trends in Google. Google Trends adjusts Google searches by dividing each individual data point by total searches, geography and time range. In other words, this displays the term that was searched in relation to global search-volume. Trends in the data can be graphed by country or city. 
+  
+  Terms such as “second amendment” and “Isis” were some of the first terms we tried that we knew would probably prompt some pretty drastic search trends, which they did. Then, after using Google Trends to search what was intended to be a few words, we ended up searching a copious amount of terms (related and unrelated to the debates). It was time to locate debate scripts and take some terms for a spin in Google Trends. We read through each debate script and noted some terminology that stood out. As shown below,.....
+
+**Five Phrases that had particularly interesting Google search trends with respect to their debate**
+```{r echo = FALSE, message = FALSE}
 ```
 
 
-##```{r, echo=FALSE,message=FALSE}
+**Emotions**
+
+
+
+
+
+
+
+
+
+
+plots to include:
+gtrends with time: 5 interesting phrases
+plots by state pick phrase to plot by state
+emotions
+
+
+
+
+
+
+```{r, echo=FALSE,message=FALSE}
 library(rvest)
 library(tidyverse)
 library(stringr)

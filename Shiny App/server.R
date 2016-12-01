@@ -1,60 +1,60 @@
-
-if(!require(shiny)){
-  install.packages('shiny')
-}
-if(!require(gtrendsR)){
-  install.packages('gtrendsR')
-}
-if(!require(reshape2)){
-  install.packages('reshape2')
-}
-if(!require(ggplot2)){
-  install.packages('ggplot2')
-}
-
-if(!require(rvest)){
-  install.packages('rvest')
-}
-if(!require(gtrendsR)){
-  install.packages('gtrendsR')
-}
-if(!require(stringr)){
-  install.packages('stringr')
-}
-if(!require(dplyr)){
-  install.packages('dplyr')
-}
-if(!require(tm)){
-  install.packages('tm')
-}
-if(!require(lubridate)){
-  install.packages('lubridate')
-}
-if(!require(RColorBrewer)){
-  install.packages('RColorBrewer')
-}
-#if(!require(shinydashbaord)){
- # install.packages('shinydashboard')
-#}
-if(!require(tokenizers)){
-  install.packages('tokenizers')
-}
-if(!require(tidytext)){
-  install.packages('tidytext')
-}
-if(!require(xml2)){
-  install.packages('tokenizers')
-}
-if(!require(RTextTools)){
-  install.packages('RTextTools')
-}
-if(!require(devtools)){
-  install.packages('devtools')
-}
-if(!require(googleVis)){
-  install.packages('googleVis')
-}
-
+# 
+# if(!require(shiny)){
+#   install.packages('shiny')
+# }
+# if(!require(gtrendsR)){
+#   install.packages('gtrendsR')
+# }
+# if(!require(reshape2)){
+#   install.packages('reshape2')
+# }
+# if(!require(ggplot2)){
+#   install.packages('ggplot2')
+# }
+# 
+# if(!require(rvest)){
+#   install.packages('rvest')
+# }
+# if(!require(gtrendsR)){
+#   install.packages('gtrendsR')
+# }
+# if(!require(stringr)){
+#   install.packages('stringr')
+# }
+# if(!require(dplyr)){
+#   install.packages('dplyr')
+# }
+# if(!require(tm)){
+#   install.packages('tm')
+# }
+# if(!require(lubridate)){
+#   install.packages('lubridate')
+# }
+# if(!require(RColorBrewer)){
+#   install.packages('RColorBrewer')
+# }
+# #if(!require(shinydashbaord)){
+#  # install.packages('shinydashboard')
+# #}
+# if(!require(tokenizers)){
+#   install.packages('tokenizers')
+# }
+# if(!require(tidytext)){
+#   install.packages('tidytext')
+# }
+# if(!require(xml2)){
+#   install.packages('tokenizers')
+# }
+# if(!require(RTextTools)){
+#   install.packages('RTextTools')
+# }
+# if(!require(devtools)){
+#   install.packages('devtools')
+# }
+# if(!require(googleVis)){
+#   install.packages('googleVis')
+# } 
+ 
 ##Loading libraries
 library(rvest)
 #library(tidyverse)
@@ -66,11 +66,12 @@ library(dplyr)
 library(tm)
 library(SnowballC)
 library(wordcloud)
+library(sentimentr)
 library(lubridate)
 library(ggplot2)
 library(readr)
 library(gtrendsR)
-#library(xml2)
+library(xml2)
 library(shiny)
 library(devtools)
 ls("package:gtrendsR")
@@ -90,12 +91,8 @@ library(DT)
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-<<<<<<< HEAD
 shinyServer(function(input, output) { 
-=======
-shinyServer(function(input, output){
->>>>>>> ce54a5663ebb13f83f81ba6ac2d7adf97f9c2342
-  
+
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
   ch <- gconnect(usr, psw)
@@ -150,9 +147,6 @@ shinyServer(function(input, output){
   
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
-  
-  
-  
   
   
   #break into clinton lines
@@ -271,8 +265,6 @@ shinyServer(function(input, output){
   
   #library(RTextTools)
   
-  
-  
   #install.packages("devtools")
   #require(devtools)
   #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
@@ -281,13 +273,14 @@ shinyServer(function(input, output){
   
   
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
+  
   # the below function was developed from 
   #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
   
   reactive({
   if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
   words_gtrends <- words_t}
-  else if (input$Debate=="Hilary_Clinton"){lines_go<- clinton_lines
+  else if (input$Debate=="Hilary_Clinton"){lines_go <- clinton_lines
   words_gtrends <- words_c}
   })
   df <- data.frame(lines_go)
@@ -316,9 +309,9 @@ shinyServer(function(input, output){
   emotion = class_emo[,7]
   emotion[is.na(emotion)] = "unknown"
   
-  download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
-  install.packages("sentiment.tar.gz", repos=NULL, type="source")
-  library(sentiment)
+  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
+  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
+
   class_pol = classify_polarity(textdata, algorithm="bayes")
   polarity = class_pol[,4]
   
