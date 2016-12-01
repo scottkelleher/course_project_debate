@@ -66,7 +66,6 @@ library(dplyr)
 library(tm)
 library(SnowballC)
 library(wordcloud)
-library(sentiment)
 library(sentimentr)
 library(lubridate)
 library(ggplot2)
@@ -148,9 +147,6 @@ shinyServer(function(input, output) {
   
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
-  
-  
-  
   
   
   #break into clinton lines
