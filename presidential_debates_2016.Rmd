@@ -1,11 +1,11 @@
 ---
 title: What Do People Google During Debates?
-author: "Scott Kelleher, Tulsi Ram Gompo"
+author: "Scott Kelleher, Tulsi Ram Gompo, Janalee Thompson"
 date: "11/15/2016"
 output: html_document
 ---
 
-**##2016 Presidential Debate: Content Breakdown**
+##**2016 Presidential Debate: Content Breakdown**
 
   The 2016 presidential debates unfolded slowly as November approached. We watched
 candidates battle to the bittersweet end trying to convince the American people that
@@ -19,7 +19,7 @@ words that were projected during the debates that caught the attention of some v
 So what is it that we all do when we want to know more about something? We just "Google
 it" of course. 
 
-**What were we thinking?**
+#**What were we thinking?**
 
   As each debate unfolded, we wondered how many other people (like us) were using
 Google to search for termininology used in the debates- like the second amendment for
@@ -63,7 +63,6 @@ library(dplyr)
 library(tm)
 library(SnowballC)
 library(wordcloud)
-library(sentimentr)
 library(lubridate)
 library(ggplot2)
 library(readr)
@@ -75,19 +74,18 @@ ls("package:gtrendsR")
 library(RTextTools)
 library(googleVis)
 library(sentimentr)
-library(sentiment)
 source("functions/classify_emotion.R")
-
 library(RTextTools)
 library(googleVis)
 library(DT)
 library(choroplethr)
 library(choroplethrMaps)
-
+  
 usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
   ch <- gconnect(usr, psw)
   
+function(input, output, session){ 
 text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971")  # load the first debate page
 text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")   # load the second debate page
 text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")  # load the third debate page 
@@ -108,6 +106,163 @@ w <- c(text_debate1, text_debate2, text_debate3)
   db2 <- ymd_hms(161009020000, tz = "UTC")
   db3 <-ymd_hms(161029020000, tz = "UTC")
   date_time <-c(db1, db2, db3)
+  
+  reactive({
+  if(input$Debate=="First_Debate"){text <- text_debate1
+  words_t <-c("trump")
+  words_c <- c("clinton")}
+  else if (input$Debate=="Second_Debate"){text<- text_debate2
+  words_t <- c("trump")
+  words_c <- c("clinton")}
+  else if (input$Debate=="Third_Debate"){text<- text_debate3
+  words_t <- c("trump")
+  words_c <- c("clinton")}
+  })
+  ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
+  getLines <- function(person){
+    
+    id <- unlist(stringr::str_extract_all(text, "[A-Z]+:")) # get the speaker
+    Lines <- unlist(strsplit(text, "[A-Z]+:"))[-1]  # split by speaker (and get rid of a pesky empty line)
+    Lines[id %in% person] # retain speech by relevant speaker
+  }
+  
+  ##Creating an object called debate_lines that has two parts, one for clinton and one for trump
+  debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines) 
+  
+  
+  ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
+  clinton_lines <- debate_lines[1] 
+  trump_lines <- debate_lines[2] 
+  
+  
+  #break into clinton lines
+  text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
+  text_clinton 
+  
+  
+  #break into trump lines 
+  text_trump <- data_frame(text_t = trump_lines[[1]]) 
+  text_trump 
+  
+  
+  ##Breaking trump lines into individual words
+  trump_words <- text_trump %>%
+    unnest_tokens(word, text_t)  
+  #trump_words  
+  
+  
+  #filter out the stopwords, add which debate it was and the day and time
+  trump_words_unique <- !(trump_words$word %in% stopwords())
+  trump_words <- mutate(trump_words, elim = trump_words_unique)
+  trump_words<- filter(trump_words, trump_words$elim == TRUE)
+  trump_words <- select(trump_words, -elim)
+  
+  
+  ##Breaking clinton lines into individual words
+  clinton_words <- text_clinton %>%
+    unnest_tokens(word, text_c)  
+  #clinton_words
+  
+  #filter out the stopwords, add which debate it was and what day and time
+  clinton_words_unique <- !(clinton_words$word %in% stopwords())
+  clinton_words <- mutate(clinton_words, elim = clinton_words_unique)
+  clinton_words<- filter(clinton_words, clinton_words$elim == TRUE)
+  clinton_words <- select(clinton_words, -elim)
+  
+  
+  ##Counting the number of times each word is said for clinton
+  clinton_word_frequency <- table(clinton_words)
+  
+  ##Counting the number of times each word is said for trump
+  trump_word_frequency <- table(trump_words)
+  
+  ##Object that has word frequencies sorted from least to most for clinton
+  clinton_most_words <- sort(clinton_word_frequency)
+  
+  
+  ##Object that has word frequencies sorted from least to most for trump
+  trump_most_words <- sort(trump_word_frequency)
+  
+  textr <-renderPrint({ input$text})
+  output$value <- renderPrint({ input$text })
+  google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  
+ output$term_plot <- renderPlot({
+   plot(google_results)
+ }) 
+  #should be filtered down to which candidate and which debate at this point
+  #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  #plot(some_clinton_words)
+  
+  reactive({
+  
+  if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
+  else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
+
+  })
+
+  output$high_frequency_words <- DT::renderDataTable( 
+    DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
+  ) 
+  
+  output$word_plot <- renderPlot({plot(top_used_words)})
+  
+  
+  # https://www.r-bloggers.com/intro-to-text-analysis-with-r/
+  
+  #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
+  
+  # the below function was developed from 
+  #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
+  
+  reactive({
+  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
+  words_gtrends <- words_t}
+  else if (input$Speaker=="Hilary_Clinton"){lines_go <- clinton_lines
+  words_gtrends <- words_c}
+  })
+  df <- data.frame(lines_go)
+  colnames(df) <- c("col1")
+  textdata <- df[df$col1, ] 
+  textdata = gsub("[[:punct:]]", "", textdata) 
+  
+  textdata = gsub("[[:punct:]]", "", textdata)
+  textdata = gsub("[[:digit:]]", "", textdata)
+  textdata = gsub("http\\w+", "", textdata)
+  textdata = gsub("[ \t]{2,}", "", textdata)
+  textdata = gsub("^\\s+|\\s+$", "", textdata)
+  try.error = function(x)
+  {
+    y = NA
+    try_error = tryCatch(tolower(x), error=function(e) e)
+    if (!inherits(try_error, "error"))
+      y = tolower(x)
+    return(y) 
+  }
+  textdata = sapply(textdata, try.error)
+  textdata = textdata[!is.na(textdata)]
+  names(textdata) = NULL
+  
+  class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
+  emotion = class_emo[,7]
+  emotion[is.na(emotion)] = "unknown"
+  
+  download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
+  install.packages("sentiment.tar.gz", repos=NULL, type="source")
+
+  class_pol = classify_polarity(textdata, algorithm="bayes")
+  polarity = class_pol[,4]
+  
+  
+  sent_df = data.frame(text=textdata, emotion=emotion,
+                       polarity=polarity, stringsAsFactors=FALSE)
+  sent_df = within(sent_df,
+                   emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
+  
+ # detach("package:sentiment", unload=TRUE)                
+  
+  # pdf(plots.pdf) 
+  output$emotions <- renderPlot({
 ```
 
 ```{r, echo = FALSE, message = FALSE}
@@ -115,7 +270,6 @@ w <- c(text_debate1, text_debate2, text_debate3)
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
   google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
-
 ```
 
   Additionally, we were interested in specific terminology searched in Google at the
