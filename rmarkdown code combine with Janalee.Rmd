@@ -58,7 +58,7 @@ their debate**
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
   google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
-  google_states = c("")
+  google_states = c("Clinton Foundation")
 
 ##Loading libraries
 library(rvest)
@@ -265,50 +265,50 @@ if(Debate=="First_Debate"){text <- text_debate1
     lines_go <- trump_lines
   } else if(Speaker =="Hilary_Clinton"){
     lines_go <- clinton_lines} 
-  
-  df <- data.frame(lines_go)
-  colnames(df) <- c("col1") 
-  textdata <- df[df$col1, ] 
-  textdata = gsub("[[:punct:]]", "", textdata)  
-  
-  textdata = gsub("[[:punct:]]", "", textdata)
-  textdata = gsub("[[:digit:]]", "", textdata)
-  textdata = gsub("http\\w+", "", textdata)
-  textdata = gsub("[ \t]{2,}", "", textdata)
-  textdata = gsub("^\\s+|\\s+$", "", textdata)
-  try.error = function(x)
-  {
-    y = NA
-    try_error = tryCatch(tolower(x), error=function(e) e)
-    if (!inherits(try_error, "error"))
-      y = tolower(x)
-    return(y) 
-  }
-  textdata = sapply(textdata, try.error)
-  textdata = textdata[!is.na(textdata)]
-  names(textdata) = NULL
-  
-  class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
-  emotion = class_emo[,7]
-  emotion[is.na(emotion)] = "unknown"
-
-  class_pol = classify_polarity(textdata, algorithm="bayes")
-  polarity = class_pol[,4]
-  
-  
-  sent_df = data.frame(text=textdata, emotion=emotion,
-                       polarity=polarity, stringsAsFactors=FALSE)
-  sent_df = within(sent_df,
-                   emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
-  
- # detach("package:sentiment", unload=TRUE)                
-  
-  # pdf(plots.pdf) 
-  
-    ggplot(sent_df, aes(x=emotion)) +
-    geom_bar(aes(y=..count.., fill=emotion)) +
-    scale_fill_brewer(palette="Dark2") +
-    labs(x="emotion categories", y = "")
-  # dev.off()
+ #  
+ #  df <- data.frame(lines_go)
+ #  colnames(df) <- c("col1") 
+ #  textdata <- df[df$col1, ] 
+ #  textdata = gsub("[[:punct:]]", "", textdata)  
+ #  
+ #  textdata = gsub("[[:punct:]]", "", textdata)
+ #  textdata = gsub("[[:digit:]]", "", textdata)
+ #  textdata = gsub("http\\w+", "", textdata)
+ #  textdata = gsub("[ \t]{2,}", "", textdata)
+ #  textdata = gsub("^\\s+|\\s+$", "", textdata)
+ #  try.error = function(x)
+ #  {
+ #    y = NA
+ #    try_error = tryCatch(tolower(x), error=function(e) e)
+ #    if (!inherits(try_error, "error"))
+ #      y = tolower(x)
+ #    return(y) 
+ #  }
+ #  textdata = sapply(textdata, try.error)
+ #  textdata = textdata[!is.na(textdata)]
+ #  names(textdata) = NULL
+ #  
+ #  class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
+ #  emotion = class_emo[,7]
+ #  emotion[is.na(emotion)] = "unknown"
+ # 
+ #  class_pol = classify_polarity(textdata, algorithm="bayes")
+ #  polarity = class_pol[,4]
+ #  
+ #  
+ #  sent_df = data.frame(text=textdata, emotion=emotion,
+ #                       polarity=polarity, stringsAsFactors=FALSE)
+ #  sent_df = within(sent_df,
+ #                   emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
+ #  
+ # # detach("package:sentiment", unload=TRUE)                
+ #  
+ #  # pdf(plots.pdf) 
+ #  
+ #    ggplot(sent_df, aes(x=emotion)) +
+ #    geom_bar(aes(y=..count.., fill=emotion)) +
+ #    scale_fill_brewer(palette="Dark2") +
+ #    labs(x="emotion categories", y = "")
+ #  # dev.off()
 ```
 
