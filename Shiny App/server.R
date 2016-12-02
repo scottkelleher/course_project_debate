@@ -79,7 +79,7 @@ ls("package:gtrendsR")
 #library(shinydashboard)
 library(RTextTools)
 library(googleVis)
-source("classify_emotion.R")
+#source("classify_emotion.R")
 
 library(RTextTools)
 library(googleVis)
