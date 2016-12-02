@@ -90,7 +90,7 @@ install_url("ftp://cran.r-project.org/pub/R/src/contrib/Archive/Rstem_0.4-1.tar.
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-shinyServer(function(input, output,session){ 
+shinyServer(function(input, output, session){ 
 
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")

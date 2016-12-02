@@ -1,23 +1,59 @@
 ---
 title: "Debate Project"
-author: "Scott Kelleher, Janalee Thompson, Tulsi Gompo"
+author: "Scott Kelleher, Tulsi Gompo, Janalee Thompson"
 date: "November 30, 2016"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+##**2016 Presidential Debate: Content Breakdown**
 
-## Debate Analysis
+  The 2016 presidential debates unfolded slowly as November approached. We watched
+candidates battle to the bittersweet end trying to convince the American people that
+they were the better-suited candidate to lead our country. According to CNN.com, over
+84 million viewers tuned in to watch Hillary Clinton and Donald Trump debate. There
+were three debates in total spanning over a couple months. Some would consider these
+debates amusing (or scary) to say the least, such that terminology never before used in
+political discussions was broadcasted live for United States citizens and other
+countries to see in all its' glory. "Piggy" and "deplorable" were just a couple
+words that were projected during the debates that caught the attention of some viewers.
+So what is it that we all do when we want to know more about something? We just "Google
+it" of course. 
 
+#**What were we thinking?**
 
-#this chuck is libraries and brining in data
+  As each debate unfolded, we wondered how many other people (like us) were using
+Google to search for termininology used in the debates- like the second amendment for
+example. Thus, we generated an analysis utilizing debate content and Google search
+terms. We started checking out Google Trends and tried trending some search terms
+ourselves. Google Trends is available to the general public with the purpose of
+displaying global search trends in Google. Google Trends adjusts Google searches by
+dividing each individual data point by total searches, geography and time range. In
+other words, this displays the term that was searched in relation to global
+search-volume. Trends in the data can be graphed by country or city. 
+  
+  Terms such as “second amendment” and “Isis” were some of the first terms we tried
+that we knew would probably prompt some pretty drastic search trends, which they did.
+Then, after using Google Trends to search what was intended to be a few words, we ended
+up searching a copious amount of terms (related and unrelated to the debates)! It was
+time to get down to business and locate the debate scripts and take some terms used by
+our candidates for a spin in Google Trends. 
+
+  We read through each debate script and noted some terminology that stood out.
+Displayed below are some terms used by our now President-Elect Donald Trump during the
+second debate. The terms `Melania`, `e-mail scandal`, `bigly`, `nasty woman`, and
+`benghazi' were searched using Google during and immediately following the second
+debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League." As a
+result of this confusion, Google Trends reported that "Bigly" had become the top
+trending search on all of Google. Check out the Tweet
+[here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
+idential-debate/21587735/). 
+
+**Five Phrases that had particularly interesting Google search trends with respect to
+their debate**
+
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
 
-################################################################################################################
 ## specify inputs
-
   Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
   google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
@@ -44,12 +80,9 @@ library(xml2)
 library(shiny)
 library(devtools)
 ls("package:gtrendsR")
-
-#library(shinydashboard)
 library(RTextTools)
 library(googleVis)
-library(sentimentr)
-library(sentiment)
+library(syuzhet)
 source("functions/classify_emotion.R")
 
 library(RTextTools)
@@ -57,7 +90,6 @@ library(googleVis)
 library(DT)
 library(choroplethr)
 library(choroplethrMaps)
-
 
 usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -76,21 +108,21 @@ usr <- ("535rprogram@gmail.com")
   text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
     html_text() # get the text
   
-   db1 <- ymd_hms(160927020000, tz = "UTC")
+  db1 <- ymd_hms(160927020000, tz = "UTC")
   db2 <- ymd_hms(161009020000, tz = "UTC")
   db3 <-ymd_hms(161029020000, tz = "UTC")
   date_time <-c(db1, db2, db3)
-  
-
 ```
 
+  Additionally, we were interested in specific terminology searched in Google at the
+state level. Specifically, which states were Googling more particular terms than
+others? The following graphic is categorized by state using Google Trends search term
+data. This time we used the search term "Clinton Foundation" and attained the following
+result. 
 
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
-
-
-  ###loop was here 
   
-  if(Debate=="First_Debate"){text <- text_debate1
+if(Debate=="First_Debate"){text <- text_debate1
   words_t <-c("trump")
   words_c <- c("clinton")}
   if (Debate=="Second_Debate"){text<- text_debate2
@@ -114,23 +146,16 @@ usr <- ("535rprogram@gmail.com")
   
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
   
-  
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
-  
-  
-  
-  
   
   #break into clinton lines
   text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
   text_clinton 
   
-  
   #break into trump lines 
   text_trump <- data_frame(text_t = trump_lines[[1]]) 
   text_trump 
-  
   
   ##Breaking trump lines into individual words
   trump_words <- text_trump %>%
@@ -144,7 +169,6 @@ usr <- ("535rprogram@gmail.com")
   trump_words<- filter(trump_words, trump_words$elim == TRUE)
   trump_words <- select(trump_words, -elim)
   
-  
   ##Breaking clinton lines into individual words
   clinton_words <- text_clinton %>%
     unnest_tokens(word, text_c)  
@@ -156,18 +180,14 @@ usr <- ("535rprogram@gmail.com")
   clinton_words<- filter(clinton_words, clinton_words$elim == TRUE)
   clinton_words <- select(clinton_words, -elim)
   
-  
-  
   ##Counting the number of times each word is said for clinton
   clinton_word_frequency <- table(clinton_words)
-  
   
   ##Counting the number of times each word is said for trump
   trump_word_frequency <- table(trump_words)
   
   ##Object that has word frequencies sorted from least to most for clinton
   clinton_most_words <- sort(clinton_word_frequency)
-  
   
   ##Object that has word frequencies sorted from least to most for trump
   trump_most_words <- sort(trump_word_frequency)
@@ -212,7 +232,6 @@ usr <- ("535rprogram@gmail.com")
    
    google_breakdown <- gtrends(google_states, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
    
-   
   by_state <-google_breakdown[[5]]
   by_state$Subregion <- tolower(by_state$Subregion)
   by_state <- rename(by_state, c(Subregion = "region", `United.States` = "value"))
@@ -224,36 +243,23 @@ usr <- ("535rprogram@gmail.com")
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   #plot(some_clinton_words)
   
- 
-  
   if(Speaker == "Donald_Trump"){top_used_words <- trump_most_words}
   if(Speaker =="Hilary_Clinton"){top_used_words<- clinton_most_words}
-
-
 
  DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
   
   plot(top_used_words)
   
-  
   # https://www.r-bloggers.com/intro-to-text-analysis-with-r/
-  
-  
   
   #library(RTextTools)
   
   #install.packages("devtools")
   #require(devtools)
-  #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
-  #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
-  #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
-  
-  
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
   # the below function was developed from 
   #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
-  
   
   if(Speaker == "Donald_Trump"){
     lines_go <- trump_lines
@@ -285,9 +291,6 @@ usr <- ("535rprogram@gmail.com")
   class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
   emotion = class_emo[,7]
   emotion[is.na(emotion)] = "unknown"
-  
-  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
-  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
 
   class_pol = classify_polarity(textdata, algorithm="bayes")
   polarity = class_pol[,4]
@@ -302,16 +305,10 @@ usr <- ("535rprogram@gmail.com")
   
   # pdf(plots.pdf) 
   
-    
     ggplot(sent_df, aes(x=emotion)) +
     geom_bar(aes(y=..count.., fill=emotion)) +
     scale_fill_brewer(palette="Dark2") +
     labs(x="emotion categories", y = "")
   # dev.off()
-  
-  
-
-
-
 ```
 
