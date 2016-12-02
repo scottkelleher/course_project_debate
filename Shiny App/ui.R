@@ -21,7 +21,7 @@ hr(),
 fluidRow(column(3, verbatimTextOutput("value"))),
       
   ##  Main Panel
-    mainPanel(plotOutput("emotions"), 
+    mainPanel( 
               dataTableOutput("high_frequency_words"), 
               plotOutput("word_plot"),
               plotOutput("term_plot")
