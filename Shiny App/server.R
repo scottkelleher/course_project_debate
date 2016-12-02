@@ -235,6 +235,7 @@ shinyServer(function(input, output,session){
   #   
   # })    
   
+  
  
   textr <-renderPrint({ input$text})
   output$value <- renderPrint({ input$text })
