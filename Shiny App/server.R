@@ -66,7 +66,7 @@ library(dplyr)
 library(tm)
 library(SnowballC)
 library(wordcloud)
-library(sentimentr)
+library(syuzhet)
 library(lubridate)
 library(ggplot2)
 library(readr)
@@ -74,13 +74,11 @@ library(gtrendsR)
 library(xml2)
 library(shiny)
 library(devtools)
-library(sentiment)
 ls("package:gtrendsR")
 
 #library(shinydashboard)
 library(RTextTools)
 library(googleVis)
-library(sentimentr)
 source("classify_emotion.R")
 
 library(RTextTools)
@@ -88,9 +86,9 @@ library(googleVis)
 library(DT)
 
 
-#install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
-#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
-#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
+install_url("ftp://cran.r-project.org/pub/R/src/contrib/Archive/Rstem_0.4-1.tar.gz")
+install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
+install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
 shinyServer(function(input, output) { 
 
@@ -271,10 +269,6 @@ shinyServer(function(input, output) {
   
   #install.packages("devtools")
   #require(devtools)
-  #install_url("http://www.omegahat.org/Rstem/Rstem_0.4-1.tar.gz")
-  #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
-  #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
-  
   
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
@@ -313,8 +307,8 @@ shinyServer(function(input, output) {
   emotion = class_emo[,7]
   emotion[is.na(emotion)] = "unknown"
   
-  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
-  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
+  download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
+  install.packages("sentiment.tar.gz", repos=NULL, type="source")
 
   class_pol = classify_polarity(textdata, algorithm="bayes")
   polarity = class_pol[,4]
