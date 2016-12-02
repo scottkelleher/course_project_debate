@@ -276,61 +276,61 @@ shinyServer(function(input, output, session){
   # the below function was developed from 
   #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
   
-  reactive({
-  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
-  words_gtrends <- words_t}
-  else if (input$Speaker=="Hilary_Clinton"){lines_go <- clinton_lines
-  words_gtrends <- words_c}
-  })
-  df <- data.frame(lines_go)
-  colnames(df) <- c("col1")
-  textdata <- df[df$col1, ] 
-  textdata = gsub("[[:punct:]]", "", textdata) 
-  
-  textdata = gsub("[[:punct:]]", "", textdata)
-  textdata = gsub("[[:digit:]]", "", textdata)
-  textdata = gsub("http\\w+", "", textdata)
-  textdata = gsub("[ \t]{2,}", "", textdata)
-  textdata = gsub("^\\s+|\\s+$", "", textdata)
-  try.error = function(x)
-  {
-    y = NA
-    try_error = tryCatch(tolower(x), error=function(e) e)
-    if (!inherits(try_error, "error"))
-      y = tolower(x)
-    return(y) 
-  }
-  textdata = sapply(textdata, try.error)
-  textdata = textdata[!is.na(textdata)]
-  names(textdata) = NULL
-  
-  class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
-  emotion = class_emo[,7]
-  emotion[is.na(emotion)] = "unknown"
-  
-  download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
-  install.packages("sentiment.tar.gz", repos=NULL, type="source")
-
-  class_pol = classify_polarity(textdata, algorithm="bayes")
-  polarity = class_pol[,4]
-  
-  
-  sent_df = data.frame(text=textdata, emotion=emotion,
-                       polarity=polarity, stringsAsFactors=FALSE)
-  sent_df = within(sent_df,
-                   emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
-  
- # detach("package:sentiment", unload=TRUE)                
-  
-  # pdf(plots.pdf) 
-  output$emotions <- renderPlot({
-    
-    ggplot(sent_df, aes(x=emotion)) +
-    geom_bar(aes(y=..count.., fill=emotion)) +
-    scale_fill_brewer(palette="Dark2") +
-    labs(x="emotion categories", y = "")
-  # dev.off()
-  })
+ #  reactive({
+ #  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
+ #  words_gtrends <- words_t}
+ #  else if (input$Speaker=="Hilary_Clinton"){lines_go <- clinton_lines
+ #  words_gtrends <- words_c}
+ #  })
+ #  df <- data.frame(lines_go)
+ #  colnames(df) <- c("col1")
+ #  textdata <- df[df$col1, ] 
+ #  textdata = gsub("[[:punct:]]", "", textdata) 
+ #  
+ #  textdata = gsub("[[:punct:]]", "", textdata)
+ #  textdata = gsub("[[:digit:]]", "", textdata)
+ #  textdata = gsub("http\\w+", "", textdata)
+ #  textdata = gsub("[ \t]{2,}", "", textdata)
+ #  textdata = gsub("^\\s+|\\s+$", "", textdata)
+ #  try.error = function(x)
+ #  {
+ #    y = NA
+ #    try_error = tryCatch(tolower(x), error=function(e) e)
+ #    if (!inherits(try_error, "error"))
+ #      y = tolower(x)
+ #    return(y) 
+ #  }
+ #  textdata = sapply(textdata, try.error)
+ #  textdata = textdata[!is.na(textdata)]
+ #  names(textdata) = NULL
+ #  
+ #  class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
+ #  emotion = class_emo[,7]
+ #  emotion[is.na(emotion)] = "unknown"
+ #  
+ #  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
+ #  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
+ # 
+ #  class_pol = classify_polarity(textdata, algorithm="bayes")
+ #  polarity = class_pol[,4]
+ #  
+ #  
+ #  sent_df = data.frame(text=textdata, emotion=emotion,
+ #                       polarity=polarity, stringsAsFactors=FALSE)
+ #  sent_df = within(sent_df,
+ #                   emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
+ #  
+ # # detach("package:sentiment", unload=TRUE)                
+ #  
+ #  # pdf(plots.pdf) 
+ #  output$emotions <- renderPlot({
+ #    
+ #    ggplot(sent_df, aes(x=emotion)) +
+ #    geom_bar(aes(y=..count.., fill=emotion)) +
+ #    scale_fill_brewer(palette="Dark2") +
+ #    labs(x="emotion categories", y = "")
+ #  # dev.off()
+ #  })
   
 }) 
 
