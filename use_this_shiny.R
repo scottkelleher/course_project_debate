@@ -185,7 +185,7 @@ some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"
   
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
-  df <- data.frame(clinton_lines)
+  df <- data.frame(trump_lines)
   colnames(df) <- c("col1")
   textdata <- df[df$col1, ] 
   textdata = gsub("[[:punct:]]", "", textdata) 

@@ -1,11 +1,11 @@
 ---
 title: What Do People Google During Debates?
-author: "Scott Kelleher, Tulsi Ram Gompo"
+author: "Scott Kelleher, Tulsi Ram Gompo, Janalee Thompson"
 date: "11/15/2016"
 output: html_document
 ---
 
-**##2016 Presidential Debate: Content Breakdown**
+##**2016 Presidential Debate: Content Breakdown**
 
   The 2016 presidential debates unfolded slowly as November approached. We watched
 candidates battle to the bittersweet end trying to convince the American people that
@@ -63,7 +63,6 @@ library(dplyr)
 library(tm)
 library(SnowballC)
 library(wordcloud)
-library(sentimentr)
 library(lubridate)
 library(ggplot2)
 library(readr)
@@ -75,9 +74,7 @@ ls("package:gtrendsR")
 library(RTextTools)
 library(googleVis)
 library(sentimentr)
-library(sentiment)
 source("functions/classify_emotion.R")
-
 library(RTextTools)
 library(googleVis)
 library(DT)
