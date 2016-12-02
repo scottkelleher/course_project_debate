@@ -90,7 +90,7 @@ install_url("ftp://cran.r-project.org/pub/R/src/contrib/Archive/Rstem_0.4-1.tar.
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-shinyServer(function(input, output) { 
+shinyServer(function(input, output,session){ 
 
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -278,7 +278,7 @@ shinyServer(function(input, output) {
   reactive({
   if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
   words_gtrends <- words_t}
-  else if (input$Debate=="Hilary_Clinton"){lines_go <- clinton_lines
+  else if (input$Speaker=="Hilary_Clinton"){lines_go <- clinton_lines
   words_gtrends <- words_c}
   })
   df <- data.frame(lines_go)
