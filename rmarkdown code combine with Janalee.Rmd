@@ -58,7 +58,7 @@ their debate**
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
   google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
-  google_states = c("Clinton Foundation")
+  google_states = c("bigly")
 
 ##Loading libraries
 library(rvest)
@@ -192,42 +192,9 @@ if(Debate=="First_Debate"){text <- text_debate1
   
   ##Object that has word frequencies sorted from least to most for trump
   trump_most_words <- sort(trump_word_frequency)
+    
   
-  # reactive({
-  #   
-  #   if(input$Speaker== "Donald_Trump" & input$Debate == "First_Debate"){google_words <- c("Mexico","piggy","sophisticated","tremendously","renegotiate","Secretary","Michigan","NAFTA","red tape","bureaucratic","onerous","braggadocious","squander",
-  #                                                                                         "tunnels","bridges","airport security","shooting","vigilant","Lester Holt","Hisapnic","Bloomberg","lawsuit","African American","Cyber","Doable")}
-  #   else if (input$Speaker=="Hilary_Clinton" & input$Debate == "First_Debate"){google_words <- c("adversaries","abyss","commander in chief","Profit sharing","transactions","recession","superpower","hoax","perpetrated","ISIS",
-  #                                                                                                "repartriation","trickle-down","bait and switch","prohibition","dishwashers","Charlotte","Vibrancy","touted","Kurdish","Caliphate","Al Qaida","Propagada")}
-  #   
-  #   else if (input$Speaker=="Donald_Trump" & input$Debate == "Second_Debate"){google_words <- c("make America great again","Obamacare", "terrorist state","trade deficit","Inner cities","locker room talk","ISIS chopping off heads","Medieval times","respect for women","Kathey Shelton","Paula Jhones",
-  #                                                                                               "own an apology","Wikileaks","Deborah Wasserman Schultz","super delegates","special prosecuter","clinton email scandal","daughter's wedding",
-  #                                                                                               "United States congress","monopolies","Johnathan Gurber","Islamphobia",
-  #                                                                                               "Trojan Horse","San baernandino","Radical Islamic terrorist","Muslim ban","extreme vetting",
-  #                                                                                               "criminal illegal aliens","Warren buffett","massive co-operation","Hillary as a senator","George soros","disaster as senator","Libya with gadhafi","Raqqua and Mosul","Sex Tape","people deplorable","Ambassador Steves",
-  #                                                                                               "EPA killing companies","20 trillion debt")}
-  #   
-  #   else if (input$Speaker=="Hilary_Clinton" & input$Debate == "Second_Debate"){google_words <- c("Michelle Obama","preschool education","Captain Khan","personal emails","prescription drugs","health Insurance","Small businessman","our grandchildren",
-  #                                                                                                 "Donald about women","embarras women on TV and twitter","targeted immigrants","gold star family",
-  #                                                                                                 "demagogic rhetoric","American Muslims","Homeland security","violent Jihadist terrorist",
-  #                                                                                                 "religious freedom and liberty","terrorist sites","intelligence community","Entanglement","foster care system",
-  #                                                                                                 "Bipartisan worker","Syria is catastrophic","aggressiveness of Russia","American Forces in syria","Kurdish Peshmerga fighters","Children defense fund","Texas registering Latinos",
-  #                                                                                                 "Great Depression","Wealthy American","Supreme court","Second Amendment","Gun show loopholes","Donald children")}
-  #   
-  #   else if (input$Speaker=="Donald_Trump" & input$Debate == "Third_Debate"){google_words <-  c("aleppo","African American rights","aligned","amendment","amnesty","arabia","beneficiary","border security","businesses","campaign","catastrophe",
-  #                                                                                               "china company","congressional","corrupt","crosstalk","depreciation","gdp","ginsburg","gun","haiti","hombres", "humanitarian", "illegal immigrants","imperative","isis","islamic terrorist",
-  #                                                                                               "Hilary for jail","unemployment","latinos","macarthur","mexico","migration","nafta","nasty woman","nightmare Trump")}
-  #   
-  #   else if (input$Speaker=="Hilary_Clinton" & input$Debate == "Third_Debate"){google_words <- c("aleppo","alicia","apprenticeships","Citizenship","Chinese","Catastrophic","Crocodile","Criminals","Cyberattacks","Denigrating","deportation","Discrimination","foundation","Espionage","Heartbreaking","Hurricanes","immigrants","Iranians","Jeopardy",
-  #                                                                                                "Laughingstock","Lgbt","mischaracterization","Negotiation","putin","Racketeering","Radicalization","Reagan","Recession",
-  #                                                                                                "Republicans","Russian","Saudi", "Steelworkers","Sunni","terrorism","Vladimir","Wikileaks")}
-  #   
-  #   
-  # })    
-  
- 
-  # textr <-renderPrint({ input$text})
-  # output$value <- renderPrint({ input$text })
+
   google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
    plot(google_results)
    
@@ -236,13 +203,11 @@ if(Debate=="First_Debate"){text <- text_debate1
   by_state <-google_breakdown[[5]]
   by_state$Subregion <- tolower(by_state$Subregion)
   by_state <- rename(by_state, c(Subregion = "region", `United.States` = "value"))
-   # rename(region = subregion)
+
     
   state_choropleth(by_state)
   
-  #should be filtered down to which candidate and which debate at this point
-  #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-  #plot(some_clinton_words)
+ 
   
   if(Speaker == "Donald_Trump"){top_used_words <- trump_most_words}
   if(Speaker =="Hilary_Clinton"){top_used_words<- clinton_most_words}
@@ -251,74 +216,81 @@ if(Debate=="First_Debate"){text <- text_debate1
   
   plot(top_used_words)
   
-  # https://www.r-bloggers.com/intro-to-text-analysis-with-r/
-  
-  #library(RTextTools)
-  
-  #install.packages("devtools")
-  #require(devtools)
-  #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
-  
-  # the below function was developed from 
-  #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
   
   if(Speaker == "Donald_Trump"){
     lines_go <- trump_lines
   } else if(Speaker =="Hilary_Clinton"){
     lines_go <- clinton_lines} 
- #  
- #  df <- data.frame(lines_go)
- #  colnames(df) <- c("col1") 
- #  textdata <- df[df$col1, ] 
- #  textdata = gsub("[[:punct:]]", "", textdata)  
- #  
- #  textdata = gsub("[[:punct:]]", "", textdata)
- #  textdata = gsub("[[:digit:]]", "", textdata)
- #  textdata = gsub("http\\w+", "", textdata)
- #  textdata = gsub("[ \t]{2,}", "", textdata)
- #  textdata = gsub("^\\s+|\\s+$", "", textdata)
- #  try.error = function(x)
- #  {
- #    y = NA
- #    try_error = tryCatch(tolower(x), error=function(e) e)
- #    if (!inherits(try_error, "error"))
- #      y = tolower(x)
- #    return(y) 
- #  }
- #  textdata = sapply(textdata, try.error)
- #  textdata = textdata[!is.na(textdata)]
- #  names(textdata) = NULL
- #  
- #  class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
- #  emotion = class_emo[,7]
- #  emotion[is.na(emotion)] = "unknown"
- # 
- #  class_pol = classify_polarity(textdata, algorithm="bayes")
- #  polarity = class_pol[,4]
- #  
- #  
- #  sent_df = data.frame(text=textdata, emotion=emotion,
- #                       polarity=polarity, stringsAsFactors=FALSE)
- #  sent_df = within(sent_df,
- #                   emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
- #  
- # # detach("package:sentiment", unload=TRUE)                
- #  
- #  # pdf(plots.pdf) 
- #  
- #    ggplot(sent_df, aes(x=emotion)) +
- #    geom_bar(aes(y=..count.., fill=emotion)) +
- #    scale_fill_brewer(palette="Dark2") +
- #    labs(x="emotion categories", y = "")
- #  # dev.off()
+
 ```
 
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
 
-s_v <- get_sentences(lines_go)
-s_v_sentiment <- get_sentiment(as.vector(clinton_words$word))
+#s_v <- get_sentences(lines_go)
+sentiment_clinton <- get_sentiment(as.vector(clinton_words$word))
+sentiment_trump <- get_sentiment(as.vector(trump_words$word))
+
+pwdw <- round(length(sentiment_clinton)*.1)
+clinton_rolled <- zoo::rollmean(sentiment_clinton, k=pwdw)
+bwdw <- round(length(sentiment_trump)*.1)
+trump_rolled <- zoo::rollmean(sentiment_trump, k=bwdw)
+###############this is a good comparison between the candidates, not really smoothed much 
+clinton_list <- rescale_x_2(clinton_rolled)
+trump_list <- rescale_x_2(trump_rolled)
+
+plot(clinton_list$x, 
+     clinton_list$z, 
+     type="l", 
+     col="blue", 
+     xlab="Narrative Time", 
+     ylab="Emotional Valence")
+lines(trump_list$x, trump_list$z, col="red")
+
+######################################## the plots below are smoothed 
+poa_sample <- seq(1, length(clinton_list$x), by=round(length(clinton_list$x)/100))
+bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
+
+plot(clinton_list$x[poa_sample], 
+     clinton_list$z[poa_sample], 
+     type="l", 
+     col="blue",
+     xlab="Narrative Time (sampled)", 
+     ylab="Emotional Valence"
+     )
+lines(trump_list$x[bov_sample], trump_list$z[bov_sample], col="red")
+
+#################################################################################################################
+
+nrc_data <- get_nrc_sentiment(as.vector(clinton_words$word))
+
+barplot(
+  sort(colSums(prop.table(nrc_data[, 1:8]))), 
+  horiz = FALSE, 
+  cex.names = 0.7, 
+  las = 1, 
+  main = "Emotions in Sample text", xlab="Percentage"
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 plot(
-  s_v_sentiment, 
+  s_v_sentiment_c, 
+  s_v_sentiment_t,
   type="l", 
   main="Example Plot Trajectory", 
   xlab = "Narrative Time", 
@@ -330,12 +302,38 @@ percent_vals <- get_percentage_values(s_v_sentiment, bins = 10)
 plot(
   percent_vals, 
   type="l", 
-  main="", 
+  main= paste0("Speaker = ",  Speaker), 
   xlab = "Narrative Time", 
   ylab= "Emotional Valence", 
   col="red"
   )
 
+##### smooothed response of plot above
+ft_values <- get_transformed_values(
+      s_v_sentiment, 
+      low_pass_size = 3, 
+      x_reverse_len = 100,
+      padding_factor = 2,
+      scale_vals = TRUE,
+      scale_range = FALSE
+      )
+plot(
+  ft_values, 
+  type ="l", 
+  main =Speaker, 
+  xlab = "Narrative Time", 
+  ylab = "Emotional Valence", 
+  col = "red"
+  )
 
 
+nrc_data <- get_nrc_sentiment(as.vector(clinton_words$word))
+
+barplot(
+  sort(colSums(prop.table(nrc_data[, 1:8]))), 
+  horiz = FALSE, 
+  cex.names = 0.7, 
+  las = 1, 
+  main = "Emotions in Sample text", xlab="Percentage"
+  )
 ```

@@ -15,7 +15,7 @@ shinyUI(fluidPage(
       selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate")),
       selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump")),
 
-textInput("text", label = h3("show me Google"), value = "Enter text..."),
+textInput("textg", label = h3("show me Google"), value = "Enter text..."),
 
 hr(),
 fluidRow(column(3, verbatimTextOutput("value"))),
