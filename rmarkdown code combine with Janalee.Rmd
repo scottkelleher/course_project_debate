@@ -5,7 +5,7 @@ date: "November 30, 2016"
 output: html_document
 ---
 
-##**2016 Presidential Debate: Content Breakdown**
+#**2016 Presidential Debate: Content Breakdown**
 
   The 2016 presidential debates unfolded slowly as November approached. We watched
 candidates battle to the bittersweet end trying to convince the American people that
@@ -19,7 +19,7 @@ words that were projected during the debates that caught the attention of some v
 So what is it that we all do when we want to know more about something? We just "Google
 it" of course. 
 
-#**What were we thinking?**
+###**What were we thinking?**
 
   As each debate unfolded, we wondered how many other people (like us) were using
 Google to search for termininology used in the debates- like the second amendment for
@@ -48,8 +48,7 @@ trending search on all of Google. Check out the Tweet
 [here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
 idential-debate/21587735/). 
 
-**Five Phrases that had particularly interesting Google search trends with respect to
-their debate**
+###**Five phrases that had particularly interesting Google search trends with respect to their debate**
 
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
 
