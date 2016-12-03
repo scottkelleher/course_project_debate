@@ -89,6 +89,7 @@ library(googleVis)
 library(DT)
 library(choroplethr)
 library(choroplethrMaps)
+library(syuzhet)
 
 usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -311,3 +312,29 @@ if(Debate=="First_Debate"){text <- text_debate1
  #  # dev.off()
 ```
 
+```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
+
+s_v <- get_sentences(lines_go)
+s_v_sentiment <- get_sentiment(as.vector(clinton_words$word))
+plot(
+  s_v_sentiment, 
+  type="l", 
+  main="Example Plot Trajectory", 
+  xlab = "Narrative Time", 
+  ylab= "Emotional Valence"
+  )
+
+
+percent_vals <- get_percentage_values(s_v_sentiment, bins = 10)
+plot(
+  percent_vals, 
+  type="l", 
+  main="", 
+  xlab = "Narrative Time", 
+  ylab= "Emotional Valence", 
+  col="red"
+  )
+
+
+
+```
