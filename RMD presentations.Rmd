@@ -10,7 +10,7 @@ output: ioslides_presentation
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-
+#notes: add which of the three sentiment packages we chose and why
 
 
 # Overview of the Presentation
