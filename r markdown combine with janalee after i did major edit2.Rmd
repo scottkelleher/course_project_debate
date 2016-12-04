@@ -40,9 +40,10 @@ our candidates for a spin in Google Trends.
 
   We webscraped and read [each](http://www.presidency.ucsb.edu/debates.php) presidential debate script and noted some terminology that stood out. Displayed below are some terms used by our now President-Elect Donald Trump during the second debate. The terms *Melania*, *e-mail scandal*, *bigly*, *nasty woman*, and *benghazi* were searched using a Google search engine during and immediately following the second debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League." Interestingly as a result of this confusion, Google Trends reported that "Bigly" had become the top trending search on all of Google. Check out the Tweet [here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
 idential-debate/21587735/). 
+  
+  Here are five words and phrases that we we thought had interesting search trends. After webscraping the three presidential debates, we broke down the debate into individual words said by each speaker (Donald Trump or Hillary Clinton). The following results were then generated using the R package Googletrendsr from CRAN, which displays the Google search trends for those specific words. 
 
-**Five Phrases that had particularly interesting Google search trends with respect to
-their debate**
+**Five Phrases that had particularly interesting Google search trends with respect to their debate**
 
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
 
