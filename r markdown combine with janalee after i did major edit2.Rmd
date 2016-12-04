@@ -9,15 +9,7 @@ output: html_document
 
 The 2016 presidential debates unfolded slowly as November approached. We watched
 candidates battle to the bittersweet end trying to convince the American people that
-they were the better-suited candidate to lead our country. According to CNN.com, over
-84 million viewers tuned in to watch Hillary Clinton and Donald Trump debate. There
-were three debates in total spanning over a couple months. Some would consider these
-debates amusing (or scary) to say the least, such that terminology never before used in
-political discussions was broadcasted live for United States citizens and other
-countries to see in all its' glory. "Piggy" and "deplorable" were just a couple
-words that were projected during the debates that caught the attention of some viewers.
-So what is it that we all do when we want to know more about something? We just "Google
-it" of course. 
+they were the better-suited candidate to lead our country. According to [CNN.com](http://money.cnn.com/2016/09/27/media/debate-ratings-record-viewership/), a record breaking 84 million viewers tuned in to watch Hillary Clinton and Donald Trump in the first debate, making this the most watched presidential debate in history. Though the first debate broke records, there were three debates in total spanning over two months. Some would consider these debates amusing (or surprising) to say the least, such that terminology never before used in political discussions was broadcasted live for United States citizens and other countries to see in all its' glory. "Piggy" and "deplorable" were just a couple words that were said during the debates that fired up some viewers, and there was even some terminology used that was just plain confusing like "bigly." So what is it that we all do when we want to know more about something? We just "Google it" of course. 
 
 ###**What were we thinking?**
 
