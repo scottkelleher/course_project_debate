@@ -143,11 +143,19 @@ term data by state for "bigly".
 
     
   state_choropleth(by_state)
-
-
-
 ```
 
+###**Emotions**
+  We were also curious about the emotional context in which Donald Trump and Hillary
+Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct
+this exploratory part of our analysis. Syuzhet is a package consisting of four
+sentiment dictionaries developed at Stanford. The purpose of this package is to extract
+words and assign them "sentiment" values from the sentiment dictionaries and plot them
+based on speaker. This package assigns words a sentiment score based on overall
+positivity and negativity. There is not a numerical limit on scores, though negative
+words will tend to have negative sentiment scores and positive words will have positive
+sentiment scores. As shown here, each speaker is plotted with respect to the first,
+second or third debate with normaized emotional valence scores. 
 
 ```{r}
 for (i in (1:3)) {    
@@ -384,17 +392,7 @@ ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, color = debate))+
 
 ```
 
-###**Emotions**
-  We were also curious about the emotional context in which Donald Trump and Hillary
-Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct
-this exploratory part of our analysis. Syuzhet is a package consisting of four
-sentiment dictionaries developed at Stanford. The purpose of this package is to extract
-words and assign them "sentiment" values from the sentiment dictionaries and plot them
-based on speaker. This package assigns words a sentiment score based on overall
-positivity and negativity. There is not a numerical limit on scores, though negative
-words will tend to have negative sentiment scores and positive words will have positive
-sentiment scores. As shown here, each speaker is plotted with respect to the first,
-second or third debate with normaized emotional valence scores. 
+
   
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE}
 
