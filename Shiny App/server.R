@@ -90,7 +90,7 @@ library(DT)
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
-shinyServer(function(input, output, session){ 
+shinyServer(function(input, output){ 
 
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -235,8 +235,8 @@ shinyServer(function(input, output, session){
   
   
  
-  textr <-renderPrint({ input$text})
-  output$value <- renderPrint({ input$text })
+  textr <-renderPrint({ input$textg})
+  output$value <- renderPrint({ input$textg})
   google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   
  output$term_plot <- renderPlot({
@@ -247,7 +247,6 @@ shinyServer(function(input, output, session){
   #plot(some_clinton_words)
   
   reactive({
-  
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
   else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
 

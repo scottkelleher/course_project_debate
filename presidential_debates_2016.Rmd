@@ -262,13 +262,13 @@ w <- c(text_debate1, text_debate2, text_debate3)
  # detach("package:sentiment", unload=TRUE)                
   
   # pdf(plots.pdf) 
-  output$emotions <- renderPlot({
 ```
 
 ```{r, echo = FALSE, message = FALSE}
   Speaker <- "Donald Trump"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
-  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
+  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")
+  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
 ```
 
@@ -279,7 +279,7 @@ data. This time we used the search term "Clinton Foundation" and attained the fo
 result. 
 
 ```{r, echo = FALSE, message = FALSE}
-google_states = c("Clinton Foundation")
+#google_states = c("Clinton Foundation")
 ```
 
 

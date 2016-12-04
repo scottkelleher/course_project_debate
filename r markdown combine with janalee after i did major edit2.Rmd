@@ -38,15 +38,22 @@ up searching a copious amount of terms (related and unrelated to the debates)! I
 time to get down to business and locate the debate scripts and take some terms used by
 our candidates for a spin in Google Trends. 
 
-  We read through each debate script and noted some terminology that stood out.
-Displayed below are some terms used by our now President-Elect Donald Trump during the
-second debate. The terms `Melania`, `e-mail scandal`, `bigly`, `nasty woman`, and
-`benghazi' were searched using Google during and immediately following the second
-debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League." As a
-result of this confusion, Google Trends reported that "Bigly" had become the top
-trending search on all of Google. Check out the Tweet
+  We webscraped and read [each](http://www.presidency.ucsb.edu/debates.php)
+presidential debate script and noted some terminology that stood out. Displayed below
+are some terms used by our now President-Elect Donald Trump during the second debate.
+The terms *Melania*, *e-mail scandal*, *bigly*, *nasty woman*, and *benghazi* were
+searched using a Google search engine during and immediately following the second
+debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League."
+Interestingly as a result of this confusion, Google Trends reported that "Bigly" had
+become the top trending search on all of Google. Check out the Tweet
 [here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
 idential-debate/21587735/). 
+  
+  Here are five words and phrases that we we thought had interesting search trends.
+After webscraping the three presidential debates, we broke down the debate into 
+individual words said by each speaker (Donald Trump or Hillary Clinton). The following
+results were then generated using the R package Googletrendsr from CRAN, which displays
+the Google search trends for those specific words. 
 
 **Five Phrases that had particularly interesting Google search trends with respect to
 their debate**
@@ -56,7 +63,7 @@ their debate**
 ## specify inputs
   Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
-  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
+  google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
   google_states = c("bigly")
 
@@ -77,13 +84,13 @@ library(ggplot2)
 library(readr)
 library(gtrendsR)
 library(xml2)
-library(shiny)
+#library(shiny)
 library(devtools)
 ls("package:gtrendsR")
 library(RTextTools)
 library(googleVis)
 library(syuzhet)
-source("functions/classify_emotion.R")
+
 
 library(RTextTools)
 library(googleVis)
@@ -108,6 +115,7 @@ usr <- ("535rprogram@gmail.com")
   
   text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
     html_text() # get the text
+  w <- c(text_debate1, text_debate2, text_debate3)
   
   db1 <- ymd_hms(160927020000, tz = "UTC")
   db2 <- ymd_hms(161009020000, tz = "UTC")
@@ -115,16 +123,11 @@ usr <- ("535rprogram@gmail.com")
   date_time <-c(db1, db2, db3)
 ```
 
-<<<<<<< HEAD
-=======
-  (state choropleth plot) 
->>>>>>> 602a830618f90942696bc213fe8badaa83d4ca1e
   Additionally, we were interested in specific terminology searched in Google at the
-state level. Specifically, which states were Googling more particular terms than
+state level. Specifically, which states were Googling some terms more than
 others? The following graphic is categorized by state using Google Trends search term
-data. This time we used the search term "Clinton Foundation" and attained the following
-result. 
-
+data and the choroplethrMaps package in R. This example displays the state-level search
+term data by state for "bigly".
 
 ```{r  echo = FALSE, include = FALSE, message = FALSE}
 
@@ -146,19 +149,11 @@ result.
 ```
 
 
-```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
+```{r}
+for (i in (1:3)) {    
   
-if(Debate=="First_Debate"){text <- text_debate1
-  words_t <-c("trump")
-  words_c <- c("clinton")}
-  if (Debate=="Second_Debate"){text<- text_debate2
-  words_t <- c("trump")
-  words_c <- c("clinton")}
-  if (Debate=="Third_Debate"){text<- text_debate3
-  words_t <- c("trump")
-  words_c <- c("clinton")}
-
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
+  text <- w[i]
   getLines <- function(person){
     
     id <- unlist(stringr::str_extract_all(text, "[A-Z]+:")) # get the speaker
@@ -171,17 +166,22 @@ if(Debate=="First_Debate"){text <- text_debate1
   
   
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
-  
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
   
+  
+  
+  
+  
   #break into clinton lines
   text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
-  text_clinton 
+ 
+  
   
   #break into trump lines 
   text_trump <- data_frame(text_t = trump_lines[[1]]) 
-  text_trump 
+  
+  
   
   ##Breaking trump lines into individual words
   trump_words <- text_trump %>%
@@ -191,54 +191,212 @@ if(Debate=="First_Debate"){text <- text_debate1
   
   #filter out the stopwords, add which debate it was and the day and time
   trump_words_unique <- !(trump_words$word %in% stopwords())
-  trump_words <- mutate(trump_words, elim = trump_words_unique)
+  trump_words <- mutate(trump_words, elim = trump_words_unique, debate = i, date = date_time[i])
   trump_words<- filter(trump_words, trump_words$elim == TRUE)
   trump_words <- select(trump_words, -elim)
+  if(i == 1){
+    all_debate_words_trump<- trump_words
+  } else{
+    all_debate_words_trump <- bind_rows(all_debate_words_trump, trump_words)
+  }
+  
   
   ##Breaking clinton lines into individual words
   clinton_words <- text_clinton %>%
     unnest_tokens(word, text_c)  
   #clinton_words
   
+  
+  
   #filter out the stopwords, add which debate it was and what day and time
   clinton_words_unique <- !(clinton_words$word %in% stopwords())
-  clinton_words <- mutate(clinton_words, elim = clinton_words_unique)
+  clinton_words <- mutate(clinton_words, elim = clinton_words_unique, debate = i, date = date_time[i])
   clinton_words<- filter(clinton_words, clinton_words$elim == TRUE)
   clinton_words <- select(clinton_words, -elim)
   
-  ##Counting the number of times each word is said for clinton
-  clinton_word_frequency <- table(clinton_words)
+  if(i == 1){
+    all_debate_words_clinton<- clinton_words
+  } else{
+    all_debate_words_clinton <- bind_rows(all_debate_words_clinton, clinton_words)
+  }
   
-  ##Counting the number of times each word is said for trump
-  trump_word_frequency <- table(trump_words)
   
-  ##Object that has word frequencies sorted from least to most for clinton
-  clinton_most_words <- sort(clinton_word_frequency)
-  
-  ##Object that has word frequencies sorted from least to most for trump
-  trump_most_words <- sort(trump_word_frequency)
+sentiment_clinton <- get_sentiment(as.vector(clinton_words$word))
+sentiment_trump <- get_sentiment(as.vector(trump_words$word))
+
+pwdw <- round(length(sentiment_clinton)*.1)
+clinton_rolled <- zoo::rollmean(sentiment_clinton, k=pwdw)
+bwdw <- round(length(sentiment_trump)*.1)
+trump_rolled <- zoo::rollmean(sentiment_trump, k=bwdw)
+###############this is a good comparison between the candidates, not really smoothed much 
+clinton_list_getting <- rescale_x_2(clinton_rolled)
+#clinton_list$x <- mutate(clinton_list$x, debate = i)
+ trump_list_getting <- rescale_x_2(trump_rolled)
+ #trump_list$x <- mutate(trump_list$x, debate = 1)
+# 
+# plot(clinton_list$x, 
+#      clinton_list$z, 
+#      type="l", 
+#      col="blue", 
+#      xlab="Narrative Time", 
+#      ylab="Emotional Valence")
+# lines(trump_list$x, trump_list$z, col="red")
+
+######################################## the plots below are smoothed
+poa_sample <- seq(1, length(clinton_list$x), by=round(length(clinton_list$x)/100))
+bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
+
+if(i == 1){
+    clinton_x_getting <- as.data.frame(clinton_list$x)
+    clinton_x <- mutate(clinton_x_getting, debate = i)
+    clinton_y_getting <- as.data.frame(clinton_list$z)
+    clinton_y <- mutate(clinton_y_getting, debate = i)
     
-  
-
-  
+    trump_x_getting <- as.data.frame(trump_list$x)
+    trump_x <- mutate(trump_x_getting, debate = i)
+    trump_y_getting <- as.data.frame(trump_list$z)
+    trump_y <- mutate(trump_y_getting, debate = i)
+  } else{
+    clinton_x_getting <- as.data.frame(clinton_list$x)
+    clinton_x2 <- mutate(clinton_x_getting, debate = i)
+    clinton_x <- bind_rows(clinton_x, clinton_x2)
+    
+    clinton_y_getting <- as.data.frame(clinton_list$z)
+    clinton_y2 <- mutate(clinton_y_getting, debate = i)
+    clinton_y <- bind_rows(clinton_y, clinton_y2)
+    
+    trump_x_getting <- as.data.frame(trump_list$x)
+    trump_x2 <- mutate(trump_x_getting, debate = i)
+    trump_x <- bind_rows(trump_x, trump_x2)
+    
+    trump_y_getting <- as.data.frame(trump_list$z)
+    trump_y2 <- mutate(trump_y_getting, debate = i)
+    trump_y <- bind_rows(trump_y, trump_y2)
+    
+    
+  }   
  
-  
-  if(Speaker == "Donald_Trump"){top_used_words <- trump_most_words}
-  if(Speaker =="Hilary_Clinton"){top_used_words<- clinton_most_words}
 
- DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
+
+plot(clinton_list$x[poa_sample], 
+     clinton_list$z[poa_sample], 
+     type="l", 
+     col="blue",
+     xlab="Narrative Time (sampled)", 
+     ylab="Emotional Valence"
+     )
+lines(trump_list$x[bov_sample], trump_list$z[bov_sample], col="red")
+
   
-  plot(top_used_words)
+  nrc_data_c <- get_nrc_sentiment(as.vector(clinton_words$word))
+  nrc_data_t <- get_nrc_sentiment(as.vector(trump_words$word))
+barplot(
+  colSums(prop.table(nrc_data_c[, 1:8])), 
+  horiz = FALSE, 
+  cex.names = 0.7, 
+  las = 1, 
+  main = "Clinton", xlab="Percentage"
+  )
+barplot(
+  colSums(prop.table(nrc_data_t[, 1:8])), 
+  horiz = FALSE, 
+  cex.names = 0.7, 
+  las = 1, 
+  main = "Trump", xlab="Percentage"
+  )
   
+print(i)
+}
+clinton_x <- rename(clinton_x, c(`clinton_list$x` = "score"))
+clinton_y <- rename(clinton_y, c(`clinton_list$z` = "score"))
+
+trump_x <- rename(trump_x, c(`trump_list$x` = "score"))
+trump_y <- rename(trump_y, c(`trump_list$z` = "score"))
+
+df_c <- data.frame(clinton_x, clinton_y)
+#names(df_c) <- c("clinton_plot_x", "clinton_plot_y")
+
+df_t <- data.frame(trump_x, trump_y)
+names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
+
+# all debates strug together
+ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
+  geom_line(color = "blue", size = 2, alpha = .4)+
+  geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 2, alpha = .4, color = "red")+
+  #geom_vline(xintercept = 100, size = 2, linetype = "dashed")+
+  #geom_vline(xintercept = 200, size = 2, linetype = "dashed")+
+  #scale_x_continuous(breaks=c(0,100,200), labels=c("debate 1", "debate 2", "debate 3"))+
+  ylab("emotional valance")+
+  xlab("")+
+  ggtitle("Candidate emotional valance during debates")
   
-  if(Speaker == "Donald_Trump"){
-    lines_go <- trump_lines
-  } else if(Speaker =="Hilary_Clinton"){
-    lines_go <- clinton_lines} 
+
+#
+trump_y$debate <- as.factor(trump_y$debate)
+idu <- row.names(trump_y)
+ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, color = debate))+
+  geom_line(color = "blue", size = 2, alpha = .4)
+  #geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 2, alpha = .4, color = "red")+
+  #geom_vline(xintercept = 100, size = 2, linetype = "dashed")+
+  #geom_vline(xintercept = 200, size = 2, linetype = "dashed")+
+  #scale_x_continuous(breaks=c(0,100,200), labels=c("debate 1", "debate 2", "debate 3"))+
+  ylab("emotional valance")+
+  xlab("")+
+  ggtitle("Candidate emotional valance during debates")
+  
+
+
+  ##Counting the number of times each word is said for clinton
+  # clinton_word_frequency <- table(clinton_words)
+  # 
+  # 
+  # ##Counting the number of times each word is said for trump
+  # trump_word_frequency <- table(trump_words)
+  # 
+  # ##Object that has word frequencies sorted from least to most for clinton
+  # clinton_most_words <- sort(clinton_word_frequency)
+  # 
+  # 
+  # ##Object that has word frequencies sorted from least to most for trump
+  # trump_most_words <- sort(trump_word_frequency)
+
 
 ```
 
+
+
+
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
+  
+
+ #  if(Speaker == "Donald_Trump"){top_used_words <- trump_most_words}
+ #  if(Speaker =="Hilary_Clinton"){top_used_words<- clinton_most_words}
+ # 
+ # DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
+ #  
+ #  plot(top_used_words)
+ #  
+ #  
+ #  if(Speaker == "Donald_Trump"){
+ #    lines_go <- trump_lines
+ #  } else if(Speaker =="Hilary_Clinton"){
+ #    lines_go <- clinton_lines} 
+
+```
+
+###**Emotions**
+  We were also curious about the emotional context in which Donald Trump and Hillary
+Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct
+this exploratory part of our analysis. Syuzhet is a package consisting of four
+sentiment dictionaries developed at Stanford. The purpose of this package is to extract
+words and assign them "sentiment" values from the sentiment dictionaries and plot them
+based on speaker. This package assigns words a sentiment score based on overall
+positivity and negativity. There is not a numerical limit on scores, though negative
+words will tend to have negative sentiment scores and positive words will have positive
+sentiment scores. As shown here, each speaker is plotted with respect to the first,
+second or third debate with normaized emotional valence scores. 
+  
+```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE}
 
 #s_v <- get_sentences(lines_go)
 sentiment_clinton <- get_sentiment(as.vector(clinton_words$word))
@@ -252,13 +410,12 @@ trump_rolled <- zoo::rollmean(sentiment_trump, k=bwdw)
 clinton_list <- rescale_x_2(clinton_rolled)
 trump_list <- rescale_x_2(trump_rolled)
 
-debate1_plot_speaker <- ggplot(clinton_list$x, 
+plot(clinton_list$x, 
      clinton_list$z, 
      type="l", 
      col="blue", 
      xlab="Narrative Time", 
      ylab="Emotional Valence")
-    facet_wrap(~ ),
 lines(trump_list$x, trump_list$z, col="red")
 
 ######################################## the plots below are smoothed
@@ -325,16 +482,18 @@ barplot(
   main = "Emotions in Sample text", xlab="Percentage"
   )
 ```
-<<<<<<< HEAD
 
-###*Emotions*
-(syuzhet plots instert here) 
-  We were also curious about the emotional context in which Donald Trump and Hillary Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct this exploratory part of our analysis. In a nutshell, Syuzhet is a package consisting of four sentiment dictionaries developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment score based on overall positivity and negativity. There is not a numerical limit on scores, though negative words will tend to have negative sentiment scores and positive words will have positive sentiment scores. As shown here, each speaker is plotted with respect to the first, second or third debate.  
+###**Limitations**
+  As with any research, there are some limitations to this analysis. The data
+is limited to people who use Google as their search engine. This would exclude
+non-internet users and people who use Yahoo or other search engines. Though this may
+seem like a daunting limitation, Google is the most popular search engine in the world
+fostering over 1.17 billion people. If you want to check out the statistics behind
+this, check out this [link](https://www.statista.com/chart/899/unique-users-of-search-
+engines-in-december-2012/). 
   
-###*Limitations*
-  As with any research, there are some limitations to this analysis. Firstly, the data is limited to people who use Google as their search engine. This would exclude non-internet users and people who use Yahoo or other search engines. Though this may seem like a daunting limitation, Google is the most popular search engine in the world fostering over 1.17 billion people (Statista.com, 2016). 
-
-
-
-=======
-
+  
+  
+  
+  
+  
