@@ -56,7 +56,7 @@ their debate**
 ## specify inputs
   Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
-  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
+  google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
   google_states = c("bigly")
 
@@ -115,10 +115,6 @@ usr <- ("535rprogram@gmail.com")
   date_time <-c(db1, db2, db3)
 ```
 
-<<<<<<< HEAD
-=======
-  (state choropleth plot) 
->>>>>>> 602a830618f90942696bc213fe8badaa83d4ca1e
   Additionally, we were interested in specific terminology searched in Google at the
 state level. Specifically, which states were Googling more particular terms than
 others? The following graphic is categorized by state using Google Trends search term
@@ -252,13 +248,12 @@ trump_rolled <- zoo::rollmean(sentiment_trump, k=bwdw)
 clinton_list <- rescale_x_2(clinton_rolled)
 trump_list <- rescale_x_2(trump_rolled)
 
-debate1_plot_speaker <- ggplot(clinton_list$x, 
+plot(clinton_list$x, 
      clinton_list$z, 
      type="l", 
      col="blue", 
      xlab="Narrative Time", 
      ylab="Emotional Valence")
-    facet_wrap(~ ),
 lines(trump_list$x, trump_list$z, col="red")
 
 ######################################## the plots below are smoothed
@@ -325,16 +320,3 @@ barplot(
   main = "Emotions in Sample text", xlab="Percentage"
   )
 ```
-<<<<<<< HEAD
-
-###*Emotions*
-(syuzhet plots instert here) 
-  We were also curious about the emotional context in which Donald Trump and Hillary Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct this exploratory part of our analysis. In a nutshell, Syuzhet is a package consisting of four sentiment dictionaries developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment score based on overall positivity and negativity. There is not a numerical limit on scores, though negative words will tend to have negative sentiment scores and positive words will have positive sentiment scores. As shown here, each speaker is plotted with respect to the first, second or third debate.  
-  
-###*Limitations*
-  As with any research, there are some limitations to this analysis. Firstly, the data is limited to people who use Google as their search engine. This would exclude non-internet users and people who use Yahoo or other search engines. Though this may seem like a daunting limitation, Google is the most popular search engine in the world fostering over 1.17 billion people (Statista.com, 2016). 
-
-
-
-=======
->>>>>>> 46cc77c2856b66071b2c2851a23cfc66a96758a1
