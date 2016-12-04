@@ -378,3 +378,17 @@ barplot(
   main = "Emotions in Sample text", xlab="Percentage"
   )
 ```
+
+###*Emotions*
+(syuzhet plots instert here) 
+  We were also curious about the emotional context in which Donald Trump and Hillary Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct this exploratory part of our analysis. In a nutshell, Syuzhet is a package consisting of four sentiment dictionaries developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment score based on overall positivity and negativity. There is not a numerical limit on scores, though negative words will tend to have negative sentiment scores and positive words will have positive sentiment scores. As shown here, each speaker is plotted with respect to the first, second or third debate.  
+  
+###*Limitations*
+  As with any research, there are some limitations to this analysis. Firstly, the data is limited to people who use Google as their search engine. This would exclude non-internet users and people who use Yahoo or other search engines. Though this may seem like a daunting limitation, Google is the most popular search engine in the world fostering over 1.17 billion people. If you want to check out the statistics behind this, check out this [link](https://www.statista.com/chart/899/unique-users-of-search-engines-in-december-2012/). 
+  
+###*References 
+  
+  
+  
+  
+  
