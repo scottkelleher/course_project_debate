@@ -1,7 +1,6 @@
 ---
-title: "What is the trend of vocabulary use among the presidential candidates during
-  the 2016 election debates ?"
-author: Janalee Thompson, Scott Kelleher,Tulsi Ram Gompo
+title: "2016 Presidential Debate: Content Breakdown"
+author: Scott Kelleher, Tulsi Ram Gompo, Janalee Thompson
 date: "11/16/2016"
 output: ioslides_presentation
 ---
@@ -9,6 +8,18 @@ output: ioslides_presentation
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
+
+===========================================================
+Introduction
+- Research Question
+- Significance
+- Methods
+- Results
+- Conclsion
+_ Tutorial
+
+
+
 
 #notes: add which of the three sentiment packages we chose and why
 
