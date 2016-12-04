@@ -33,7 +33,7 @@ Here are some of the top words and phrases that had interesting search trends. A
 ## specify inputs
   Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
-  google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
+  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
   google_states = c("bigly")
 
