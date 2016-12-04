@@ -38,12 +38,25 @@ up searching a copious amount of terms (related and unrelated to the debates)! I
 time to get down to business and locate the debate scripts and take some terms used by
 our candidates for a spin in Google Trends. 
 
-  We webscraped and read [each](http://www.presidency.ucsb.edu/debates.php) presidential debate script and noted some terminology that stood out. Displayed below are some terms used by our now President-Elect Donald Trump during the second debate. The terms *Melania*, *e-mail scandal*, *bigly*, *nasty woman*, and *benghazi* were searched using a Google search engine during and immediately following the second debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League." Interestingly as a result of this confusion, Google Trends reported that "Bigly" had become the top trending search on all of Google. Check out the Tweet [here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
+  We webscraped and read [each](http://www.presidency.ucsb.edu/debates.php)
+presidential debate script and noted some terminology that stood out. Displayed below
+are some terms used by our now President-Elect Donald Trump during the second debate.
+The terms *Melania*, *e-mail scandal*, *bigly*, *nasty woman*, and *benghazi* were
+searched using a Google search engine during and immediately following the second
+debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League."
+Interestingly as a result of this confusion, Google Trends reported that "Bigly" had
+become the top trending search on all of Google. Check out the Tweet
+[here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
 idential-debate/21587735/). 
   
-  Here are five words and phrases that we we thought had interesting search trends. After webscraping the three presidential debates, we broke down the debate into individual words said by each speaker (Donald Trump or Hillary Clinton). The following results were then generated using the R package Googletrendsr from CRAN, which displays the Google search trends for those specific words. 
+  Here are five words and phrases that we we thought had interesting search trends.
+After webscraping the three presidential debates, we broke down the debate into 
+individual words said by each speaker (Donald Trump or Hillary Clinton). The following
+results were then generated using the R package Googletrendsr from CRAN, which displays
+the Google search trends for those specific words. 
 
-**Five Phrases that had particularly interesting Google search trends with respect to their debate**
+**Five Phrases that had particularly interesting Google search trends with respect to
+their debate**
 
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
 
@@ -111,11 +124,10 @@ usr <- ("535rprogram@gmail.com")
 ```
 
   Additionally, we were interested in specific terminology searched in Google at the
-state level. Specifically, which states were Googling more particular terms than
+state level. Specifically, which states were Googling some terms more than
 others? The following graphic is categorized by state using Google Trends search term
-data. This time we used the search term "Clinton Foundation" and attained the following
-result. 
-
+data and the choroplethrMaps package in R. This example displays the state-level search
+term data by state for "bigly".
 
 ```{r  echo = FALSE, include = FALSE, message = FALSE}
 
@@ -373,7 +385,16 @@ ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, color = debate))+
 ```
 
 ###**Emotions**
-  We were also curious about the emotional context in which Donald Trump and Hillary Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct this exploratory part of our analysis. Syuzhet is a package consisting of four sentiment dictionaries developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment score based on overall positivity and negativity. There is not a numerical limit on scores, though negative words will tend to have negative sentiment scores and positive words will have positive sentiment scores. As shown here, each speaker is plotted with respect to the first, second or third debate with normaized emotional valence scores. 
+  We were also curious about the emotional context in which Donald Trump and Hillary
+Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct
+this exploratory part of our analysis. Syuzhet is a package consisting of four
+sentiment dictionaries developed at Stanford. The purpose of this package is to extract
+words and assign them "sentiment" values from the sentiment dictionaries and plot them
+based on speaker. This package assigns words a sentiment score based on overall
+positivity and negativity. There is not a numerical limit on scores, though negative
+words will tend to have negative sentiment scores and positive words will have positive
+sentiment scores. As shown here, each speaker is plotted with respect to the first,
+second or third debate with normaized emotional valence scores. 
   
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE}
 
@@ -463,7 +484,13 @@ barplot(
 ```
 
 ###**Limitations**
-  As with any research, there are some limitations to this analysis. Firstly, the data is limited to people who use Google as their search engine. This would exclude non-internet users and people who use Yahoo or other search engines. Though this may seem like a daunting limitation, Google is the most popular search engine in the world fostering over 1.17 billion people. If you want to check out the statistics behind this, check out this [link](https://www.statista.com/chart/899/unique-users-of-search-engines-in-december-2012/). 
+  As with any research, there are some limitations to this analysis. The data
+is limited to people who use Google as their search engine. This would exclude
+non-internet users and people who use Yahoo or other search engines. Though this may
+seem like a daunting limitation, Google is the most popular search engine in the world
+fostering over 1.17 billion people. If you want to check out the statistics behind
+this, check out this [link](https://www.statista.com/chart/899/unique-users-of-search-
+engines-in-december-2012/). 
   
   
   
