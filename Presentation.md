@@ -60,12 +60,12 @@ Tutorial: Overview
 
 Tutorial: GTrendsr
 ========================================================
-- GTrendsr
+
 
 
 Tutorial: Syuzhet
 ========================================================
-- Syuzhet
+
 
 
 Tutorial: Lessons Learned
