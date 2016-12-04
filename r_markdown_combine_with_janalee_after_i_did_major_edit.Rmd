@@ -251,21 +251,14 @@ plot(clinton_list$x[poa_sample],
 lines(trump_list$x[bov_sample], trump_list$z[bov_sample], col="red")
 
   
-  nrc_data_c <- get_nrc_sentiment(as.vector(clinton_words$word))
-  nrc_data_t <- get_nrc_sentiment(as.vector(trump_words$word))
+  nrc_data <- get_nrc_sentiment(as.vector(clinton_words$word))
+
 barplot(
-  colSums(prop.table(nrc_data_c[, 1:8])), 
+  sort(colSums(prop.table(nrc_data[, 1:8]))), 
   horiz = FALSE, 
   cex.names = 0.7, 
   las = 1, 
-  main = "Clinton", xlab="Percentage"
-  )
-barplot(
-  colSums(prop.table(nrc_data_t[, 1:8])), 
-  horiz = FALSE, 
-  cex.names = 0.7, 
-  las = 1, 
-  main = "Trump", xlab="Percentage"
+  main = "Emotions in Sample text", xlab="Percentage"
   )
   
 }
