@@ -240,37 +240,47 @@ clinton_list_getting <- rescale_x_2(clinton_rolled)
 # lines(trump_list$x, trump_list$z, col="red")
 
 ######################################## the plots below are smoothed
-poa_sample <- seq(1, length(clinton_list$x), by=round(length(clinton_list$x)/100))
-bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
+poa_sample <- seq(1, length(clinton_list_getting$x), by=round(length(clinton_list_getting$x)/100))
+bov_sample <- seq(1, length(trump_list_getting$x), by=round(length(trump_list_getting$x)/100))
 
-if(i == 1){
-    clinton_x_getting <- as.data.frame(clinton_list$x)
+nrc_data_c <- get_nrc_sentiment(as.vector(clinton_words$word))
+nrc_data_t <- get_nrc_sentiment(as.vector(trump_words$word))
+
+if(i == 1){ 
+    clinton_x_getting <- as.data.frame(clinton_list_getting$x)
     clinton_x <- mutate(clinton_x_getting, debate = i)
-    clinton_y_getting <- as.data.frame(clinton_list$z)
+    clinton_y_getting <- as.data.frame(clinton_list_getting$z)
     clinton_y <- mutate(clinton_y_getting, debate = i)
     
-    trump_x_getting <- as.data.frame(trump_list$x)
+    trump_x_getting <- as.data.frame(trump_list_getting$x)
     trump_x <- mutate(trump_x_getting, debate = i)
-    trump_y_getting <- as.data.frame(trump_list$z)
+    trump_y_getting <- as.data.frame(trump_list_getting$z)
     trump_y <- mutate(trump_y_getting, debate = i)
+    
+    clinton_emo <- colSums(prop.table(nrc_data_c[, 1:8]))
+    trump_emo <- colSums(prop.table(nrc_data_t[, 1:8]))
+    
   } else{
-    clinton_x_getting <- as.data.frame(clinton_list$x)
+    clinton_x_getting <- as.data.frame(clinton_list_getting$x)
     clinton_x2 <- mutate(clinton_x_getting, debate = i)
     clinton_x <- bind_rows(clinton_x, clinton_x2)
     
-    clinton_y_getting <- as.data.frame(clinton_list$z)
+    clinton_y_getting <- as.data.frame(clinton_list_getting$z)
     clinton_y2 <- mutate(clinton_y_getting, debate = i)
     clinton_y <- bind_rows(clinton_y, clinton_y2)
     
-    trump_x_getting <- as.data.frame(trump_list$x)
+    trump_x_getting <- as.data.frame(trump_list_getting$x)
     trump_x2 <- mutate(trump_x_getting, debate = i)
     trump_x <- bind_rows(trump_x, trump_x2)
     
-    trump_y_getting <- as.data.frame(trump_list$z)
+    trump_y_getting <- as.data.frame(trump_list_getting$z)
     trump_y2 <- mutate(trump_y_getting, debate = i)
     trump_y <- bind_rows(trump_y, trump_y2)
     
-    
+    clinton_emo2<- colSums(prop.table(nrc_data_c[, 1:8]))
+    trump_emo2 <- colSums(prop.table(nrc_data_t[, 1:8]))
+    clinton_emo_plot <- bind_rows(clinton_emo, clinton_emo2)
+    trump_emo_plot <- bind_rows(trump_emo, trump_emo2)
   }   
  
 
@@ -304,14 +314,14 @@ barplot(
   
 print(i)
 }
-clinton_x <- rename(clinton_x, c(`clinton_list$x` = "score"))
-clinton_y <- rename(clinton_y, c(`clinton_list$z` = "score"))
+clinton_x <- rename(clinton_x, c(`clinton_list_getting$x` = "score"))
+clinton_y <- rename(clinton_y, c(`clinton_list_getting$z` = "score"))
 
-trump_x <- rename(trump_x, c(`trump_list$x` = "score"))
-trump_y <- rename(trump_y, c(`trump_list$z` = "score"))
+trump_x <- rename(trump_x, c(`trump_list_getting$x` = "score"))
+trump_y <- rename(trump_y, c(`trump_list_getting$z` = "score"))
 
 df_c <- data.frame(clinton_x, clinton_y)
-#names(df_c) <- c("clinton_plot_x", "clinton_plot_y")
+names(df_c) <- c("clinton_plot_x", "debate", "clinton_plot_y")
 
 df_t <- data.frame(trump_x, trump_y)
 names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
@@ -329,10 +339,12 @@ ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
   
 
 #
-trump_y$debate <- as.factor(trump_y$debate)
+clinton_y$debate <- as.factor(clinton_y$debate)
 idu <- row.names(trump_y)
-ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, color = debate))+
-  geom_line(color = "blue", size = 2, alpha = .4)
+ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, color = debate))+
+#   scale_fill_manual(
+# values = c("red", "blue", "green "))+
+  geom_line() 
   #geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 2, alpha = .4, color = "red")+
   #geom_vline(xintercept = 100, size = 2, linetype = "dashed")+
   #geom_vline(xintercept = 200, size = 2, linetype = "dashed")+
