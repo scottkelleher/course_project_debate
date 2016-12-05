@@ -16,7 +16,8 @@ shinyUI(fluidPage(
                                                   "Second Debate",
                                                   "Third Debate")),
       selectInput("Speaker", "Speaker", choices = c("Hillary Clinton",
-                                                    "Donald Trump")),
+                                                    "Donald Trump"),
+                  value = "Donald Trump"),
 
 textInput("textg", label = h3("show me Google"), value = "deplorables"),
 
@@ -24,9 +25,9 @@ hr(),
 fluidRow(column(3, verbatimTextOutput("value"))),
       
   ##  Main Panel
-    mainPanel( 
+    mainPanel( textOutput("ex"),
               DT::dataTableOutput("high_frequency_words"), 
-              #plotOutput("word_plot"),
+              plotOutput("word_plot"),
               plotOutput("term_plot")
              
     ))) 
