@@ -1,7 +1,7 @@
-
 library(shiny)
 library(ggplot2)
-display.mode="showcase"
+library(DT)
+
 ##start user interface
 shinyUI(fluidPage(  
   
@@ -12,17 +12,21 @@ shinyUI(fluidPage(
 
   #sidebarLayout(   
     #sidebarPanel(
-      selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate")),
-      selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump")),
+      selectInput("Debate", "Debate", choices = c("First Debate",
+                                                  "Second Debate",
+                                                  "Third Debate")),
+      selectInput("Speaker", "Speaker", choices = c("Hillary Clinton",
+                                                    "Donald Trump"), 
+                  selected = "Donald Trump"),
 
-textInput("textg", label = h3("show me Google"), value = "Enter text..."),
+textInput("textg", label = h3("show me Google"), value = "deplorables"),
 
 hr(),
 fluidRow(column(3, verbatimTextOutput("value"))),
       
   ##  Main Panel
     mainPanel( 
-              dataTableOutput("high_frequency_words"), 
+              DT::dataTableOutput("high_frequency_words"), 
               plotOutput("word_plot"),
               plotOutput("term_plot")
              
