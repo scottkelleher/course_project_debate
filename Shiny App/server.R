@@ -61,13 +61,13 @@ shinyServer(function(input, output){
   
   ###loop was here 
   reactive({
-  if(input$Debate=="First_Debate"){text <- text_debate1
+  if(input$Debate=="First Debate"){text <- text_debate1
   words_t <-c("trump")
   words_c <- c("clinton")}
-  else if (input$Debate=="Second_Debate"){text<- text_debate2
+  else if (input$Debate=="Second Debate"){text<- text_debate2
   words_t <- c("trump")
   words_c <- c("clinton")}
-  else if (input$Debate=="Third_Debate"){text<- text_debate3
+  else if (input$Debate=="Third Debate"){text<- text_debate3
   words_t <- c("trump")
   words_c <- c("clinton")}
   })
@@ -189,8 +189,8 @@ shinyServer(function(input, output){
   #plot(some_clinton_words)
   
   reactive({
-  if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
-  else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
+  if(input$Speaker== "Donald Trump"){top_used_words <- trump_most_words}
+  else if (input$Speaker=="Hilary Clinton"){top_used_words<- clinton_most_words}
 
   })
 

@@ -12,8 +12,11 @@ shinyUI(fluidPage(
 
   #sidebarLayout(   
     #sidebarPanel(
-      selectInput("Debate", "Debate", choices = c("First_Debate","Second_Debate", "Third_Debate")),
-      selectInput("Speaker", "Speaker", choices = c("Hillary_Clinton","Donald_Trump")),
+      selectInput("Debate", "Debate", choices = c("First Debate",
+                                                  "Second Debate",
+                                                  "Third Debate")),
+      selectInput("Speaker", "Speaker", choices = c("Hillary Clinton",
+                                                    "Donald Trump")),
 
 textInput("textg", label = h3("show me Google"), placeholder = "Enter text..."),
 
