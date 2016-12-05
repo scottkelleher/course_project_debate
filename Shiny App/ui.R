@@ -16,8 +16,8 @@ shinyUI(fluidPage(
                                                   "Second Debate",
                                                   "Third Debate")),
       selectInput("Speaker", "Speaker", choices = c("Hillary Clinton",
-                                                    "Donald Trump"),
-                  value = "Donald Trump"),
+                                                    "Donald Trump"), 
+                  selected = "Donald Trump"),
 
 textInput("textg", label = h3("show me Google"), value = "deplorables"),
 
