@@ -360,7 +360,7 @@ ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
   scale_fill_discrete(name = "Debate") +
   ylab("Emotional Valence")+
   xlab("Position in Debate")+
-  ggtitle("Trump Emotional Valance") +
+  ggtitle("Trump Emotional Valence") +
   theme(plot.title = element_text(hjust = .5))
   
 ```
@@ -372,7 +372,7 @@ ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate))
   scale_fill_discrete(name = "Debate") +
   ylab("Emotional Valence")+
   xlab("Position in Debate")+
-  ggtitle("Clinton Emotional Valance") +
+  ggtitle("Clinton Emotional Valence") +
   theme(plot.title = element_text(hjust = .5))
   
 ```
