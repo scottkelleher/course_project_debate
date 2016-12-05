@@ -60,15 +60,17 @@ shinyServer(function(input, output){
   
   
   ###loop was here 
-  reactive({
-  if(input$Debate=="First Debate"){
-      text <- text_debate1
-    } else if (input$Debate=="Second Debate"){
-      text<- text_debate2
-    } else if (input$Debate=="Third Debate"){
-      text<- text_debate3
-    }
+  text <- reactive({
+    if(input$Debate == "First Debate"){ 
+      text_debate1 
+    } else if(input$Debate == "Second Debate"){
+      text_debate2
+    } else {
+      text_debate3
+      }
   })
+
+  
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person, text){
     
@@ -78,30 +80,32 @@ shinyServer(function(input, output){
   }
   
   ##Creating an object called debate_lines that has two parts, one for clinton and one for trump
-  debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines, text = text) 
+  debate_lines <- reactive({lapply(c("CLINTON:", "TRUMP:"), getLines, text = text())})
   
   
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
   
   
-  clinton_lines <- debate_lines[1] 
-  trump_lines <- debate_lines[2] 
+  clinton_lines <- reactive({debate_lines()[1]})
+  trump_lines <- reactive({debate_lines()[2]})
   
   
   
   
   
   #break into clinton lines
-  text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
+  text_clinton <- reactive({data_frame(text_c = clinton_lines()[[1]])})
   
   
   #break into trump lines 
-  text_trump <- data_frame(text_t = trump_lines[[1]]) 
+  text_trump <- reactive({data_frame(text_t = trump_lines()[[1]])})
   
   
   ##Breaking trump lines into individual words
-  trump_words <- text_trump %>%
+  trump_words <- reactive({
+    text_trump() %>%
     unnest_tokens(word, text_t)  
+  })
   #trump_words  
   
   
