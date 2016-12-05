@@ -25,8 +25,8 @@ fluidRow(column(3, verbatimTextOutput("value"))),
       
   ##  Main Panel
     mainPanel( 
-              #DT::dataTableOutput("high_frequency_words"), 
-              #plotOutput("word_plot"),
+              DT::dataTableOutput("high_frequency_words"), 
+              plotOutput("word_plot"),
               plotOutput("term_plot")
              
     ))) 
