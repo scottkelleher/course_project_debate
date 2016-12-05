@@ -175,7 +175,6 @@ shinyServer(function(input, output){
   
   
  
-  textr <-renderPrint({ input$textg})
   output$value <- renderPrint({ input$textg})
   google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   
