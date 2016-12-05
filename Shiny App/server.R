@@ -60,8 +60,6 @@ shinyServer(function(input, output){
   
   
   ###loop was here 
-  words_t <-c("trump")
-  words_c <- c("clinton")
   reactive({
   if(input$Debate=="First Debate"){
       text <- text_debate1
