@@ -235,8 +235,8 @@ shinyServer(function(input, output){
   
   
  
-  textr <-renderPrint({ input$textg})
-  output$value <- renderPrint({ input$textg})
+  textr <-renderPrint({input$textg})
+  output$value <- renderPrint({input$textg})
   google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   
  output$term_plot <- renderPlot({
@@ -254,8 +254,8 @@ shinyServer(function(input, output){
 
   
   
-  output$high_frequency_words <- DT::renderDataTable( 
-    DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
+  output$high_frequency_words <- shiny::renderDataTable( 
+    shiny::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
   ) 
   
   output$word_plot <- renderPlot({plot(top_used_words)})
