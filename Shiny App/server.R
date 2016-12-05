@@ -72,7 +72,7 @@ shinyServer(function(input, output){
     }
   })
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
-  getLines <- function(person){
+  getLines <- function(person, text){
     
     id <- unlist(stringr::str_extract_all(text, "[A-Z]+:")) # get the speaker
     Lines <- unlist(strsplit(text, "[A-Z]+:"))[-1]  # split by speaker (and get rid of a pesky empty line)
@@ -80,7 +80,7 @@ shinyServer(function(input, output){
   }
   
   ##Creating an object called debate_lines that has two parts, one for clinton and one for trump
-  debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines) 
+  debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines, text = text) 
   
   
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
