@@ -79,18 +79,13 @@ ls("package:gtrendsR")
 #library(shinydashboard)
 library(RTextTools)
 library(googleVis)
-#source("classify_emotion.R")
+source("classify_emotion.R")
 
 library(RTextTools)
 library(googleVis)
 library(DT)
 
-
-#install_url("ftp://cran.r-project.org/pub/R/src/contrib/Archive/Rstem_0.4-1.tar.gz")
-#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
-#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
-
-shinyServer(function(input, output){ 
+shinyServer(function(input, output, session){ 
 
   usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -142,13 +137,8 @@ shinyServer(function(input, output){
   
   
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
-  
-  
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
-  
-  
-  
   
   
   #break into clinton lines
@@ -186,10 +176,8 @@ shinyServer(function(input, output){
   clinton_words <- select(clinton_words, -elim)
   
   
-  
   ##Counting the number of times each word is said for clinton
   clinton_word_frequency <- table(clinton_words)
-  
   
   ##Counting the number of times each word is said for trump
   trump_word_frequency <- table(trump_words)
@@ -233,10 +221,8 @@ shinyServer(function(input, output){
   #   
   # })    
   
-  
- 
-  textr <-renderPrint({ input$textg})
-  output$value <- renderPrint({ input$textg})
+  textr <-renderPrint({ input$text})
+  output$value <- renderPrint({ input$text })
   google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   
  output$term_plot <- renderPlot({
@@ -247,13 +233,12 @@ shinyServer(function(input, output){
   #plot(some_clinton_words)
   
   reactive({
+  
   if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
   else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
 
   })
 
-  
-  
   output$high_frequency_words <- DT::renderDataTable( 
     DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
   ) 
@@ -263,73 +248,66 @@ shinyServer(function(input, output){
   
   # https://www.r-bloggers.com/intro-to-text-analysis-with-r/
   
-  
-  
-  #library(RTextTools)
-  
-  #install.packages("devtools")
-  #require(devtools)
-  
   #data <- readLines("https://www.r-bloggers.com/wp-content/uploads/2016/01/vent.txt") # from: http://www.wvgazettemail.com/
   
   # the below function was developed from 
   #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
   
- #  reactive({
- #  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
- #  words_gtrends <- words_t}
- #  else if (input$Speaker=="Hilary_Clinton"){lines_go <- clinton_lines
- #  words_gtrends <- words_c}
- #  })
- #  df <- data.frame(lines_go)
- #  colnames(df) <- c("col1")
- #  textdata <- df[df$col1, ] 
- #  textdata = gsub("[[:punct:]]", "", textdata) 
- #  
- #  textdata = gsub("[[:punct:]]", "", textdata)
- #  textdata = gsub("[[:digit:]]", "", textdata)
- #  textdata = gsub("http\\w+", "", textdata)
- #  textdata = gsub("[ \t]{2,}", "", textdata)
- #  textdata = gsub("^\\s+|\\s+$", "", textdata)
- #  try.error = function(x)
- #  {
- #    y = NA
- #    try_error = tryCatch(tolower(x), error=function(e) e)
- #    if (!inherits(try_error, "error"))
- #      y = tolower(x)
- #    return(y) 
- #  }
- #  textdata = sapply(textdata, try.error)
- #  textdata = textdata[!is.na(textdata)]
- #  names(textdata) = NULL
- #  
- #  class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
- #  emotion = class_emo[,7]
- #  emotion[is.na(emotion)] = "unknown"
- #  
- #  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
- #  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
- # 
- #  class_pol = classify_polarity(textdata, algorithm="bayes")
- #  polarity = class_pol[,4]
- #  
- #  
- #  sent_df = data.frame(text=textdata, emotion=emotion,
- #                       polarity=polarity, stringsAsFactors=FALSE)
- #  sent_df = within(sent_df,
- #                   emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
- #  
- # # detach("package:sentiment", unload=TRUE)                
- #  
- #  # pdf(plots.pdf) 
- #  output$emotions <- renderPlot({
- #    
- #    ggplot(sent_df, aes(x=emotion)) +
- #    geom_bar(aes(y=..count.., fill=emotion)) +
- #    scale_fill_brewer(palette="Dark2") +
- #    labs(x="emotion categories", y = "")
- #  # dev.off()
- #  })
+  reactive({
+  if(input$Speaker=="Donald_Trump"){lines_go <- trump_lines
+  words_gtrends <- words_t}
+  else if (input$Speaker=="Hilary_Clinton"){lines_go <- clinton_lines
+  words_gtrends <- words_c}
+  })
+  df <- data.frame(lines_go)
+  colnames(df) <- c("col1")
+  textdata <- df[df$col1, ] 
+  textdata = gsub("[[:punct:]]", "", textdata) 
+  
+  textdata = gsub("[[:punct:]]", "", textdata)
+  textdata = gsub("[[:digit:]]", "", textdata)
+  textdata = gsub("http\\w+", "", textdata)
+  textdata = gsub("[ \t]{2,}", "", textdata)
+  textdata = gsub("^\\s+|\\s+$", "", textdata)
+  try.error = function(x)
+  {
+    y = NA
+    try_error = tryCatch(tolower(x), error=function(e) e)
+    if (!inherits(try_error, "error"))
+      y = tolower(x)
+    return(y) 
+  }
+  textdata = sapply(textdata, try.error)
+  textdata = textdata[!is.na(textdata)]
+  names(textdata) = NULL
+  
+  #class_emo = classify_emotion(textdata, algorithm="bayes", prior=1.0)
+  #emotion = class_emo[,7]
+  #emotion[is.na(emotion)] = "unknown"
+  
+  #download.file("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz", "sentiment.tar.gz")
+  #install.packages("sentiment.tar.gz", repos=NULL, type="source")
+
+  #class_pol = classify_polarity(textdata, algorithm="bayes")
+  #polarity = class_pol[,4]
+  
+  
+  # sent_df = data.frame(text=textdata, emotion=emotion,
+  #                      polarity=polarity, stringsAsFactors=FALSE)
+  # sent_df = within(sent_df,
+  #                  emotion <- factor(emotion, levels=names(sort(table(emotion), decreasing=TRUE))))
+  # 
+ # detach("package:sentiment", unload=TRUE)                
+  
+  # pdf(plots.pdf) 
+  output$emotions <- renderPlot({
+    
+    ggplot(sent_df, aes(x=emotion)) +
+    geom_bar(aes(y=..count.., fill=emotion)) +
+    scale_fill_brewer(palette="Dark2") +
+    labs(x="emotion categories", y = "")
+  # dev.off()
+  })
   
 }) 
 
