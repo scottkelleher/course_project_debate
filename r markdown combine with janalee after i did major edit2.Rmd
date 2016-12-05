@@ -1,69 +1,39 @@
 ---
-title: "Debate Project"
+title: **"2016 Presidential Debate: Content Breakdown"**
 author: "Scott Kelleher, Tulsi Gompo, Janalee Thompson"
-date: "November 30, 2016"
+date: "December 5, 2016"
 output: html_document
 ---
 
-##**2016 Presidential Debate: Content Breakdown**
+###**Introduction**
 
-  The 2016 presidential debates unfolded slowly as November approached. We watched
+The 2016 presidential debates unfolded slowly as November approached. We watched
 candidates battle to the bittersweet end trying to convince the American people that
-they were the better-suited candidate to lead our country. According to CNN.com, over
-84 million viewers tuned in to watch Hillary Clinton and Donald Trump debate. There
-were three debates in total spanning over a couple months. Some would consider these
-debates amusing (or scary) to say the least, such that terminology never before used in
-political discussions was broadcasted live for United States citizens and other
-countries to see in all its' glory. "Piggy" and "deplorable" were just a couple
-words that were projected during the debates that caught the attention of some viewers.
-So what is it that we all do when we want to know more about something? We just "Google
-it" of course. 
+they were the better-suited candidate to lead our country. According to [CNN.com](http://money.cnn.com/2016/09/27/media/debate-ratings-record-viewership/), a record breaking 84 million viewers tuned in to watch Hillary Clinton and Donald Trump in the first debate, making this the most watched presidential debate in history. Though the first debate broke records, there were three debates in total spanning over two months. Some would consider these debates amusing (or surprising) to say the least, such that terminology never before used in political discussions was broadcasted live for United States citizens and other countries to see in all its' glory. "Piggy" and "deplorable" were just a couple words that were said during the debates that fired up some viewers, and there was even some terminology used that was just plain confusing like "bigly." So what is it that we all do when we want to know more about something? We just "Google it" of course. 
 
-#**What were we thinking?**
+###**What were we thinking?**
 
-  As each debate unfolded, we wondered how many other people (like us) were using
-Google to search for termininology used in the debates- like the second amendment for
-example. Thus, we generated an analysis utilizing debate content and Google search
-terms. We started checking out Google Trends and tried trending some search terms
-ourselves. Google Trends is available to the general public with the purpose of
-displaying global search trends in Google. Google Trends adjusts Google searches by
-dividing each individual data point by total searches, geography and time range. In
-other words, this displays the term that was searched in relation to global
-search-volume. Trends in the data can be graphed by country or city. 
+As each debate unfolded, we wondered how many other people (like us) were using
+Google to search for termininology used by Donald Trump and Hillary Clinton during the debates- like the second amendment for example. Thus, we generated an analysis utilizing debate content and Google search terms. We started checking out Google Trends and tried trending some search terms ourselves. Google Trends is available to the general public with the purpose of displaying global search trends in Google. Google Trends adjusts Google searches by dividing each individual data point by total searches, geography and time range. In other words, this displays the term that was searched in relation to global search-volume. Trends in the data can be graphed by country or city. 
   
-  Terms such as “second amendment” and “Isis” were some of the first terms we tried
-that we knew would probably prompt some pretty drastic search trends, which they did.
-Then, after using Google Trends to search what was intended to be a few words, we ended
-up searching a copious amount of terms (related and unrelated to the debates)! It was
-time to get down to business and locate the debate scripts and take some terms used by
-our candidates for a spin in Google Trends. 
+Terms such as “second amendment” and “Isis” were some of the first terms we tried
+that we thought would probably prompt some pretty drastic search trends, which they did. Then, after using Google Trends to search what was intended to be a few words, we ended up searching a copious amount of terms (related and unrelated to the debates)! It was time to get down to business and locate the debate scripts and take some terms used by our candidates for a spin in Google Trends. 
 
-  We webscraped and read [each](http://www.presidency.ucsb.edu/debates.php)
+We webscraped and read [each](http://www.presidency.ucsb.edu/debates.php)
 presidential debate script and noted some terminology that stood out. Displayed below
 are some terms used by our now President-Elect Donald Trump during the second debate.
 The terms *Melania*, *e-mail scandal*, *bigly*, *nasty woman*, and *benghazi* were
-searched using a Google search engine during and immediately following the second
-debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League."
-Interestingly as a result of this confusion, Google Trends reported that "Bigly" had
-become the top trending search on all of Google. Check out the Tweet
-[here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
-idential-debate/21587735/). 
+some of the most searched words during and immediately following the second debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big League." Interestingly as a result of this confusion, Google Trends reported that "Bigly" had become the top trending search on all of Google. Check out the Tweet [here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres idential-debate/21587735/). 
   
-  Here are five words and phrases that we we thought had interesting search trends.
-After webscraping the three presidential debates, we broke down the debate into 
-individual words said by each speaker (Donald Trump or Hillary Clinton). The following
-results were then generated using the R package Googletrendsr from CRAN, which displays
-the Google search trends for those specific words. 
+Here are some of the top words and phrases that had interesting search trends. After webscraping the three presidential debates, we broke down the debate into individual words said by each speaker (Donald Trump or Hillary Clinton). The following results were then generated using the R package Googletrendsr from CRAN, which displays the Google search trends for those specific words. 
 
-**Five Phrases that had particularly interesting Google search trends with respect to
-their debate**
-
+####**Five Phrases that had interesting Google search trends with respect to their debate**
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
 
 ## specify inputs
   Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
-  google_these_words = c("Melania", "email scandal", "Rosie O'Donnell", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
+  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends and results
   # enter one phrase you would like to see broken down by state
   google_states = c("bigly")
 
@@ -123,9 +93,14 @@ usr <- ("535rprogram@gmail.com")
   db3 <-ymd_hms(161029020000, tz = "UTC")
   date_time <-c(db1, db2, db3)
 
+<<<<<<< HEAD
 ```
   
   Additionally, we were interested in specific terminology searched in Google at the
+=======
+####**State level search trends**
+Additionally, we were interested in specific terminology searched in Google at the
+>>>>>>> 63f9fc49fde4eb729bd1c4119d18fe31715669aa
 state level. Specifically, which states were Googling some terms more than
 others? The following graphic is categorized by state using Google Trends search term
 data and the choroplethrMaps package in R. This example displays the state-level search
@@ -147,6 +122,8 @@ term data by state for "bigly".
   state_choropleth(by_state)
 ```
 
+###**Emotional Context**
+We were also curious about the emotional context of each speaker during the three debates. Did one candidtate speak in a more positive context than the other? We used the Syuzhet package from R to conduct this exploratory part of our analysis. Syuzhet is a package consisting of four sentiment dictionaries developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment score based on overall positivity and negativity. There is not a numerical limit on scores, though negative words will tend to have negative sentiment scores and positive words will have positive sentiment scores. As shown here, each speaker is plotted with respect to the first, second or third debate with normalized emotional valence scores. As you can see, both Clinton and Trump had a pretty broad range of emotions during each debate. From this exploratory analysis, we can report that one candidate did not speak in a more positive emotional context than the other. 
 
 ```{r}
 for (i in (1:3)) {    
@@ -238,38 +215,59 @@ clinton_list_getting <- rescale_x_2(clinton_rolled)
 #      ylab="Emotional Valence")
 # lines(trump_list$x, trump_list$z, col="red")
 
+<<<<<<< HEAD
 
 poa_sample <- seq(1, length(clinton_list$x), by=round(length(clinton_list$x)/100))
 bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
+=======
+######################################## the plots below are smoothed
+poa_sample <- seq(1, length(clinton_list_getting$x), by=round(length(clinton_list_getting$x)/100))
+bov_sample <- seq(1, length(trump_list_getting$x), by=round(length(trump_list_getting$x)/100))
 
-if(i == 1){
-    clinton_x_getting <- as.data.frame(clinton_list$x)
+nrc_data_c <- get_nrc_sentiment(as.vector(clinton_words$word))
+nrc_data_t <- get_nrc_sentiment(as.vector(trump_words$word))
+>>>>>>> 63f9fc49fde4eb729bd1c4119d18fe31715669aa
+
+if(i == 1){ 
+    clinton_x_getting <- as.data.frame(clinton_list_getting$x)
     clinton_x <- mutate(clinton_x_getting, debate = i)
-    clinton_y_getting <- as.data.frame(clinton_list$z)
+    clinton_y_getting <- as.data.frame(clinton_list_getting$z)
     clinton_y <- mutate(clinton_y_getting, debate = i)
     
-    trump_x_getting <- as.data.frame(trump_list$x)
+    trump_x_getting <- as.data.frame(trump_list_getting$x)
     trump_x <- mutate(trump_x_getting, debate = i)
-    trump_y_getting <- as.data.frame(trump_list$z)
+    trump_y_getting <- as.data.frame(trump_list_getting$z)
     trump_y <- mutate(trump_y_getting, debate = i)
+    
+    clinton_emo <- colSums(prop.table(nrc_data_c[, 1:8]))
+    trump_emo <- colSums(prop.table(nrc_data_t[, 1:8]))
+    
   } else{
-    clinton_x_getting <- as.data.frame(clinton_list$x)
+    clinton_x_getting <- as.data.frame(clinton_list_getting$x)
     clinton_x2 <- mutate(clinton_x_getting, debate = i)
     clinton_x <- bind_rows(clinton_x, clinton_x2)
     
-    clinton_y_getting <- as.data.frame(clinton_list$z)
+    clinton_y_getting <- as.data.frame(clinton_list_getting$z)
     clinton_y2 <- mutate(clinton_y_getting, debate = i)
     clinton_y <- bind_rows(clinton_y, clinton_y2)
     
-    trump_x_getting <- as.data.frame(trump_list$x)
+    trump_x_getting <- as.data.frame(trump_list_getting$x)
     trump_x2 <- mutate(trump_x_getting, debate = i)
     trump_x <- bind_rows(trump_x, trump_x2)
     
-    trump_y_getting <- as.data.frame(trump_list$z)
+    trump_y_getting <- as.data.frame(trump_list_getting$z)
     trump_y2 <- mutate(trump_y_getting, debate = i)
     trump_y <- bind_rows(trump_y, trump_y2)
     
+<<<<<<< HEAD
    }   
+=======
+    clinton_emo2<- colSums(prop.table(nrc_data_c[, 1:8]))
+    trump_emo2 <- colSums(prop.table(nrc_data_t[, 1:8]))
+    clinton_emo_plot <- bind_rows(clinton_emo, clinton_emo2)
+    trump_emo_plot <- bind_rows(trump_emo, trump_emo2)
+  }   
+>>>>>>> 63f9fc49fde4eb729bd1c4119d18fe31715669aa
  
 
 
@@ -300,14 +298,14 @@ barplot(colSums(prop.table(nrc_data_t[, 1:8])),
   
 print(i)
 }
-clinton_x <- rename(clinton_x, c(`clinton_list$x` = "score"))
-clinton_y <- rename(clinton_y, c(`clinton_list$z` = "score"))
+clinton_x <- rename(clinton_x, c(`clinton_list_getting$x` = "score"))
+clinton_y <- rename(clinton_y, c(`clinton_list_getting$z` = "score"))
 
-trump_x <- rename(trump_x, c(`trump_list$x` = "score"))
-trump_y <- rename(trump_y, c(`trump_list$z` = "score"))
+trump_x <- rename(trump_x, c(`trump_list_getting$x` = "score"))
+trump_y <- rename(trump_y, c(`trump_list_getting$z` = "score"))
 
 df_c <- data.frame(clinton_x, clinton_y)
-#names(df_c) <- c("clinton_plot_x", "clinton_plot_y")
+names(df_c) <- c("clinton_plot_x", "debate", "clinton_plot_y")
 
 df_t <- data.frame(trump_x, trump_y)
 names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
@@ -324,12 +322,20 @@ ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score)))) +
   
 
 #
-trump_y$debate <- as.factor(trump_y$debate)
+clinton_y$debate <- as.factor(clinton_y$debate)
 idu <- row.names(trump_y)
+<<<<<<< HEAD
 
 ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, color = debate))+
   geom_line(color = "blue", size = 2, alpha = .4) +
   #geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 2, alpha = .4, color = "red") +
+=======
+ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, color = debate))+
+#   scale_fill_manual(
+# values = c("red", "blue", "green "))+
+  geom_line() 
+  #geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 2, alpha = .4, color = "red")+
+>>>>>>> 63f9fc49fde4eb729bd1c4119d18fe31715669aa
   #geom_vline(xintercept = 100, size = 2, linetype = "dashed")+
   #geom_vline(xintercept = 200, size = 2, linetype = "dashed")+
   #scale_x_continuous(breaks=c(0,100,200), labels=c("debate 1", "debate 2", "debate 3")) +
@@ -376,6 +382,7 @@ ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, color = debate))+
 
 ```
 
+<<<<<<< HEAD
 ### **Emotions**
    We were also curious about the emotional context in which Donald Trump and Hillary
 Clinton spoke to throughout each debate. We uzed the Syuzhet package from R to conduct
@@ -387,6 +394,9 @@ positivity and negativity. There is not a numerical limit on scores, though nega
 words will tend to have negative sentiment scores and positive words will have positive
 sentiment scores. As shown here, each speaker is plotted with respect to the first,
 second or third debate with normaized emotional valence scores. 
+=======
+
+>>>>>>> 63f9fc49fde4eb729bd1c4119d18fe31715669aa
   
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE}
 
@@ -471,8 +481,12 @@ barplot(
 ```
 
 ###**Limitations**
+<<<<<<< HEAD
   
   As with any research, there are some limitations to this analysis. The data
+=======
+As with any research, there are some limitations to this analysis. The data
+>>>>>>> 63f9fc49fde4eb729bd1c4119d18fe31715669aa
 is limited to people who use Google as their search engine. This would exclude
 non-internet users and people who use Yahoo or other search engines. Though this may
 seem like a daunting limitation, Google is the most popular search engine in the world
