@@ -191,15 +191,24 @@ shinyServer(function(input, output){
   top_used_words <- reactive({
     if(input$Speaker == "Donald Trump"){
       trump_most_words %>% tbl_df() %>% arrange(desc(n))
-    } else if (input$Speaker == "Hilary Clinton"){
+    } else if(input$Speaker == "Hilary Clinton"){
       clinton_most_words %>% tbl_df() %>% arrange(desc(n))
     }
   })
   
-  output$high_frequency_words <- DT::renderDataTable( 
+  observeEvent(input$Speaker, ({
+  if(input$Speaker == "Hilary Clinton"){
+      top_used_words <- reactive({clinton_most_words %>% tbl_df() %>% arrange(desc(n))})
+    } else {
+      top_used_words <- reactive({trump_most_words %>% tbl_df() %>% arrange(desc(n))})
+    }
+  })
+)
+  
+  output$high_frequency_words <- DT::renderDataTable(
     DT::datatable(as.data.frame(top_used_words()),
                   options = list(pageLength = 10))
-  ) 
+  )
   
   output$word_plot <- renderPlot({plot(as.data.frame(top_used_words()))})
   
