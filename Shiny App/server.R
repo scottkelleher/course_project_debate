@@ -167,7 +167,6 @@ shinyServer(function(input, output){
   
   
  
-  output$value <- renderPrint({ input$textg})
   google_results <- reactive({
     gtrends(input$textg, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   })
