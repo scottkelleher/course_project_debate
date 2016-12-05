@@ -17,7 +17,6 @@ library(gtrendsR)
 library(xml2)
 library(shiny)
 library(devtools)
-ls("package:gtrendsR")
 
 #library(shinydashboard)
 library(RTextTools)
