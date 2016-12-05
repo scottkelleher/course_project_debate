@@ -116,7 +116,7 @@ term data by state for "bigly".
   state_choropleth(by_state)
 ```
 
-###**Emotional Context**
+###**Emotional Context: Valence**
 We were also curious about the emotional context of each speaker during the three debates. Did one candidtate speak in a more positive context than the other? We used the Syuzhet package from R to conduct this exploratory part of our analysis. Syuzhet is a package consisting of four sentiment dictionaries developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment score based on overall positivity and negativity. There is not a numerical limit on scores, though negative words will tend to have negative sentiment scores and positive words will have positive sentiment scores. As shown here, each speaker is plotted with respect to the first, second or third debate with normalized emotional valence scores. As you can see, both Clinton and Trump had a pretty broad range of emotions during each debate. From this exploratory analysis, we can report that one candidate did not speak in a more positive emotional context than the other. 
 
 ```{r}
@@ -493,19 +493,33 @@ barplot(
   )
 ```
 
-```{r}
+
+###**Sentiment**
+Next, we plotted words based on the seven types of sentiment categories. Individual words are categorized based on sentiment and candidate. This plot displays the sentiment in Donald Trump's words for all three debates. Most of Trump's words in both debates were grouped into the category "trust." "
+
+```{r, trump sentiment plots}
  trump_emo_plot_this_shit <- rename(trump_emo, c(`colSums(prop.table(nrc_data_t[, 1:8]))` = "Emotional Valence", `rownames(trump_emo)` = "Emotion"))
 ggplot(trump_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
   geom_bar(position="dodge", stat="identity")+
   ggtitle("Emotional Context")+
   scale_debate_discrete()
+```
 
+Similarly, this plot displays the sentiment in Hillary Clinton's words for all three debates. 
+```{r, hillary sentiment plots}
  clinton_emo_plot_this_shit <- rename(clinton_emo, c(`colSums(prop.table(nrc_data_c[, 1:8]))` = "Emotional Valence", `rownames(clinton_emo)` = "Emotion"))
 ggplot(clinton_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
   geom_bar(position="dodge", stat="identity")+
   ggtitle("Emotional Context")+
   scale_debate_discrete()
 ```
+
+
+
+
+
+
+
 ###**Limitations**
 As with any research, there are some limitations to this analysis. The data
 is limited to people who use Google as their search engine. This would exclude
