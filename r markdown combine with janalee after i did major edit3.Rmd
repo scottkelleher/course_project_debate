@@ -494,9 +494,15 @@ barplot(
 ```
 
 ```{r}
-# gather(trump_emo_plot, )
-# what_emotion <- colnames(trump_emo_plot)
-# ggplot(trump_emo_plot, aes(x = what_emotion, y = )
+ trump_emo_plot_this_shit <- rename(trump_emo, c(`colSums(prop.table(nrc_data_t[, 1:8]))` = "emo_val", `rownames(trump_emo)` = "what_emotion"))
+ggplot(trump_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
+  geom_bar(position="dodge", stat="identity")+
+  scale_debate_discrete()
+
+ clinton_emo_plot_this_shit <- rename(clinton_emo, c(`colSums(prop.table(nrc_data_c[, 1:8]))` = "emo_val", `rownames(clinton_emo)` = "what_emotion"))
+ggplot(clinton_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
+  geom_bar(position="dodge", stat="identity")+
+  scale_debate_discrete()
 
 ```
 ###**Limitations**
