@@ -1,7 +1,7 @@
 
 library(shiny)
 library(ggplot2)
-display.mode="showcase"
+
 ##start user interface
 shinyUI(fluidPage(  
   
