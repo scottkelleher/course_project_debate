@@ -120,12 +120,14 @@ term data by state for "bigly".
 ```{r  echo = FALSE, warning = FALSE, message = FALSE}
 
   google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-   plot(google_results)
+   plot(google_results)  
+
    
 ```
    
 ```{r  echo = FALSE, warning = FALSE, message = FALSE}
-  google_breakdown <- gtrends(google_states, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  google_breakdown <- gtrends(google_states, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15") 
+
 
   by_state <-google_breakdown[[5]]
   by_state$Subregion <- tolower(by_state$Subregion)
