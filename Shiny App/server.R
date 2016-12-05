@@ -133,13 +133,7 @@ shinyServer(function(input, output){
   
   ##Counting the number of times each word is said for trump
   trump_word_frequency <- table(trump_words)
-  
-  ##Object that has word frequencies sorted from least to most for clinton
-  clinton_most_words <- sort(clinton_word_frequency)
-  
-  
-  ##Object that has word frequencies sorted from least to most for trump
-  trump_most_words <- sort(trump_word_frequency)
+
   
   # reactive({
   #   
@@ -204,6 +198,8 @@ shinyServer(function(input, output){
     }
   })
 )
+  
+  ex <- renderText(clinton_most_words)
   
   output$high_frequency_words <- DT::renderDataTable(
     DT::datatable(as.data.frame(top_used_words()),
