@@ -1,61 +1,4 @@
-# 
-# if(!require(shiny)){
-#   install.packages('shiny')
-# }
-# if(!require(gtrendsR)){
-#   install.packages('gtrendsR')
-# }
-# if(!require(reshape2)){
-#   install.packages('reshape2')
-# }
-# if(!require(ggplot2)){
-#   install.packages('ggplot2')
-# }
-# 
-# if(!require(rvest)){
-#   install.packages('rvest')
-# }
-# if(!require(gtrendsR)){
-#   install.packages('gtrendsR')
-# }
-# if(!require(stringr)){
-#   install.packages('stringr')
-# }
-# if(!require(dplyr)){
-#   install.packages('dplyr')
-# }
-# if(!require(tm)){
-#   install.packages('tm')
-# }
-# if(!require(lubridate)){
-#   install.packages('lubridate')
-# }
-# if(!require(RColorBrewer)){
-#   install.packages('RColorBrewer')
-# }
-# #if(!require(shinydashbaord)){
-#  # install.packages('shinydashboard')
-# #}
-# if(!require(tokenizers)){
-#   install.packages('tokenizers')
-# }
-# if(!require(tidytext)){
-#   install.packages('tidytext')
-# }
-# if(!require(xml2)){
-#   install.packages('tokenizers')
-# }
-# if(!require(RTextTools)){
-#   install.packages('RTextTools')
-# }
-# if(!require(devtools)){
-#   install.packages('devtools')
-# }
-# if(!require(googleVis)){
-#   install.packages('googleVis')
-# } 
- 
-##Loading libraries
+ ##Loading libraries
 library(rvest)
 #library(tidyverse)
 library(stringr)
@@ -74,7 +17,6 @@ library(gtrendsR)
 library(xml2)
 library(shiny)
 library(devtools)
-ls("package:gtrendsR")
 
 #library(shinydashboard)
 library(RTextTools)
@@ -114,18 +56,16 @@ shinyServer(function(input, output, session){
   
   ###loop was here 
   reactive({
-  if(input$Debate=="First_Debate"){text <- text_debate1
-  words_t <-c("trump")
-  words_c <- c("clinton")}
-  else if (input$Debate=="Second_Debate"){text<- text_debate2
-  words_t <- c("trump")
-  words_c <- c("clinton")}
-  else if (input$Debate=="Third_Debate"){text<- text_debate3
-  words_t <- c("trump")
-  words_c <- c("clinton")}
+  if(input$Debate=="First Debate"){
+      text <- text_debate1
+    } else if (input$Debate=="Second Debate"){
+      text<- text_debate2
+    } else if (input$Debate=="Third Debate"){
+      text<- text_debate3
+    }
   })
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
-  getLines <- function(person){
+  getLines <- function(person, text){
     
     id <- unlist(stringr::str_extract_all(text, "[A-Z]+:")) # get the speaker
     Lines <- unlist(strsplit(text, "[A-Z]+:"))[-1]  # split by speaker (and get rid of a pesky empty line)
@@ -133,7 +73,7 @@ shinyServer(function(input, output, session){
   }
   
   ##Creating an object called debate_lines that has two parts, one for clinton and one for trump
-  debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines) 
+  debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines, text = text) 
   
   
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
@@ -143,12 +83,10 @@ shinyServer(function(input, output, session){
   
   #break into clinton lines
   text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
-  text_clinton 
   
   
   #break into trump lines 
   text_trump <- data_frame(text_t = trump_lines[[1]]) 
-  text_trump 
   
   
   ##Breaking trump lines into individual words
@@ -181,13 +119,7 @@ shinyServer(function(input, output, session){
   
   ##Counting the number of times each word is said for trump
   trump_word_frequency <- table(trump_words)
-  
-  ##Object that has word frequencies sorted from least to most for clinton
-  clinton_most_words <- sort(clinton_word_frequency)
-  
-  
-  ##Object that has word frequencies sorted from least to most for trump
-  trump_most_words <- sort(trump_word_frequency)
+
   
   # reactive({
   #   
@@ -221,29 +153,46 @@ shinyServer(function(input, output, session){
   #   
   # })    
   
-  textr <-renderPrint({ input$text})
-  output$value <- renderPrint({ input$text })
-  google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+
+  
+ 
+  google_results <- reactive({
+    gtrends(input$textg, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  })
   
  output$term_plot <- renderPlot({
-   plot(google_results)
+   plot(google_results()) + 
+     ggtitle(paste0('Google searches for "', input$textg, '"'))
  }) 
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   #plot(some_clinton_words)
   
-  reactive({
-  
-  if(input$Speaker== "Donald_Trump"){top_used_words <- trump_most_words}
-  else if (input$Speaker=="Hilary_Clinton"){top_used_words<- clinton_most_words}
-
+  top_used_words <- reactive({
+    if(input$Speaker == "Donald Trump"){
+      trump_word_frequency %>% tbl_df() %>% arrange(desc(n))
+    } else if(input$Speaker == "Hilary Clinton"){
+      clinton_word_frequency %>% tbl_df() %>% arrange(desc(n))
+    }
   })
-
-  output$high_frequency_words <- DT::renderDataTable( 
-    DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
-  ) 
   
-  output$word_plot <- renderPlot({plot(top_used_words)})
+#   observeEvent(input$Speaker, ({
+#   if(input$Speaker == "Hilary Clinton"){
+#       top_used_words <- reactive({clinton_most_words %>% tbl_df() %>% arrange(desc(n))})
+#     } else {
+#       top_used_words <- reactive({trump_most_words %>% tbl_df() %>% arrange(desc(n))})
+#     }
+#   })
+# )
+  
+  # ex <- renderText(clinton_most_words)
+  
+  output$high_frequency_words <- DT::renderDataTable(
+    DT::datatable(as.data.frame(top_used_words()),
+                  options = list(pageLength = 10))
+  )
+  
+  output$word_plot <- renderPlot({plot(as.data.frame(top_used_words()))})
   
   
   # https://www.r-bloggers.com/intro-to-text-analysis-with-r/
