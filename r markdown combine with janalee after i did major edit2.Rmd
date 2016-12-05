@@ -1,5 +1,5 @@
 ---
-title: **"2016 Presidential Debate: Content Breakdown"**
+title: "2016 Presidential Debate: Content Breakdown"
 author: "Scott Kelleher, Tulsi Gompo, Janalee Thompson"
 date: "December 5, 2016"
 output: html_document
@@ -485,13 +485,12 @@ barplot(
 ```
 
 ###**Limitations**
-As with any research, there are some limitations to this analysis. The data
-is limited to people who use Google as their search engine. This would exclude
-non-internet users and people who use Yahoo or other search engines. Though this may
-seem like a daunting limitation, Google is the most popular search engine in the world
-fostering over 1.17 billion people. If you want to check out the statistics behind
-this, check out this [link](https://www.statista.com/chart/899/unique-users-of-search-
-engines-in-december-2012/). 
+As with any research, there are some limitations to this analysis. The data is limited to people who use
+Google as their search engine. This would exclude non-internet users and people who use Yahoo or other
+search engines. Though this may seem like a daunting limitation, Google is the most popular search engine
+in the world fostering over 1.17 billion people. If you want to check out the statistics behind this,
+check out this [link](https://www.statista.com/chart/899/unique-users-of-search-engines-in-december-2012/
+). 
   
   
   
