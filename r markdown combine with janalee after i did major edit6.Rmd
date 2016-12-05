@@ -1,5 +1,5 @@
 ---
-title: "2016 Presidential Debate: Content Breakdown"
+title: '2016 Presidential Debate: Content Breakdown'
 author: "Scott Kelleher, Tulsi Gompo, Janalee Thompson"
 date: "December 5, 2016"
 output: html_document
