@@ -95,12 +95,10 @@ shinyServer(function(input, output){
   
   #break into clinton lines
   text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
-  text_clinton 
   
   
   #break into trump lines 
   text_trump <- data_frame(text_t = trump_lines[[1]]) 
-  text_trump 
   
   
   ##Breaking trump lines into individual words
