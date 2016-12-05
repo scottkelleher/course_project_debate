@@ -1,5 +1,6 @@
 library(shiny)
 library(ggplot2)
+library(DT)
 
 ##start user interface
 shinyUI(fluidPage(  
@@ -21,7 +22,7 @@ fluidRow(column(3, verbatimTextOutput("value"))),
       
   ##  Main Panel
     mainPanel( 
-              dataTableOutput("high_frequency_words"), 
+              DT::dataTableOutput("high_frequency_words"), 
               plotOutput("word_plot"),
               plotOutput("term_plot")
              
