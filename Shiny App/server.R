@@ -60,16 +60,16 @@ shinyServer(function(input, output){
   
   
   ###loop was here 
-  reactive({
-  if(input$Debate=="First Debate"){text <- text_debate1
   words_t <-c("trump")
-  words_c <- c("clinton")}
-  else if (input$Debate=="Second Debate"){text<- text_debate2
-  words_t <- c("trump")
-  words_c <- c("clinton")}
-  else if (input$Debate=="Third Debate"){text<- text_debate3
-  words_t <- c("trump")
-  words_c <- c("clinton")}
+  words_c <- c("clinton")
+  reactive({
+  if(input$Debate=="First Debate"){
+      text <- text_debate1
+    } else if (input$Debate=="Second Debate"){
+      text<- text_debate2
+    } else if (input$Debate=="Third Debate"){
+      text<- text_debate3
+    }
   })
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person){
