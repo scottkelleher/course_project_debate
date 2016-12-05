@@ -176,10 +176,13 @@ shinyServer(function(input, output){
   
  
   output$value <- renderPrint({ input$textg})
-  google_results <- gtrends(c("trump"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  google_results <- reactive({
+    gtrends(input$textg, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  })
   
  output$term_plot <- renderPlot({
-   plot(google_results)
+   plot(google_results()) + 
+     ggtitle(paste0('Google searchers for "', input$textg, '"'))
  }) 
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
