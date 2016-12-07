@@ -101,11 +101,11 @@ shinyServer(function(input, output){
 
   
 
-  words_speaker_debate <-   reactive({filter(big_word_frame, speaker == input$Speaker & debate == input$Debate)
-  })
+  words_speaker_debate <- reactive({filter(big_word_frame, speaker == input$Speaker & debate == input$Debate)})
   
-  frequency <- table(words_speaker_debate)
-  top_used_words <- frequency %>% tbl_df() %>% arrange(desc(n))
+  
+  frequency1 <- reactive({table(words_speaker_debate())})
+  top_used_words <- reactive({frequency1() %>% tbl_df() %>% arrange(desc(n))})
   
   
   #still need to trim down columns to eliminate unnecesary columns in shiny table
@@ -116,16 +116,16 @@ shinyServer(function(input, output){
   ) 
   
   
- # output$word_plot <- renderPlot({plot(as.data.frame(top_used_words))})
+ #output$word_plot <- renderPlot({plot(as.data.frame(top_used_words))})
   
   
-  # google_breakdown <- reactive({ gtrends(input$state, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-  # })
-  # by_state <- google_breakdown["Top.searches.for.United.States"]
-  # by_state$Subregion <- tolower(by_state$Subregion)
-  # by_state <- rename(by_state, c(Subregion = "region", `United.States` = "value")) 
-  # output$states_plot <- renderPlot({state_choropleth(by_state)
-  # })
+   google_breakdown <- reactive({ gtrends(input$state, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+   })
+   by_state <- reactive({google_breakdown$Top.subregions.for.United.States()})
+   by_state$Subregion <- reactive({tolower(by_state$Subregion())})
+   by_state <- reactive({rename(by_state(), c(Subregion = "region", `United.States` = "value"))})
+   output$states_plot <- renderPlot({state_choropleth(by_state)
+   })
    
-})    
+})     
 

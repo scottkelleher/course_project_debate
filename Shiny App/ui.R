@@ -23,7 +23,8 @@ textInput("text1", label = h1("Enter a word or phrase you would like to google i
 textInput("text2", label = h1(""), value = "clinton foundation"),
 textInput("text3", label = h1(""), value = "border wall"),
 textInput("text4", label = h1(""), value = "bigly"),
-textInput("state", label = h1("google search broken down by state, please input phrase"), value = "trump tower"),
+textInput("state", label = h1("google search broken down by state, please input phrase"), value = "bigly"),
+textInput("state", label = h1(""), value = "bigly"),
 
 hr(),
 fluidRow(column(3, verbatimTextOutput("value"))),
@@ -32,7 +33,8 @@ fluidRow(column(3, verbatimTextOutput("value"))),
     mainPanel( 
               DT::dataTableOutput("high_frequency_words"), 
               #plotOutput("word_plot"),
-              plotOutput("term_plot")
+              plotOutput("term_plot"),
+              plotOutput("states_plot")
              
     ))) 
 
