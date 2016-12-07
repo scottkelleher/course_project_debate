@@ -90,7 +90,6 @@ shinyServer(function(input, output){
   
   
   
-  
   #break into clinton lines
   text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
   
