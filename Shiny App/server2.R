@@ -1,5 +1,4 @@
-
-##Loading libraries
+ ##Loading libraries
 library(rvest)
 #library(tidyverse)
 library(stringr)
@@ -34,11 +33,11 @@ library(DT)
 #install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
 shinyServer(function(input, output){ 
-  
+
   
   ###loop was here 
   reactive({
-    if(input$Debate=="First Debate"){
+  if(input$Debate=="First Debate"){
       text <- text_debate1
     } else if (input$Debate=="Second Debate"){
       text<- text_debate2
@@ -108,19 +107,19 @@ shinyServer(function(input, output){
   
   ##Counting the number of times each word is said for trump
   trump_word_frequency <- table(trump_words)
+
   
   
-  
-  
+ 
   google_results <- reactive({
     gtrends(c(input$text1, input$text2, input$text3, input$text4), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   }) 
+
   
-  
-  output$term_plot <- renderPlot({
-    plot(google_results()) + 
-      ggtitle(paste0('Google searches for "', input$textg, '"'))
-  }) 
+ output$term_plot <- renderPlot({
+   plot(google_results()) + 
+     ggtitle(paste0('Google searches for "', input$textg, '"'))
+ }) 
   #should be filtered down to which candidate and which debate at this point
   #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   #plot(some_clinton_words)
@@ -133,31 +132,31 @@ shinyServer(function(input, output){
     }
   })
   
-  #   observeEvent(input$Speaker, ({
-  #   if(input$Speaker == "Hilary Clinton"){
-  #       top_used_words <- reactive({clinton_most_words %>% tbl_df() %>% arrange(desc(n))})
-  #     } else {
-  #       top_used_words <- reactive({trump_most_words %>% tbl_df() %>% arrange(desc(n))})
-  #     }
-  #   })
-  # )
+#   observeEvent(input$Speaker, ({
+#   if(input$Speaker == "Hilary Clinton"){
+#       top_used_words <- reactive({clinton_most_words %>% tbl_df() %>% arrange(desc(n))})
+#     } else {
+#       top_used_words <- reactive({trump_most_words %>% tbl_df() %>% arrange(desc(n))})
+#     }
+#   })
+# )
   
   # ex <- renderText(clinton_most_words)
   
-  
+
   output$high_frequency_words <- shiny::renderDataTable( 
     shiny::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
   ) 
-  
+
   output$high_frequency_words <- DT::renderDataTable(
     DT::datatable(as.data.frame(top_used_words()),
                   options = list(pageLength = 10))
   )
-  
+
   
   output$word_plot <- renderPlot({plot(as.data.frame(top_used_words()))})
   
-  
+ 
   
 }) 
 
