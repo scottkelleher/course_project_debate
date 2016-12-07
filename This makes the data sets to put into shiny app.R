@@ -1,8 +1,6 @@
 
 
 
-
-
 ## specify inputs
 Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
 Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
@@ -224,7 +222,6 @@ for (i in (1:3)) {
     
   }  
   
-
   
   print(i)
 }
