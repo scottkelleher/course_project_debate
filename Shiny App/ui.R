@@ -19,7 +19,10 @@ shinyUI(fluidPage(
                                                     "Donald Trump"), 
                   selected = "Donald Trump"),
 
-textInput("textg", label = h3("show me Google"), value = "deplorables"),
+textInput("text1", label = h1("Enter a word or phrase you would like to google in each line"), value = "deplorables"),
+textInput("text2", label = h1(""), value = "clinton foundation"),
+textInput("text3", label = h1(""), value = "border wall"),
+textInput("text4", label = h1(""), value = "bigly"),
 
 hr(),
 fluidRow(column(3, verbatimTextOutput("value"))),
