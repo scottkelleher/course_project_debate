@@ -145,7 +145,7 @@ shinyServer(function(input, output){
   
 
   output$high_frequency_words <- shiny::renderDataTable( 
-    shiny::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
+    shiny::datatable(as.data.frame(top_used_words), options = list(pageLength = 10))
   ) 
 
   output$high_frequency_words <- DT::renderDataTable(
