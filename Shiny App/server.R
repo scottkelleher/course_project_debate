@@ -1,38 +1,12 @@
 
-##Loading libraries
-library(rvest)
-#library(tidyverse)
-library(stringr)
-library(tidytext)
-library(gtrendsR)
-library(tokenizers)
-library(dplyr)
-library(tm)
-library(SnowballC)
-library(wordcloud)
-library(syuzhet)
-library(lubridate)
-library(ggplot2)
-library(readr)
-library(gtrendsR)
-library(xml2)
-library(shiny)
-library(devtools)
-
-#library(shinydashboard)
-library(RTextTools)
-library(googleVis)
-#source("classify_emotion.R")
-
 library(RTextTools)
 library(googleVis)
 library(DT)
+#will need to wrap the "this makes the data sets to put in shiny" file into a function or something and then load at the beginning here
 
 
-#install_url("ftp://cran.r-project.org/pub/R/src/contrib/Archive/Rstem_0.4-1.tar.gz")
-#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.1.tar.gz")
-#install_url("http://cran.r-project.org/src/contrib/Archive/sentiment/sentiment_0.2.tar.gz")
 
+<<<<<<< HEAD
 shinyServer(function(input, output){ 
   
   
@@ -110,7 +84,11 @@ shinyServer(function(input, output){
   
   
   
+=======
+shinyServer(function(input, output){  
+>>>>>>> 39b65861afa364b009bceb894ab2ae237859da26
   
+
   google_results <- reactive({
     gtrends(c(input$text1, input$text2, input$text3, input$text4), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   }) 
@@ -120,43 +98,34 @@ shinyServer(function(input, output){
     plot(google_results()) + 
       ggtitle(paste0('Google searches for "', input$textg, '"'))
   }) 
-  #should be filtered down to which candidate and which debate at this point
-  #some_clinton_words <- gtrends(c("women", "undocumented", "security", "espionage"), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-  #plot(some_clinton_words)
+
   
-  top_used_words <- reactive({
-    if(input$Speaker == "Donald Trump"){
-      trump_word_frequency %>% tbl_df() %>% arrange(desc(n))
-    } else if(input$Speaker == "Hilary Clinton"){
-      clinton_word_frequency %>% tbl_df() %>% arrange(desc(n))
-    }
+
+  words_speaker_debate <-   reactive({filter(big_word_frame, speaker == input$Speaker & debate == input$Debate)
   })
   
-  #   observeEvent(input$Speaker, ({
-  #   if(input$Speaker == "Hilary Clinton"){
-  #       top_used_words <- reactive({clinton_most_words %>% tbl_df() %>% arrange(desc(n))})
-  #     } else {
-  #       top_used_words <- reactive({trump_most_words %>% tbl_df() %>% arrange(desc(n))})
-  #     }
-  #   })
-  # )
-  
-  # ex <- renderText(clinton_most_words)
+  frequency <- table(words_speaker_debate)
+  top_used_words <- frequency %>% tbl_df() %>% arrange(desc(n))
   
   
-  output$high_frequency_words <- shiny::renderDataTable( 
-    shiny::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
+  #still need to trim down columns to eliminate unnecesary columns in shiny table
+  
+  output$high_frequency_words <- DT::renderDataTable( 
+    DT::datatable(as.data.frame(top_used_words),
+                  options = list(pageLength = 10))
   ) 
   
-  output$high_frequency_words <- DT::renderDataTable(
-    DT::datatable(as.data.frame(top_used_words()),
-                  options = list(pageLength = 10))
-  )
+  
+ # output$word_plot <- renderPlot({plot(as.data.frame(top_used_words))})
   
   
-  output$word_plot <- renderPlot({plot(as.data.frame(top_used_words()))})
-  
-  
-  
-}) 
+  # google_breakdown <- reactive({ gtrends(input$state, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+  # })
+  # by_state <- google_breakdown["Top.searches.for.United.States"]
+  # by_state$Subregion <- tolower(by_state$Subregion)
+  # by_state <- rename(by_state, c(Subregion = "region", `United.States` = "value")) 
+  # output$states_plot <- renderPlot({state_choropleth(by_state)
+  # })
+   
+})    
 
