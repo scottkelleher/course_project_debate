@@ -21,17 +21,17 @@ shinyServer(function(input, output){
 
   
 
-  words_speaker_debate <-   reactive({filter(big_word_frame, speaker == input$Speaker & debate == input$Debate)
-  })
+  words_speaker_debate <-   reactive({filter(big_word_frame, speaker == input$Speaker & debate == input$Debate)})
   
-  frequency <- table(words_speaker_debate)
-  top_used_words <- frequency %>% tbl_df() %>% arrange(desc(n))
+  
+  frequency1 <- reactive({table(words_speaker_debate())})
+  top_used_words <- reactive({frequency1() %>% tbl_df() %>% arrange(desc(n))})
   
   
   #still need to trim down columns to eliminate unnecesary columns in shiny table
   
   output$high_frequency_words <- DT::renderDataTable( 
-    DT::datatable(as.data.frame(top_used_words),
+    DT::datatable(as.data.frame(top_used_words()),
                   options = list(pageLength = 10))
   ) 
   
