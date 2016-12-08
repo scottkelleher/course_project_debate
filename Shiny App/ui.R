@@ -1,7 +1,12 @@
 library(shiny)
 library(ggplot2)
 library(DT)
-load(big_word_frame)
+library(gtrendsR)
+
+load("big_word_frame.RData")
+usr <- ("535rprogram@gmail.com")
+psw <- ("groupproject")
+ch <- gconnect(usr, psw)
 
 ##start user interface
 shinyUI(fluidPage(  
