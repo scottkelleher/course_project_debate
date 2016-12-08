@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(DT)
+load(big_word_frame)
 
 ##start user interface
 shinyUI(fluidPage(  
