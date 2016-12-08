@@ -21,7 +21,7 @@ shinyServer(function(input, output){
 
   
 
-  words_speaker_debate <- reactive({filter(big_word_frame, speaker == input$Speaker & debate == input$Debate)})
+  words_speaker_debate <-   reactive({filter(big_word_frame, speaker == input$Speaker & debate == input$Debate)})
   
   
   frequency1 <- reactive({table(words_speaker_debate())})
