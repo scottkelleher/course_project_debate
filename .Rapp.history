@@ -1,0 +1,4 @@
+load("/Users/Tulsigompo/Desktop/course_project_debate/text_debate_source_file.RData")
+text_debate_1
+text_debate1
+load("/Users/Tulsigompo/Desktop/course_project_debate/text_debate_source_file.RData")
