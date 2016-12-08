@@ -252,4 +252,8 @@ all_hilaryclinton_words <- rbind(all_debate_words_clinton, all_debate_words_clin
 
 big_word_frame <- rbind(all_donaldtrump_words, all_hilaryclinton_words)
 
+<<<<<<< HEAD
 
+=======
+save(big_word_frame, file = "big_word_frame.RData")
+>>>>>>> dcc080633d110c238c80c6289506be7b19c32fdb
