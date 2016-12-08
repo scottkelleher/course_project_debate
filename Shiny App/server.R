@@ -30,10 +30,12 @@ shinyServer(function(input, output){
   
   #still need to trim down columns to eliminate unnecesary columns in shiny table
   
+  dd <- reactive ({as.data.frame(top_used_words())})
+  ddd <- reactive({select(dd(), word, n)})
   output$high_frequency_words <- DT::renderDataTable( 
-    DT::datatable(as.data.frame(top_used_words),
+    DT::datatable(ddd,
                   options = list(pageLength = 10))
-  ) 
+  )  
   
   
  #output$word_plot <- renderPlot({plot(as.data.frame(top_used_words))})
