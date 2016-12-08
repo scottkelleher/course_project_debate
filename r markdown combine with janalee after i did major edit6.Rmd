@@ -117,7 +117,8 @@ usr <- ("535rprogram@gmail.com")
 
 ```{r  echo = FALSE, warning = FALSE, message = FALSE}
 
-  google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = 
+                            "2016-11-15")
    plot(google_results)
    
 ```
@@ -140,7 +141,7 @@ term data by state for "bigly".
 
 ###**Emotional Context: Valence**
 We were also curious about the emotional context of each speaker during the three debates. Did one
-candidtate speak in a more positive context than the other? We used the Syuzhet package from R to conduct
+candidate speak in a more positive context than the other? We used the Syuzhet package from R to conduct
 this exploratory part of our analysis. Syuzhet is a package consisting of four sentiment dictionaries
 developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values
 from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment
