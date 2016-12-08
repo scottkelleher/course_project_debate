@@ -255,14 +255,14 @@ barplot(
   horiz = FALSE,
   cex.names = 0.7,
   las = 1,
-  main = "Clinton", xlab="Percentage"
+  main = "Clinton", xlab="Emotions categories"
   )
 barplot(
   colSums(prop.table(nrc_data_t[, 1:8])),
   horiz = FALSE,
   cex.names = 0.7,
   las = 1,
-  main = "Trump", xlab="Percentage"
+  main = "Trump", xlab="Emotions categories"
   )
   
 print(i)
@@ -291,14 +291,17 @@ break3 <- nrow(filter(clinton_y, clinton_y$debate == "3"))
 # all debates strug together                                                  ####### this plot needs a legend
 ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
   geom_line(color = "blue", size = 1, alpha = .4)+
-  geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 1, alpha = .4, color = "red")+
+  geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 1, alpha = .4, color = "red") +
   geom_vline(xintercept =(break1), size = 2, linetype = "dashed")+
   geom_vline(xintercept = (break1 + break2) , size = 2, linetype = "dashed")+
   geom_vline(xintercept = (break1 + break2+ break3) , size = 2, linetype = "dashed")+
   scale_x_continuous(breaks=c(break1, break1 + break2,break1+ break2+ break3), labels=c("debate 1", "debate 2", "debate 3"))+
-  ylab("emotional valance")+
-  xlab("")+
-  ggtitle("Candidate emotional valance during debates")  
+  ylab("emotional valance") +
+  xlab("") +
+  ggtitle("Candidate emotional valance during debates") +
+ geom_line(aes(y = score, colour="Clinton")) + # I added for legend
+   geom_line(aes(y=score, colour ="Trump")) # I added for legend
+
 
 ```
 
@@ -313,6 +316,8 @@ ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
   ggtitle("Trump Emotional Valence") +
   theme(plot.title = element_text(hjust = .5))
   
+
+
 ```
 
 ```{r   echo = FALSE, message = FALSE}
@@ -371,6 +376,7 @@ plot(clinton_list$x,
      ylab="Emotional Valence")
 lines(trump_list$x, trump_list$z, col="red")
 
+
 ######################################## the plots below are smoothed
 poa_sample <- seq(1, length(clinton_list$x), by=round(length(clinton_list$x)/100))
 bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
@@ -393,7 +399,6 @@ percent_vals <- get_percentage_values(s_v_sentiment, bins = 10)
 plot(
   percent_vals,
   type="l",
-  
   xlab = "Narrative Time",
   ylab= "Emotional Valence",
   col="red"
@@ -425,6 +430,6 @@ barplot(
   horiz = FALSE,
   cex.names = 0.7,
   las = 1,
-  main = "Emotions in Sample text", xlab="Percentage"
+  main = "Emotions in Sample text", xlab="Emotions category"
   )
 ```
