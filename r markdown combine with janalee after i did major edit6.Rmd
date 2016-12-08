@@ -117,7 +117,8 @@ usr <- ("535rprogram@gmail.com")
 
 ```{r  echo = FALSE, warning = FALSE, message = FALSE}
 
-  google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = 
+                            "2016-11-15")
    plot(google_results)
    
 ```
