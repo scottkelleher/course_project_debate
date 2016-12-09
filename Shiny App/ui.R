@@ -8,12 +8,12 @@ load("big_word_frame.RData")
 load("big_word_frame.RData")
 usr <- ("535rprogram@gmail.com")
 psw <- ("groupproject")
-ch <- gconnect(usr, psw) 
+ch <- gconnect(usr, psw)
 
 
 
  ##start user interface
- shinyUI(fluidPage( 
+ shinyUI(fluidPage(
    theme = "bootstrap.css",
    navbarPage("2016 Presidential Debate: Content Breakdown", 
             tabPanel("About", p("
@@ -33,8 +33,9 @@ ch <- gconnect(usr, psw)
         terms by state and the emotional context of the candidates during the debates. Click on any of the tabs 
         above to explore the debate content breakdown."),
                      img(src='debate_pic.jpg', width = "700", height = "400", style="display: block; margin-left: auto; margin-right: auto;"))
-   ),
     
+            
+   ),
     ##making tab for Gtrends
             tabPanel("Google Trends", 
               sidebarLayout(   
@@ -65,21 +66,21 @@ tabPanel("State-Level",
          sidebarLayout(
            sidebarPanel(
              p("Select debate and speaker, then enter up to four words to assess Google Trends by state"),
-             selectInput("Debate", "Debate", choices = c("1",
-                                                        "2",
-                                                         "3")),
-             selectInput("Speaker", "Speaker", choices = c("Clinton",
-                                                           "Trump"),
-                        selected = "Donald Trump"),
-
-             textInput("text1", label = h4("Google Search By State"), value = "deplorables"),
-             hr(),
-             fluidRow(column(3, verbatimTextOutput("value")))),
-
+           #   selectInput("Debate", "Debate", choices = c("1",
+           #                                              "2",
+           #                                               "3")),
+           #   selectInput("Speaker", "Speaker", choices = c("Clinton",
+           #                                                 "Trump"),
+           #              selected = "Donald Trump"),
+           #
+           #   textInput("text1", label = h4("Google Search By State"), value = "deplorables"),
+           #   hr(),
+           #   fluidRow(column(3, verbatimTextOutput("value")))),
+           #
            # ##  Main Panel
             mainPanel(
              plotOutput("states_plot")
-           ) ) ))
+           ) ) )
          
 )) 
  
@@ -106,7 +107,7 @@ tabPanel("State-Level",
 #             ##  Main Panel
 #             mainPanel(DT::dataTableOutput("high_frequency_words")
 #             ) ) )))
-
+)
  
  
  
