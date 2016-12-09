@@ -13,9 +13,8 @@ ch <- gconnect(usr, psw)
 
  ##start user interface
 
-
  shinyUI(fluidPage(theme = "bootstrap.css",
-         tabsetPanel("2016 Presidential Debate: Content Breakdown",
+         navbarPage("2016 Presidential Debate: Content Breakdown",
             tabPanel("About", p("
         The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle
         to the bittersweet end trying to convince the American people that they were the better-suited
@@ -55,10 +54,9 @@ ch <- gconnect(usr, psw)
                 ##  Main Panel
                 mainPanel(
                   plotOutput("term_plot"))
-                )
-              ))))
-
- # #  # # #By State
+                ))
+              )))
+ # #By State
  # tabPanel("State-Level",
  #           sidebarLayout(
  #              sidebarPanel(
@@ -74,10 +72,11 @@ ch <- gconnect(usr, psw)
  #              fluidRow(column(3, verbatimTextOutput("value")
  #               ))
  #              ))),
- #            ##  Main Panel
+ #           ##  Main Panel
  #            mainPanel(
  #              plotOutput("states_plot"))
- #                      )))
+ #                      ))
+ 
  
                    
  
