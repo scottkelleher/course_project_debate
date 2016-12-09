@@ -227,7 +227,6 @@ for (i in (1:3)) {
   ##Breaking clinton lines into individual words
   clinton_words <- text_clinton %>%
     unnest_tokens(word, text_c)  
-  #clinton_words
 
   #filter out the stopwords, add which debate it was and what day and time
   clinton_words_unique <- !(clinton_words$word %in% stopwords())
@@ -239,10 +238,10 @@ for (i in (1:3)) {
   if(i == 1){
     all_debate_words_clinton<- clinton_words
   } else{
-    all_debate_words_clinton <- bind_rows(all_debate_words_clinton, clinton_words)
+    all_debate_words_clinton <- bind_rows(all_debate_words_clinton,
+                                          clinton_words)
   }
-  
-  
+
 sentiment_clinton <- get_sentiment(as.vector(clinton_words$word))
 sentiment_trump <- get_sentiment(as.vector(trump_words$word))
 
@@ -377,6 +376,32 @@ print(i)
 }
 
 ```
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.width = 10, fig.height = 9}
+df <- list(trump = all_debate_words_trump, 
+           clinton = all_debate_words_clinton) %>%
+  bind_rows(.id = "speaker") %>%
+  group_by(speaker, debate) %>%
+  dplyr::mutate(n = 1:n(),
+                perc_debate = n / n()) %>%
+  ungroup() %>%
+  mutate(emo_var = get_sentiment(word)) %>%
+  group_by(speaker, debate) %>%
+  mutate(smooth_emo_var = zoo::rollmean(emo_var, k = bwdw, fill = NA)) %>%
+  ungroup() %>%
+  mutate(scale_emo_var = 2 * (smooth_emo_var - 
+                                min(smooth_emo_var, na.rm = TRUE)) / 
+           (max(smooth_emo_var, na.rm = TRUE) - 
+              min(smooth_emo_var, na.rm = TRUE)) - 1)
+ggplot(df, aes(x = perc_debate, y = scale_emo_var, color = speaker)) + 
+  geom_line() + 
+  # geom_smooth(se = FALSE, alpha = 0.8, span = 0.05) + 
+  facet_wrap(~ debate, ncol = 1) + 
+  theme_minimal() + 
+  xlab("Order of word in debate") + 
+  ylab("Emotional valence")
+```
+
 
 ```{r   echo = FALSE, message = FALSE}
 # not really using this one for anything but do not erase 
