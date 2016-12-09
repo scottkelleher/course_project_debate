@@ -15,8 +15,8 @@ ch <- gconnect(usr, psw)
  ##start user interface
  shinyUI(fluidPage(
    theme = "bootstrap.css",
-   tabsetPanel(
-     tabPanel("Home", p("
+   navbarPage("2016 Presidential Debate: Content Breakdown", 
+            tabPanel("About", p("
         The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle 
         to the bittersweet end trying to convince the American people that they were the better-suited 
         candidate to lead our country. According to CNN.com, a record breaking 84 million viewers tuned 
@@ -32,10 +32,12 @@ ch <- gconnect(usr, psw)
         during or immediately following the debates. Additionally users of this app can check out Googled 
         terms by state and the emotional context of the candidates during the debates. Click on any of the tabs 
         above to explore the debate content breakdown.")),
-              tabPanel("Word Trends",
-                       sidebarLayout(   
+    
+    ##making tab for Gtrends
+            tabPanel("Google Trends", 
+              sidebarLayout(   
                 sidebarPanel(
-                  p("Select debate and speaker, then enter up to five words to assess Google Trends"),
+                  p("Select debate and speaker, then enter up to four words to assess Google Trends"),
                   selectInput("Debate", "Debate", choices = c("1",
                                                               "2",
                                                               "3")),
@@ -47,61 +49,98 @@ ch <- gconnect(usr, psw)
                   textInput("text2", label = h6(""), value = "clinton foundation"),
                   textInput("text3", label = h6(""), value = "border wall"),
                   textInput("text4", label = h6(""), value = "bigly"),
-                  #textInput("state", label = h4("Google search by state"), value = "bigly"),
                   hr(),
                   fluidRow(column(3, verbatimTextOutput("value")))),
                 
                 ##  Main Panel
-                mainPanel( 
-                  tabPanel("Google Trends",
-                                     plotOutput("term_plot"))))))))
-                                     
-                  
-        ##frequency panel
-               tabsetPanel(
-                 tabPanel("Frequency",p(""),
-                            sidebarLayout(   
-                              sidebarPanel(
-                                p("Select debate and speaker, then enter up to five words to assess Google Trends"),
-                               selectInput("Debate", "Debate", choices = c("1",
-                                                                            "2",
-                                                                           "3")),
-                               selectInput("Speaker", "Speaker", choices = c("Clinton",
-                                                                              "Trump"), 
-                                           selected = "Donald Trump"),
-                                #Main Panel
-                             mainPanel( 
-                                  tabPanel("Frequency of Words", 
-                                           DT::dataTableOutput("high_frequency_words")
-                                            ) ) )
-               )))
+                mainPanel(
+                  plotOutput("term_plot")
+                  ) ) ),
+     
+# #By State 
+  tabPanel("State-Level", 
+           sidebarLayout(   
+             sidebarPanel(
+               p("Select debate and speaker, then enter up to four words to assess Google Trends by state"),
+               selectInput("Debate", "Debate", choices = c("1",
+                                                          "2",
+                                                           "3")),
+               selectInput("Speaker", "Speaker", choices = c("Clinton",
+                                                             "Trump"), 
+                          selected = "Donald Trump"),
                
-               ##State level panel
-               tabsetPanel(
-                 tabPanel("Search by State",
-                          sidebarLayout(   
-                            sidebarPanel(
-                              p("Select debate and speaker, then enter up to five words to assess Google Trends"),
-                              selectInput("Debate", "Debate", choices = c("1",
-                                                                          "2",
-                                                                          "3")),
-                              selectInput("Speaker", "Speaker", choices = c("Clinton",
-                                                                            "Trump"), 
-                                          selected = "Donald Trump"),
-                              
-                              textInput("text1", label = h4("Enter word or phrase to display Google Trends"), value = "deplorables"),
-                              textInput("text2", label = h6(""), value = "clinton foundation"),
-                              textInput("text3", label = h6(""), value = "border wall"),
-                              textInput("text4", label = h6(""), value = "bigly"),
-                              #textInput("state", label = h4("Google search by state"), value = "bigly"),
-                              hr(),
-                              fluidRow(column(3, verbatimTextOutput("value")))),
-                            
-                            ##  Main Panel
-                            mainPanel( 
-                              tabPanel("Google Trends by State",
-                                       plotOutput("states_plot"))))))
-               
+               textInput("text1", label = h4("Google Search By State"), value = "deplorables"),
+               hr(),
+               fluidRow(column(3, verbatimTextOutput("value")))),
+             
+             ##  Main Panel
+             mainPanel(
+               plotOutput("states_plot")
+             ) ) ))))
+ 
+ # #Word Frequecy Table
+ # tabPanel("Frequency", 
+ #          sidebarLayout(   
+ #            sidebarPanel(
+ #              p("Select debate and speaker, then enter up to four words to assess Google Trends"),
+ #              selectInput("Debate", "Debate", choices = c("1",
+ #                                                          "2",
+ #                                                          "3")),
+ #              selectInput("Speaker", "Speaker", choices = c("Clinton",
+ #                                                            "Trump"), 
+ #                          selected = "Donald Trump"),
+ #              
+ #              textInput("text1", label = h4("Enter word or phrase to display Google Trends"), value = "deplorables"),
+ #              textInput("text2", label = h6(""), value = "clinton foundation"),
+ #              textInput("text3", label = h6(""), value = "border wall"),
+ #              textInput("text4", label = h6(""), value = "bigly"),
+ #              #textInput("state", label = h4("Google search by state"), value = "bigly"),
+ #              hr(),
+ #              fluidRow(column(3, verbatimTextOutput("value")))),
+ #            
+ #            ##  Main Panel
+ #            mainPanel(DT::dataTableOutput("high_frequency_words")
+ #            ) ) )))
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      
+#mainPanel( 
+  #    tabPanel("Frequency of Words", 
+  #            DT::dataTableOutput("high_frequency_words")
+               # ##State level panel
+               # tabsetPanel(
+               #   tabPanel("Search by State",
+               #            sidebarLayout(   
+               #              sidebarPanel(
+               #                p("Select debate and speaker, then enter up to five words to assess Google Trends"),
+               #                selectInput("Debate", "Debate", choices = c("1",
+               #                                                            "2",
+               #                                                            "3")),
+               #                selectInput("Speaker", "Speaker", choices = c("Clinton",
+               #                                                              "Trump"), 
+               #                            selected = "Donald Trump"),
+               #                
+               #                textInput("text1", label = h4("Enter word or phrase to display Google Trends"), value = "deplorables"),
+               #                textInput("text2", label = h6(""), value = "clinton foundation"),
+               #                textInput("text3", label = h6(""), value = "border wall"),
+               #                textInput("text4", label = h6(""), value = "bigly"),
+               #                #textInput("state", label = h4("Google search by state"), value = "bigly"),
+               #                hr(),
+               #                fluidRow(column(3, verbatimTextOutput("value")))),
+               #              
+               #              ##  Main Panel
+               #              mainPanel( 
+               #                tabPanel("Google Trends by State",
+               #                         plotOutput("states_plot"))))))
+               # 
    
  #   #application title
  #   titlePanel("Google Trends"),
