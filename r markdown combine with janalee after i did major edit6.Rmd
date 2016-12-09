@@ -119,14 +119,11 @@ db3 <-ymd_hms(161029020000, tz = "UTC")
 date_time <-c(db1, db2, db3)
 ```
 
-```{r  echo = FALSE, warning = FALSE, message = FALSE}
-
-google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = 
-                            "2016-11-15")
-   plot(google_results)
-   
+```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 4}
+google_results <- gtrends(google_these_words, geo = "US",
+                          start_date = "2016-09-01", end_date = "2016-11-15")
+plot(google_results)
 ```
-   
    
 ###**State Level Search Trends**
 Additionally, we were interested in specific terminology searched in Google at the
