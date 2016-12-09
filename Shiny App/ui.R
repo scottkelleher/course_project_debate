@@ -3,6 +3,7 @@ library(ggplot2)
 library(DT)
 library(gtrendsR)
 library(stringr)
+library(choroplethr)
 load("big_word_frame.RData")
 
 load("big_word_frame.RData")
@@ -13,9 +14,8 @@ ch <- gconnect(usr, psw)
 
 
  ##start user interface
- shinyUI(fluidPage(
+ shinyUI(fluidPage(navbarPage("2016 Presidential Debate: Content Breakdown",
    theme = "bootstrap.css",
-   navbarPage("2016 Presidential Debate: Content Breakdown", 
             tabPanel("About", 
      p("The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle 
         to the bittersweet end trying to convince the American people that they were the better-suited 
@@ -51,14 +51,15 @@ ch <- gconnect(usr, psw)
                   textInput("text3", label = h6(""), value = "border wall"),
                   textInput("text4", label = h6(""), value = "bigly"),
                   hr(),
-                  fluidRow(column(3, verbatimTextOutput("value")))
+                  fluidRow(column(3, verbatimTextOutput("value")
+                  ))
                   ),
 
                 ##  Main Panel
                 mainPanel(plotOutput("term_plot"))
-                  ) ),
-   
- #By State
+                          )),
+                  
+ # # # #By State
   tabPanel("State-Level",
            sidebarLayout(
              sidebarPanel(
@@ -71,36 +72,42 @@ ch <- gconnect(usr, psw)
                #            selected = "Donald Trump"),
                textInput("text1", label = h4("Google Search By State"), value = "deplorables"),
                hr(),
-               fluidRow(column(3, verbatimTextOutput("value")))
+               fluidRow(column(3, verbatimTextOutput("value")
+                ))
                ),
 
              ##  Main Panel
-             mainPanel(plotOutput("states_plot"))
-             )),
+             mainPanel(plotOutput("states_plot")
+                       )
+                    ))
+                  )))
 
- 
- #Word Frequecy Table
-  tabPanel("Frequency",
-           sidebarLayout(
-             sidebarPanel(
-               p("Select debate and speaker, then enter up to four words to assess Google Trends"),
-               selectInput("Debate", "Debate", choices = c("1",
-                                                           "2",
-                                                           "3")),
-               selectInput("Speaker", "Speaker", choices = c("Clinton",
-                                                             "Trump"),
-                           selected = "Donald Trump"),
-
-                textInput("text1", label = h4("Enter word or phrase to display Google Trends"), value = "deplorables"),
-                textInput("text2", label = h6(""), value = "clinton foundation"),
-                textInput("text3", label = h6(""), value = "border wall"),
-                textInput("text4", label = h6(""), value = "bigly"),
-                hr(),
-                fluidRow(column(3, verbatimTextOutput("value")))
-                ),
-             ##  Main Panel
-             mainPanel(DT::dataTableOutput("high_frequency_words"))
-             ) ) ) ) )
+ # #Word Frequecy Table
+ #  tabPanel("Frequency",
+ #           sidebarLayout(
+ #             sidebarPanel(
+ #               p("Select debate and speaker, then enter up to four words to assess Google Trends"),
+ #               selectInput("Debate", "Debate", choices = c("1",
+ #                                                           "2",
+ #                                                           "3")),
+ #               selectInput("Speaker", "Speaker", choices = c("Clinton",
+ #                                                             "Trump"),
+ #                           selected = "Donald Trump"),
+ # 
+ #                textInput("text1", label = h4("Enter word or phrase to display Google Trends"), value = "deplorables"),
+ #                textInput("text2", label = h6(""), value = "clinton foundation"),
+ #                textInput("text3", label = h6(""), value = "border wall"),
+ #                textInput("text4", label = h6(""), value = "bigly"),
+ #                hr(),
+ #                fluidRow(column(3, verbatimTextOutput("value")
+ #                      )
+ #                    )
+ #                  ),
+ #             ##  Main Panel
+ #             mainPanel(DT::dataTableOutput("high_frequency_words")
+ #                       )
+ #             ) ) 
+ # ) 
 
  
  
