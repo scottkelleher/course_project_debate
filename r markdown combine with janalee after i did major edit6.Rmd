@@ -5,6 +5,38 @@ date: "December 5, 2016"
 output: html_document
 ---
 
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+##Loading libraries
+library(rvest)
+#library(tidyverse)
+library(stringr)
+library(tidytext)
+library(gtrendsR)
+library(tokenizers)
+library(dplyr)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(sentimentr)
+library(lubridate)
+library(ggplot2)
+library(readr)
+library(gtrendsR)
+library(xml2)
+#library(shiny)
+library(devtools)
+library(RTextTools)
+library(googleVis)
+library(syuzhet)
+library(RTextTools)
+library(googleVis)
+library(DT)
+library(choroplethr)
+library(choroplethrMaps)
+library(syuzhet)
+```
+
+
 ###**Introduction**
 
 The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the
@@ -64,36 +96,7 @@ google_these_words <- c("Melania", "email scandal", "bigly",
 # enter one phrase you would like to see broken down by state
 google_states <- c("bigly")
 
-##Loading libraries
-library(rvest)
-#library(tidyverse)
-library(stringr)
-library(tidytext)
-library(gtrendsR)
-library(tokenizers)
-library(dplyr)
-library(tm)
-library(SnowballC)
-library(wordcloud)
-library(sentimentr)
-library(lubridate)
-library(ggplot2)
-library(readr)
-library(gtrendsR)
-library(xml2)
-#library(shiny)
-library(devtools)
-library(RTextTools)
-library(googleVis)
-library(syuzhet)
 
-
-library(RTextTools)
-library(googleVis)
-library(DT)
-library(choroplethr)
-library(choroplethrMaps)
-library(syuzhet)
 
 usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
