@@ -31,7 +31,8 @@ ch <- gconnect(usr, psw)
         The following interactive Shiny App allows users to evaluate any words or phrases that were Googled 
         during or immediately following the debates. Additionally users of this app can check out Googled 
         terms by state and the emotional context of the candidates during the debates. Click on any of the tabs 
-        above to explore the debate content breakdown.")),
+        above to explore the debate content breakdown."),
+                     img(src='debate_pic.jpg', width = "700", height = "400", style="display: block; margin-left: auto; margin-right: auto;")),
     
     ##making tab for Gtrends
             tabPanel("Google Trends", 
