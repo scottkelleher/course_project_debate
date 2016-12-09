@@ -81,7 +81,6 @@ Trump or Hillary Clinton). The following results were then generated using the R
 from CRAN, which displays the Google search trends for those specific words. 
 
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
-
 ## specify inputs
 Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
 Debate <- "Second_Debate"    # enter First_Debate or Second_Debate or 
@@ -94,30 +93,30 @@ google_these_words <- c("Melania", "email scandal", "bigly",
 # enter one phrase you would like to see broken down by state
 google_states <- c("bigly")
 
-
-
 usr <- ("535rprogram@gmail.com")
-  psw <- ("groupproject")
-  ch <- gconnect(usr, psw)
+psw <- ("groupproject")
+ch <- gconnect(usr, psw)
 
-  text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
-  text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")  # load the second debate page
-  text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")# load the third debate page 
+# Load the debates 
+text_debate1 <- read_html(paste0("http://www.presidency.ucsb.edu/",
+                                 "ws/index.php?pid=118971"))
+text_debate2 <- read_html(paste0("http://www.presidency.ucsb.edu/",
+                                  "ws/index.php?pid=119038"))  
+text_debate3 <- read_html(paste0("http://www.presidency.ucsb.edu/",
+                                 "ws/index.php?pid=119039"))
   
-  text_debate1 <- html_nodes(text_debate1, ".displaytext") %>% # isloate the text
+text_debate1 <- html_nodes(text_debate1, ".displaytext") %>% # isloate the text
     html_text() # get the text
-  
-  text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
+text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
     html_text() # get the text
-  
-  text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
+text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
     html_text() # get the text
-  w <- c(text_debate1, text_debate2, text_debate3)
+w <- c(text_debate1, text_debate2, text_debate3)
   
-  db1 <- ymd_hms(160927020000, tz = "UTC")
-  db2 <- ymd_hms(161009020000, tz = "UTC")
-  db3 <-ymd_hms(161029020000, tz = "UTC")
-  date_time <-c(db1, db2, db3)
+db1 <- ymd_hms(160927020000, tz = "UTC")
+db2 <- ymd_hms(161009020000, tz = "UTC")
+db3 <-ymd_hms(161029020000, tz = "UTC")
+date_time <-c(db1, db2, db3)
 ```
 
 ```{r  echo = FALSE, warning = FALSE, message = FALSE}
