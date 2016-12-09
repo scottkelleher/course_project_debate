@@ -42,6 +42,7 @@ text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
 
 text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
   html_text() # get the text
+
 w <- c(text_debate1, text_debate2, text_debate3)
 
 #dates of debate
@@ -50,7 +51,7 @@ db2 <- ymd_hms(161009020000, tz = "UTC")
 db3 <-ymd_hms(161029020000, tz = "UTC")
 date_time <-c(db1, db2, db3)
 
-for (i in (1:3)) {    
+ for (i in (1:3)){    
   
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   getLines <- function(person){
@@ -131,8 +132,19 @@ for (i in (1:3)) {
   ##Object that has word frequencies sorted from least to most for trump
   trump_most_words <- sort(trump_word_frequency)
   
-  
-  
+clinton_word_frequency <- as.data.frame(clinton_word_frequency)
+clinton_word_top <- clinton_word_frequency %>%
+filter(Freq >= 1) %>%
+select(word, debate, Freq)
+clinton_word_frequency
+head(clinton_word_frequency,600)
+
+
+trump_word_frequency <- as.data.frame(trump_word_frequency)
+trump_word_top <- trump_word_frequency %>%
+  filter(Freq >= 1) %>%
+  select(word, debate, Freq)
+head(trump_word_frequency,1000)
   
   
 

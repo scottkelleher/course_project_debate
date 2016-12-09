@@ -4,47 +4,6 @@ author: "Scott Kelleher, Tulsi Gompo, Janalee Thompson"
 date: "December 5, 2016"
 output: html_document
 ---
-
-**Introduction**
-
-The 2016 presidential debates unfolded slowly as November approached. We watched
-candidates battle to the bittersweet end trying to convince the American people that
-they were the better-suited candidate to lead our country. According to
-[CNN.com](http://money.cnn.com/2016/09/27/media/debate-ratings-record-viewership/), a record breaking 84 million viewers tuned in to watch Hillary
-Clinton and Donald Trump in the first debate, making this the most watched presidential debate in history. Though the first debate broke records,
-there were three debates in total spanning over two months. Some would consider these debates amusing (or surprising) to say the least, such that
-terminology never before used in political discussions was broadcasted live for United States citizens and other countries to see in all its'
-glory. "Piggy" and "deplorable" were just a couple words that were said during the debates that fired up some viewers, and there was even some
-terminology used that was just plain confusing like "bigly." So what is it that we all do when we want to know more about something? We just
-"Google it" of course. 
-
-###**What were we thinking?**
-
-As each debate unfolded, we wondered how many other people (like us) were using
-Google to search for termininology used by Donald Trump and Hillary Clinton during the debates- like the second amendment for example. Thus, we
-generated an analysis utilizing debate content and Google search terms. We started checking out Google Trends and tried trending some search terms
-ourselves. Google Trends is available to the general public with the purpose of displaying global search trends in Google. Google Trends adjusts
-Google searches by dividing each individual data point by total searches, geography and time range. In other words, this displays the term that was
-searched in relation to global search-volume. Trends in the data can be graphed by country or city. 
-  
-Terms such as “second amendment” and “Isis” were some of the first terms we tried
-that we thought would probably prompt some pretty drastic search trends, which they did. Then, after using Google Trends to search what was
-intended to be a few words, we ended up searching a copious amount of terms (related and unrelated to the debates)! It was time to get down to
-business and locate the debate scripts and take some terms used by our candidates for a spin in Google Trends. 
-
-We webscraped and read [each](http://www.presidency.ucsb.edu/debates.php)
-presidential debate script and noted some terminology that stood out. Displayed below
-are some terms used by our now President-Elect Donald Trump during the second debate.
-The terms *Melania*, *e-mail scandal*, *bigly*, *nasty woman*, and *benghazi* were
-some of the most searched words during and immediately following the second debate. "Bigly" was misinterpreted as the Donald Trump phrase, "Big
-League." Interestingly as a result of this confusion, Google Trends reported that "Bigly" had become the top trending search on all of Google.
-Check out the Tweet [here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres idential-debate/21587735/). 
-  
-Here are some of the top words and phrases that had interesting search trends. After webscraping the three presidential debates, we broke down the
-debate into individual words said by each speaker (Donald Trump or Hillary Clinton). The following results were then generated using the R package
-Googletrendsr from CRAN, which displays the Google search trends for those specific words. 
-
-####**Five Phrases that had interesting Google search trends with respect to their debate**
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
 
 ## specify inputs
@@ -110,42 +69,13 @@ usr <- ("535rprogram@gmail.com")
   date_time <-c(db1, db2, db3)
 ```
 
-####**State level search trends**
-Additionally, we were interested in specific terminology searched in Google at the
-state level. Specifically, which states were Googling some terms more than
-others? The following graphic is categorized by state using Google Trends search term
-data and the choroplethrMaps package in R. This example displays the state-level search
-term data by state for "bigly".
-
 ```{r  echo = FALSE, warning = FALSE, message = FALSE}
 
   google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
-   plot(google_results)  
-
+   plot(google_results)
    
 ```
    
-```{r  echo = FALSE, warning = FALSE, message = FALSE}
-  google_breakdown <- gtrends(google_states, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15") 
-
-
-  by_state <-google_breakdown[[5]]
-  by_state$Subregion <- tolower(by_state$Subregion)
-  by_state <- rename(by_state, c(Subregion = "region", `United.States` = "value"))
-
-    
-  state_choropleth(by_state)
-```
-
-###**Emotional Context**
-We were also curious about the emotional context of each speaker during the three debates. Did one candidtate speak in a more positive context than
-the other? We used the Syuzhet package from R to conduct this exploratory part of our analysis. Syuzhet is a package consisting of four sentiment
-dictionaries developed at Stanford. The purpose of this package is to extract words and assign them "sentiment" values from the sentiment
-dictionaries and plot them based on speaker. This package assigns words a sentiment score based on overall positivity and negativity. There is not
-a numerical limit on scores, though negative words will tend to have negative sentiment scores and positive words will have positive sentiment
-scores. As shown here, each speaker is plotted with respect to the first, second or third debate with normalized emotional valence scores. As you
-can see, both Clinton and Trump had a pretty broad range of emotions during each debate. From this exploratory analysis, we can report that one
-candidate did not speak in a more positive emotional context than the other. 
 
 ```{r echo = FALSE, include = FALSE, message = FALSE}
 for (i in (1:3)) {     
@@ -247,20 +177,6 @@ bov_sample <- seq(1, length(trump_list_getting$x), by=round(length(trump_list_ge
 nrc_data_c <- get_nrc_sentiment(as.vector(clinton_words$word))
 nrc_data_t <- get_nrc_sentiment(as.vector(trump_words$word))
 
-# if (i == 3){
-#   clinton_emo3 <- as.vector(colSums(prop.table(nrc_data_c[, 1:8])))
-#   trump_emo3 <- as.vector(colSums(prop.table(nrc_data_t[, 1:8])))
-#     
-#     clinton_emo_plot <-  rbind(clinton_emo, clinton_emo2, clinton_emo3) 
-#     trump_emo_plot <- rbind(trump_emo, trump_emo2, trump_emo3)
-#     colnames(clinton_emo_plot) <- c("anger", "anticipation", "disgust", "fear", "joy", "sadness", "surprise", "trust")
-#     colnames(trump_emo_plot) <- c("anger", "anticipation", "disgust", "fear", "joy", "sadness", "surprise", "trust")
-# }
-# 
-# if (i == 2){
-#   clinton_emo2<- as.vector(colSums(prop.table(nrc_data_c[, 1:8])))
-#     trump_emo2 <- as.vector(colSums(prop.table(nrc_data_t[, 1:8])))
-# }
 
 if(i == 1){ 
     clinton_x_getting <- as.data.frame(clinton_list_getting$x)
@@ -322,32 +238,32 @@ if(i == 1){
   } 
 
 
-# plot(clinton_list$x[poa_sample], 
-#      clinton_list$z[poa_sample], 
-#      type="l", 
+# plot(clinton_list$x[poa_sample],
+#      clinton_list$z[poa_sample],
+#      type="l",
 #      col="blue",
-#      xlab="Narrative Time (sampled)", 
+#      xlab="Narrative Time (sampled)",
 #      ylab="Emotional Valence"
 #      )
 # lines(trump_list$x[bov_sample], trump_list$z[bov_sample], col="red")
-# 
-#   
-#   nrc_data_c <- get_nrc_sentiment(as.vector(clinton_words$word))
-#   nrc_data_t <- get_nrc_sentiment(as.vector(trump_words$word))
-# barplot(
-#   colSums(prop.table(nrc_data_c[, 1:8])), 
-#   horiz = FALSE, 
-#   cex.names = 0.7, 
-#   las = 1, 
-#   main = "Clinton", xlab="Percentage"
-#   )
-# barplot(
-#   colSums(prop.table(nrc_data_t[, 1:8])), 
-#   horiz = FALSE, 
-#   cex.names = 0.7, 
-#   las = 1, 
-#   main = "Trump", xlab="Percentage"
-#   )
+
+
+  nrc_data_c <- get_nrc_sentiment(as.vector(clinton_words$word))
+  nrc_data_t <- get_nrc_sentiment(as.vector(trump_words$word))
+barplot(
+  colSums(prop.table(nrc_data_c[, 1:8])),
+  horiz = FALSE,
+  cex.names = 0.7,
+  las = 1,
+  main = "Clinton", xlab="Emotions categories"
+  )
+barplot(
+  colSums(prop.table(nrc_data_t[, 1:8])),
+  horiz = FALSE,
+  cex.names = 0.7,
+  las = 1,
+  main = "Trump", xlab="Emotions categories"
+  )
   
 print(i)
 }
@@ -368,72 +284,55 @@ names(df_c) <- c("clinton_plot_x", "debate", "clinton_plot_y")
 df_t <- data.frame(trump_x, trump_y)
 names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
 
-# all debates strug together
-# ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y_getting$score))))+
-#   geom_line(color = "blue", size = 2, alpha = .4)+
-#   geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 2, alpha = .4, color = "red")+
-#   #geom_vline(xintercept = 100, size = 2, linetype = "dashed")+
-#   #geom_vline(xintercept = 200, size = 2, linetype = "dashed")+
-#   #scale_x_continuous(breaks=c(0,100,200), labels=c("debate 1", "debate 2", "debate 3"))+
-#   ylab("emotional valance")+
-#   xlab("")+
-#   ggtitle("Candidate emotional valance during debates")
-#   
+break1 <- nrow(filter(clinton_y, clinton_y$debate == "1"))
+break2 <- nrow(filter(clinton_y, clinton_y$debate == "2"))
+break3 <- nrow(filter(clinton_y, clinton_y$debate == "3"))
+
+# all debates strug together                                                  ####### this plot needs a legend
+ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
+  geom_line(color = "blue", size = 1, alpha = .4)+
+  geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 1, alpha = .4, color = "red") +
+  geom_vline(xintercept =(break1), size = 2, linetype = "dashed")+
+  geom_vline(xintercept = (break1 + break2) , size = 2, linetype = "dashed")+
+  geom_vline(xintercept = (break1 + break2+ break3) , size = 2, linetype = "dashed")+
+  scale_x_continuous(breaks=c(break1, break1 + break2,break1+ break2+ break3), labels=c("debate 1", "debate 2", "debate 3"))+
+  ylab("emotional valance") +
+  xlab("") +
+  ggtitle("Candidate emotional valance during debates") +
+ geom_line(aes(y = score, colour="Clinton")) + # I added for legend
+   geom_line(aes(y=score, colour ="Trump")) # I added for legend
+
+
 ```
-#
 
-```{r   echo = FALSE, message = FALSE}
-clinton_y$debate <- as.factor(clinton_y$debate)
-ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate)))+
-  geom_line()+
-
-  ylab("emotional valance")+
-  xlab("")+
-  ggtitle("Clinton's emotional valance during debates")+
-scale_shape_discrete(name  ="Payer")
-                        
-  
-```
-  
-
-```{r  echo = FALSE, message = FALSE}
-
-trump_y$debate <- as.factor(trump_y$debate)
+```{r  echo = FALSE, message = FALSE}                               
+                                                                              # this plot needs name of legend changed
+trump_y$debate <- as.factor(trump_y$debate)  
 ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
   geom_line()+
-<<<<<<< HEAD
-
-  ylab("emotional valance")+
-  xlab("")+
-  ggtitle("Trump's emotional valance during debates")
-  
-```
-
-
-
-
-=======
   scale_fill_discrete(name = "Debate") +
   ylab("Emotional Valence")+
   xlab("Position in Debate")+
-  ggtitle("Trump Emotional Valance") +
+  ggtitle("Trump Emotional Valence") +
   theme(plot.title = element_text(hjust = .5))
   
+
+
 ```
 
 ```{r   echo = FALSE, message = FALSE}
+                                                                                        # this plot needs name of legend changed
 clinton_y$debate <- as.factor(clinton_y$debate)
 ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate)))+
   geom_line()+
   scale_fill_discrete(name = "Debate") +
   ylab("Emotional Valence")+
   xlab("Position in Debate")+
-  ggtitle("Clinton Emotional Valance") +
+  ggtitle("Clinton Emotional Valence") +
   theme(plot.title = element_text(hjust = .5))
   
 ```
   
->>>>>>> ffe7aa054d0756513189e998d5366b459f9f8d01
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
   #this chuck just makes a datatable of the words and can be hidden
 
@@ -464,10 +363,11 @@ pwdw <- round(length(sentiment_clinton)*.1)
 clinton_rolled <- zoo::rollmean(sentiment_clinton, k=pwdw)
 bwdw <- round(length(sentiment_trump)*.1)
 trump_rolled <- zoo::rollmean(sentiment_trump, k=bwdw)
-###############this is a good comparison between the candidates, not really smoothed much 
+###############this is a good comparison between the candidates, not really smoothed much but still smoothed 
 clinton_list <- rescale_x_2(clinton_rolled)
 trump_list <- rescale_x_2(trump_rolled)
 
+################################### this plot needs a title and a legend 
 plot(clinton_list$x, 
      clinton_list$z, 
      type="l", 
@@ -476,93 +376,60 @@ plot(clinton_list$x,
      ylab="Emotional Valence")
 lines(trump_list$x, trump_list$z, col="red")
 
+
 ######################################## the plots below are smoothed
 poa_sample <- seq(1, length(clinton_list$x), by=round(length(clinton_list$x)/100))
 bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
 
-# plot(clinton_list$x[poa_sample], 
-#      clinton_list$z[poa_sample], 
-#      type="l", 
-#      col="blue",
-#      xlab="Narrative Time (sampled)", 
-#      ylab="Emotional Valence"
-#      )
-# lines(trump_list$x[bov_sample], trump_list$z[bov_sample], col="red")
-# 
+###################################################  this plot need a title and a legend
+plot(clinton_list$x[poa_sample],
+     clinton_list$z[poa_sample],
+     type="l",
+     col="blue",
+     xlab="Narrative Time (sampled)",
+     ylab="Emotional Valence"
+     )
+lines(trump_list$x[bov_sample], trump_list$z[bov_sample], col="red")
+
 # #################################################################################################################
 # 
-# plot(
-#   s_v_sentiment_c, 
-#   s_v_sentiment_t,
-#   type="l", 
-#   main="Example Plot Trajectory", 
-#   xlab = "Narrative Time", 
-#   ylab= "Emotional Valence"
-#   )
-# 
-# 
-# percent_vals <- get_percentage_values(s_v_sentiment, bins = 10)
-# plot(
-#   percent_vals, 
-#   type="l", 
-#   main= paste0("Speaker = ",  Speaker), 
-#   xlab = "Narrative Time", 
-#   ylab= "Emotional Valence", 
-#   col="red"
-#   )
-# 
-# ##### smooothed response of plot above
-# ft_values <- get_transformed_values(
-#       s_v_sentiment, 
-#       low_pass_size = 3, 
-#       x_reverse_len = 100,
-#       padding_factor = 2,
-#       scale_vals = TRUE,
-#       scale_range = FALSE
-#       )
-# plot(
-#   ft_values, 
-#   type ="l", 
-#   main =Speaker, 
-#   xlab = "Narrative Time", 
-#   ylab = "Emotional Valence", 
-#   col = "red"
-#   )
-# 
-# 
-# nrc_data <- get_nrc_sentiment(as.vector(clinton_words$word))
-# 
-# barplot(
-#   sort(colSums(prop.table(nrc_data[, 1:8]))), 
-#   horiz = FALSE, 
-#   cex.names = 0.7, 
-#   las = 1, 
-#   main = "Emotions in Sample text", xlab="Percentage"
-#   )
+
+
+percent_vals <- get_percentage_values(s_v_sentiment, bins = 10)
+plot(
+  percent_vals,
+  type="l",
+  xlab = "Narrative Time",
+  ylab= "Emotional Valence",
+  col="red"
+  )
+
+##### smooothed response of plot above
+ft_values <- get_transformed_values(
+      s_v_sentiment,
+      low_pass_size = 3,
+      x_reverse_len = 100,
+      padding_factor = 2,
+      scale_vals = TRUE,
+      scale_range = FALSE
+      )
+plot(
+  ft_values,
+  type ="l",
+  main =Speaker,
+  xlab = "Narrative Time",
+  ylab = "Emotional Valence",
+  col = "red"
+  )
+
+
+nrc_data <- get_nrc_sentiment(as.vector(clinton_words$word))
+
+barplot(
+  sort(colSums(prop.table(nrc_data[, 1:8]))),
+  horiz = FALSE,
+  cex.names = 0.7,
+  las = 1,
+  main = "Emotions in Sample text", xlab="Emotions category"
+  )
 ```
-
-```{r}
- trump_emo_plot_this_shit <- rename(trump_emo, c(`colSums(prop.table(nrc_data_t[, 1:8]))` = "emo_val", `rownames(trump_emo)` = "what_emotion"))
-ggplot(trump_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
-  geom_bar(position="dodge", stat="identity")
- 
-
- clinton_emo_plot_this_shit <- rename(clinton_emo, c(`colSums(prop.table(nrc_data_c[, 1:8]))` = "emo_val", `rownames(clinton_emo)` = "what_emotion"))
-ggplot(clinton_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
-  geom_bar(position="dodge", stat="identity")
-
-```
-###**Limitations**
-As with any research, there are some limitations to this analysis. The data
-is limited to people who use Google as their search engine. This would exclude
-non-internet users and people who use Yahoo or other search engines. Though this may
-seem like a daunting limitation, Google is the most popular search engine in the world
-fostering over 1.17 billion people. If you want to check out the statistics behind
-this, check out this [link](https://www.statista.com/chart/899/unique-users-of-search-
-engines-in-december-2012/). 
-  
-  
-  
-  
-  
-  
