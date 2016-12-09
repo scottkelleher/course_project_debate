@@ -17,7 +17,7 @@ shinyServer(function(input, output){
   
   output$term_plot <- renderPlot({
     plot(google_results()) + 
-      ggtitle(paste0('Google searches for "', input$textg, '"'))
+      ggtitle(paste0('Google searches', input$textg, ' '))
   }) 
 
   
