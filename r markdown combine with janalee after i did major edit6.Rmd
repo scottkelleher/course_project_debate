@@ -530,6 +530,7 @@ geom_bar(position="dodge", stat="identity") +
 labs(title = "Trump Sentiment", x = "Sentiment", y = "Fractional Amount of Total") +
 scale_fill_discrete(name = "Debate")+
 theme(plot.title = element_text(hjust = .5))
+
 ```
 
 Similarly, this plot displays the sentiment in Hillary Clinton's words for all three
