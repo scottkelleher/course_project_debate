@@ -54,7 +54,7 @@ ch <- gconnect(usr, psw)
                 ##  Main Panel
                 mainPanel( 
                   tabPanel("Google Trends",
-                                     plotOutput("term_plot"))))))))
+                                     plotOutput("term_plot")))))),
                                      
                   
         ##frequency panel
@@ -68,13 +68,13 @@ ch <- gconnect(usr, psw)
                                                                            "3")),
                                selectInput("Speaker", "Speaker", choices = c("Clinton",
                                                                               "Trump"), 
-                                           selected = "Donald Trump"),
+                                           selected = "Donald Trump")),
                                 #Main Panel
                              mainPanel( 
                                   tabPanel("Frequency of Words", 
                                            DT::dataTableOutput("high_frequency_words")
                                             ) ) )
-               )))
+               )),
                
                ##State level panel
                tabsetPanel(
@@ -101,6 +101,7 @@ ch <- gconnect(usr, psw)
                             mainPanel( 
                               tabPanel("Google Trends by State",
                                        plotOutput("states_plot"))))))
+ ))
                
    
  #   #application title
