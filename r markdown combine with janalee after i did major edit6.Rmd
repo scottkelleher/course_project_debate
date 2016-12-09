@@ -131,13 +131,36 @@ state level. Specifically, which states were Googling some terms more than
 others? The following graphic is categorized by state using Google Trends search term
 data and the choroplethrMaps package in R. This example displays the state-level search
 term data by state for "bigly".
-```{r  echo = FALSE, warning = FALSE, message = FALSE}
-  google_breakdown <- gtrends(google_states, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
 
-  by_state <-google_breakdown[[5]]
-  by_state$Subregion <- tolower(by_state$Subregion)
-  by_state <- rename(by_state, c(Subregion = "region", `United.States` = "value"))
-  state_choropleth(by_state)
+```{r message = FALSE}
+state_election_results <- read_csv(paste0("https://raw.githubusercontent.com/",
+                                      "kshaffer/election2016/master/",
+                                      "2016ElectionResultsByState.csv")) %>%
+  mutate(state = tolower(state),
+         perc_trump = trumpVotes / totalVotes)
+
+google_breakdown <- gtrends(google_states, geo = "US",
+                            start_date = "2016-09-01",
+                            end_date = "2016-11-15")
+by_state <-google_breakdown[[5]] %>%
+  mutate(Subregion = tolower(Subregion)) %>%
+  dplyr::rename(region = Subregion,
+                value = `United.States`) %>% 
+  left_join(state_election_results, by = c("region" = "state"))
+```
+
+
+```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 2.5}
+google_state_map <- state_choropleth(by_state) + 
+  ggtitle("Searches by state")
+searches_vs_votes <- ggplot(by_state, aes(x = value, y = perc_trump)) + 
+  geom_point() + 
+  xlab("Google searches for 'bigly'") + 
+  ylab("Trump votes as percent\nof total votes") + 
+  ggtitle("Searches vs. votes\nby state")
+
+library(gridExtra)
+grid.arrange(searches_vs_votes, google_state_map, ncol = 2, widths = c(1, 2))
 ```
 
 ###**Emotional Context: Valence**
