@@ -34,6 +34,8 @@ ch <- gconnect(usr, psw)
         above to explore the debate content breakdown."),
                      img(src='debate_pic.jpg', width = "700", height = "400", style="display: block; margin-left: auto; margin-right: auto;")),
     
+            
+   ))
     ##making tab for Gtrends
             tabPanel("Google Trends", 
               sidebarLayout(   
@@ -80,7 +82,7 @@ tabPanel("State-Level",
              plotOutput("states_plot")
            ) ) )
          
-))
+)) 
  
  # #Word Frequecy Table
 #  tabPanel("Frequency",
