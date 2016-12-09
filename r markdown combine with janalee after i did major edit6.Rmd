@@ -8,7 +8,6 @@ output: html_document
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 ##Loading libraries
 library(rvest)
-#library(tidyverse)
 library(stringr)
 library(tidytext)
 library(gtrendsR)
@@ -23,7 +22,6 @@ library(ggplot2)
 library(readr)
 library(gtrendsR)
 library(xml2)
-#library(shiny)
 library(devtools)
 library(RTextTools)
 library(googleVis)
