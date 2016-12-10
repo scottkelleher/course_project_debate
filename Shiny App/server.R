@@ -55,12 +55,12 @@ shinyServer(function(input, output){
  output$word_plot <- renderPlot({plot(as.data.frame(top_used_words))})
   
   
-   google_breakdown <- reactive({ gtrends(input$state, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+   google_breakdown <- reactive({gtrends(input$state, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
    })
    by_state1 <- reactive({
      google_breakdown()$Top.subregions.for.United.States %>%
        mutate(Subregion = tolower(Subregion)) %>%
-       dplyr::rename(c(Subregion = "region", `United.States` = "value"))
+       rename(c(Subregion = "region", `United.States` = "value"))
      })
 
    output$states_plot <- renderPlot({state_choropleth(by_state1())
