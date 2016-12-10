@@ -60,7 +60,7 @@ shinyServer(function(input, output){
    by_state1 <- reactive({
      google_breakdown()$Top.subregions.for.United.States %>%
        mutate(Subregion = tolower(Subregion)) %>%
-       rename(c(Subregion = "region", `United.States` = "value"))
+       plyr::rename(c(Subregion = "region", `United.States` = "value"))
      })
 
    output$states_plot <- renderPlot({state_choropleth(by_state1())
