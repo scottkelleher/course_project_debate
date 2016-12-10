@@ -6,7 +6,7 @@ library(stringr)
 library(choroplethr)
 load("big_word_frame.RData")
 
-load("big_word_frame.RData")
+#load("big_word_frame.RData")
 usr <- ("535rprogram@gmail.com")
 psw <- ("groupproject")
 ch <- gconnect(usr, psw)
@@ -53,10 +53,11 @@ ch <- gconnect(usr, psw)
                   ))
                   ),
                 ##  Main Panel
-                mainPanel(
-                  plotOutput("term_plot"))
-)),
- # #By State
+          mainPanel(
+            plotOutput("term_plot"))
+         )),                             # 4 parentheses allows state-level tab
+    
+ #By State
  tabPanel("State-Level",
            sidebarLayout(
               sidebarPanel(
@@ -70,8 +71,9 @@ ch <- gconnect(usr, psw)
             mainPanel(p("State-level data is ....."),
               (plotOutput("states_plot"))
                       ))
- ))))
- 
+ )
+ )))
+
  # #Word Frequecy Table
  #  tabPanel("Frequency",
  #           sidebarLayout(
@@ -96,8 +98,8 @@ ch <- gconnect(usr, psw)
  #             ##  Main Panel
  #             mainPanel(DT::dataTableOutput("high_frequency_words")
  #                       )
- #             ) ) 
- # ) 
+ #             ) )
+ # ))
 
     
     
