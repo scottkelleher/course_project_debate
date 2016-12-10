@@ -4,16 +4,16 @@ library(DT)
 library(gtrendsR)
 library(stringr)
 library(choroplethr)
-load("big_word_frame.RData")
+#load("Shiny App/big_word_frame.RData")
+load("~/Documents/course_project_debate/Shiny App/big_word_frame.RData")
 
-#load("big_word_frame.RData")
 usr <- ("535rprogram@gmail.com")
 psw <- ("groupproject")
 ch <- gconnect(usr, psw)
 
  ##start user interface
 
- shinyUI(fluidPage(theme = "bootstrap.css",
+ shinyUI(fluidPage(theme = "bootstrap.css", 
          navbarPage("2016 Presidential Debate: Content Breakdown",
             tabPanel("About", p("
         The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle
@@ -32,11 +32,12 @@ ch <- gconnect(usr, psw)
         terms by state and the emotional context of the candidates during the debates. Click on any of the tabs
         above to explore the debate content breakdown."),
         p(""),
-                     img(src='debate_pic.jpg', width = "700", height = "400", style="display: block; margin-left: auto; margin-right: auto;")),
+                     img(src='debate_pic.jpg', width = "700", height = "400", style="display: block; margin-left: auto; margin-right: auto;")
+        ),
     ##making tab for Gtrends
             tabPanel("Google Trends",
               sidebarLayout(
-                sidebarPanel( p("Select debate and speaker, then enter up to four words to assess Google Trends"),
+                sidebarPanel(p("Select debate and speaker, then enter up to four words to assess Google Trends"),
                   selectInput("Debate", "Debate", choices = c("1",
                                                               "2",
                                                               "3")),
@@ -48,31 +49,38 @@ ch <- gconnect(usr, psw)
                   textInput("text2", label = h6(""), value = "clinton foundation"),
                   textInput("text3", label = h6(""), value = "border wall"),
                   textInput("text4", label = h6(""), value = "bigly"),
-                  hr(),
-                  fluidRow(column(3, verbatimTextOutput("value")
-                  ))
+                  hr()
+                  #fluidRow(column(3, verbatimTextOutput("value")
                   ),
+                
                 ##  Main Panel
           mainPanel(
-            plotOutput("term_plot"))
-         )),                             # 4 parentheses allows state-level tab
+            plotOutput("term_plot")
+            )
+            )
+         ),
+                                 # 4 parentheses allows state-level tab
     
  #By State
  tabPanel("State-Level",
            sidebarLayout(
               sidebarPanel(
               p("Enter word to evaluate Google Trends by state"),
-              textInput("text1", label = h4("Google Search By State"), value = "deplorables"),
-              hr(),
-              fluidRow(column(3, verbatimTextOutput("value")
-               ))
+              textInput("state", label = h4("Google Search By State"), value = "deplorables"),
+              hr() 
+              # fluidRow(column(3, verbatimTextOutput("value")
+              #  ))
               ),
            ##  Main Panel
-            mainPanel(p("State-level data is ....."),
-              (plotOutput("states_plot"))
+            mainPanel(
+              plotOutput("states_plot")
                       ))
+          )
+ 
  )
- )))
+ )
+ )
+ 
 
  # #Word Frequecy Table
  #  tabPanel("Frequency",
@@ -90,6 +98,7 @@ ch <- gconnect(usr, psw)
  #                textInput("text2", label = h6(""), value = "clinton foundation"),
  #                textInput("text3", label = h6(""), value = "border wall"),
  #                textInput("text4", label = h6(""), value = "bigly"),
+ 
  #                hr(),
  #                fluidRow(column(3, verbatimTextOutput("value")
  #                      )
