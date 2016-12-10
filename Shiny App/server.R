@@ -5,7 +5,7 @@ library(DT)
 library(dplyr)
 library(choroplethr)
 #will need to wrap the "this makes the data sets to put in shiny" file into a function or something and then load at the beginning here
-load("big_word_frame.RData")
+#load("Shiny App/big_word_frame.RData")
 
 
 shinyServer(function(input, output){  
@@ -60,7 +60,7 @@ shinyServer(function(input, output){
    by_state1 <- reactive({
      google_breakdown()$Top.subregions.for.United.States %>%
        mutate(Subregion = tolower(Subregion)) %>%
-       rename(c(Subregion = "region", `United.States` = "value"))
+       dplyr::rename(c(Subregion = "region", `United.States` = "value"))
      })
 
    output$states_plot <- renderPlot({state_choropleth(by_state1())
