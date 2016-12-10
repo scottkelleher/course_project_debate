@@ -57,7 +57,7 @@ ch <- gconnect(usr, psw)
             plotOutput("term_plot"))
          )),                             # 4 parentheses allows state-level tab
     
- #By State
+ #By State 
  tabPanel("State-Level",
            sidebarLayout(
               sidebarPanel(
