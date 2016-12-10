@@ -107,7 +107,7 @@ for (i in (1:3)) {
   
   #filter out the stopwords, add which debate it was and the day and time
   trump_words_unique <- !(trump_words$word %in% stopwords())
-  trump_words <- mutate(trump_words, speaker = "trump", elim = trump_words_unique, debate = i, date = date_time[i])
+  trump_words <- mutate(trump_words, speaker = "Trump", elim = trump_words_unique, debate = i, date = date_time[i])
   trump_words<- filter(trump_words, trump_words$elim == TRUE)
   trump_words <- select(trump_words, -elim)
   if(i == 1){
@@ -130,7 +130,7 @@ for (i in (1:3)) {
   
   #filter out the stopwords, add which debate it was and what day and time
   clinton_words_unique <- !(clinton_words$word %in% stopwords())
-  clinton_words <- mutate(clinton_words, speaker = "clinton", elim = clinton_words_unique, debate = i, date = date_time[i])
+  clinton_words <- mutate(clinton_words, speaker = "Clinton", elim = clinton_words_unique, debate = i, date = date_time[i])
   clinton_words<- filter(clinton_words, clinton_words$elim == TRUE)
   clinton_words <- select(clinton_words, -elim)
   
@@ -252,8 +252,6 @@ all_hilaryclinton_words <- rbind(all_debate_words_clinton, all_debate_words_clin
 
 big_word_frame <- rbind(all_donaldtrump_words, all_hilaryclinton_words)
 
-<<<<<<< HEAD
 
-=======
 save(big_word_frame, file = "big_word_frame.RData")
->>>>>>> dcc080633d110c238c80c6289506be7b19c32fdb
+
