@@ -1,0 +1,35 @@
+---
+title: "new Mrakdown trial"
+author: "Tulsi Ram Gompo"
+date: "12/9/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+getwd()
+source("style.R")
+source("r_profile.R")
+custom_css(TRUE)
+custom_css(rprofile=FALSE,loc=file.path(getwd(),"New_R_mark_down"),style=NULL, source= TRUE)
+```
+
+
+
+
+```{r }
+
+
+
+```
+
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
