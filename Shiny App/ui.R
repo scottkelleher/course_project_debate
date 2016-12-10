@@ -75,40 +75,22 @@ ch <- gconnect(usr, psw)
             mainPanel(
               plotOutput("states_plot")
                       ))
-          )
- 
- )
- )
- )
+          ),
  
 
- # #Word Frequecy Table
- #  tabPanel("Frequency",
- #           sidebarLayout(
- #             sidebarPanel(
- #               p("Select debate and speaker, then enter up to four words to assess Google Trends"),
- #               selectInput("Debate", "Debate", choices = c("1",
- #                                                           "2",
- #                                                           "3")),
- #               selectInput("Speaker", "Speaker", choices = c("Clinton",
- #                                                             "Trump"),
- #                           selected = "Donald Trump"),
- # 
- #                textInput("text1", label = h4("Enter word or phrase to display Google Trends"), value = "deplorables"),
- #                textInput("text2", label = h6(""), value = "clinton foundation"),
- #                textInput("text3", label = h6(""), value = "border wall"),
- #                textInput("text4", label = h6(""), value = "bigly"),
  
- #                hr(),
- #                fluidRow(column(3, verbatimTextOutput("value")
- #                      )
- #                    )
- #                  ),
- #             ##  Main Panel
- #             mainPanel(DT::dataTableOutput("high_frequency_words")
- #                       )
- #             ) )
- # ))
+
+  #Word Frequecy Table
+   tabPanel("Frequency",
+            
+              
+              ##  Main Panel
+              mainPanel(DT::dataTableOutput("high_frequency_words")
+                       )
+              
+  )
+ 
+         )))
 
     
     
