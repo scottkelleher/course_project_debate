@@ -26,11 +26,12 @@ ch <- gconnect(usr, psw)
         for United States citizens and other countries to see in all its’ glory. “Piggy” and “deplorables”
         were just a couple words that were said during the debates that fired up some viewers, and there
         was even some terminology used that was just plain confusing like “bigly.” So what is it that we all
-        do when we want to know more about something? We just “Google it” of course.
-        The following interactive Shiny App allows users to evaluate any words or phrases that were Googled
+        do when we want to know more about something? We just “Google it” of course."),
+        p("The following interactive Shiny App allows users to evaluate any words or phrases that were Googled
         during or immediately following the debates. Additionally users of this app can check out Googled
         terms by state and the emotional context of the candidates during the debates. Click on any of the tabs
         above to explore the debate content breakdown."),
+        p(""),
                      img(src='debate_pic.jpg', width = "700", height = "400", style="display: block; margin-left: auto; margin-right: auto;")),
     ##making tab for Gtrends
             tabPanel("Google Trends",
@@ -66,21 +67,10 @@ ch <- gconnect(usr, psw)
                ))
               ),
            ##  Main Panel
-            mainPanel(
-              plotOutput("states_plot"))
+            mainPanel(p("State-level data is ....."),
+              (plotOutput("states_plot"))
                       ))
- )))
- 
- 
-                   
- 
-
- 
- 
- 
- 
- 
- 
+ ))))
  
  # #Word Frequecy Table
  #  tabPanel("Frequency",
