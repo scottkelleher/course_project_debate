@@ -5,7 +5,6 @@ date: "December 5, 2016"
 output: html_document
 ---
 
-###**Introduction**
 
 The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the
 bittersweet end trying to convince the American people that they were the better-suited candidate to lead
@@ -19,7 +18,7 @@ discussions was broadcasted live for United States citizens and other countries 
 viewers, and there was even some terminology used that was just plain confusing like "bigly." So what is
 it that we all do when we want to know more about something? We just "Google it" of course. 
 
-###**What were we thinking?**
+
 
 As each debate unfolded, we wondered how many other people (like us) were using Google to search for
 termininology used by Donald Trump and Hillary Clinton during the debates- like the second amendment for
@@ -115,7 +114,7 @@ usr <- ("535rprogram@gmail.com")
   date_time <-c(db1, db2, db3)
 ```
 
-```{r  echo = FALSE, warning = FALSE, message = FALSE}
+```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height=4}
 
 google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = 
                             "2016-11-15")
@@ -124,13 +123,13 @@ google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-
 ```
    
    
-###**State Level Search Trends**
+
 Additionally, we were interested in specific terminology searched in Google at the
 state level. Specifically, which states were Googling some terms more than
 others? The following graphic is categorized by state using Google Trends search term
 data and the choroplethrMaps package in R. This example displays the state-level search
 term data by state for "bigly".
-```{r  echo = FALSE, warning = FALSE, message = FALSE}
+```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 6, fig.height=3}
   google_breakdown <- gtrends(google_states, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
 
   by_state <-google_breakdown[[5]]
@@ -139,7 +138,7 @@ term data by state for "bigly".
   state_choropleth(by_state)
 ```
 
-###**Emotional Context: Valence**
+
 We were also curious about the emotional context of each speaker during the three debates. Did one
 candidate speak in a more positive context than the other? We used the Syuzhet package from R to conduct
 this exploratory part of our analysis. Syuzhet is a package consisting of four sentiment dictionaries
@@ -386,7 +385,7 @@ names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
 #   
 ```
 
-```{r  echo = FALSE, message = FALSE}
+```{r  echo = FALSE, message = FALSE, fig.width = 6, fig.height=3}
 
 trump_y$debate <- as.factor(trump_y$debate)
 ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
@@ -399,7 +398,7 @@ ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
   
 ```
 
-```{r   echo = FALSE, message = FALSE}
+```{r   echo = FALSE, message = FALSE, fig.width = 6, fig.height=3}
 clinton_y$debate <- as.factor(clinton_y$debate)
 ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate)))+
   geom_line()+
@@ -431,7 +430,7 @@ ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate))
 
 
   
-```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE}
+```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE, fig.width = 6, fig.height=3}
 
 #s_v <- get_sentences(lines_go)
 sentiment_clinton <- get_sentiment(as.vector(clinton_words$word))
@@ -517,13 +516,13 @@ bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
 #   main = "Emotions in Sample text", xlab="Percentage"
 #   )
 ```
-###**Sentiment**
+
 Next, we plotted words based on the seven types of sentiment categories. Individual
 words are categorized based on sentiment and candidate. This plot displays the
 sentiment in Donald Trump's words for all three debates. Most of Trump's words in both
 debates were grouped into the category "trust." 
 
-```{r echo = FALSE, message = FALSE, warning = FALSE}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height=3}
  trump_emo_plot_this_shit <- rename(trump_emo, c(`colSums(prop.table(nrc_data_t[, 1:8]))` = "emo_val",
 `rownames(trump_emo)` = "what_emotion"))
 ggplot(trump_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
@@ -538,7 +537,7 @@ Similarly, this plot displays the sentiment in Hillary Clinton's words for all t
 debates. Based solely on the plot, Clinton's anger, anticipation and sadness remained
 steady during the three debates, whereas fear fluctuated thrououghout the debates. 
 
-```{r echo = FALSE, warning = FALSE, message = FALSE}
+```{r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 6, fig.height=3}
  clinton_emo_plot_this_shit <- rename(clinton_emo, c(`colSums(prop.table(nrc_data_c[, 1:8]))` = "emo_val", `rownames(clinton_emo)` = "what_emotion"))
 ggplot(clinton_emo_plot_this_shit, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
   geom_bar(position="dodge", stat="identity") +
@@ -548,7 +547,7 @@ scale_fill_discrete(name = "Debate") +
 theme(plot.title = element_text(hjust = .5))
 ```
 
-###**Limitations**
+
 As with any research, there are some limitations to this analysis. The data
 is limited to people who use Google as their search engine. This would exclude
 non-internet users and people who use Yahoo or other search engines. Though this may

@@ -54,28 +54,22 @@ ch <- gconnect(usr, psw)
                 ##  Main Panel
                 mainPanel(
                   plotOutput("term_plot"))
-                ))
-              )))
+)),
  # #By State
- # tabPanel("State-Level",
- #           sidebarLayout(
- #              sidebarPanel(
- #              p("Enter word to evaluate Google Trends by state"),
- #              # #selectInput("Debate", "Debate", choices = c("1",
- #              #                                            "2",
- #              #                                             "3")),
- #              # selectInput("Speaker", "Speaker", choices = c("Clinton",
- #              #                                               "Trump"),
- #              #            selected = "Donald Trump"),
- #              textInput("text1", label = h4("Google Search By State"), value = "deplorables"),
- #              hr(),
- #              fluidRow(column(3, verbatimTextOutput("value")
- #               ))
- #              ))),
- #           ##  Main Panel
- #            mainPanel(
- #              plotOutput("states_plot"))
- #                      ))
+ tabPanel("State-Level",
+           sidebarLayout(
+              sidebarPanel(
+              p("Enter word to evaluate Google Trends by state"),
+              textInput("text1", label = h4("Google Search By State"), value = "deplorables"),
+              hr(),
+              fluidRow(column(3, verbatimTextOutput("value")
+               ))
+              ),
+           ##  Main Panel
+            mainPanel(
+              plotOutput("states_plot"))
+                      ))
+ )))
  
  
                    
