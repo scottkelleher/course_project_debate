@@ -353,7 +353,7 @@ ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate))
 
 
   
-```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE}
+```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
 
 #s_v <- get_sentences(lines_go)
 sentiment_clinton <- get_sentiment(as.vector(clinton_words$word))
