@@ -284,9 +284,11 @@ names(df_c) <- c("clinton_plot_x", "debate", "clinton_plot_y")
 df_t <- data.frame(trump_x, trump_y)
 names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
 
-break1 <- nrow(filter(clinton_y, clinton_y$debate == "1"))
-break2 <- nrow(filter(clinton_y, clinton_y$debate == "2"))
-break3 <- nrow(filter(clinton_y, clinton_y$debate == "3"))
+break1 <- nrow(filter(trump_y, trump_y$debate == "1"))
+break2 <- nrow(filter(trump_y, trump_y$debate == "2"))
+break3 <- nrow(filter(trump_y, trump_y$debate == "3"))
+clinton1 <- filter(df_c, df_c$debate == "1")
+trump1 <- filter(df_t, df_t$debate = "1")
 
 # all debates strug together                                                  ####### this plot needs a legend
 ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
@@ -298,9 +300,8 @@ ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
   scale_x_continuous(breaks=c(break1, break1 + break2,break1+ break2+ break3), labels=c("debate 1", "debate 2", "debate 3"))+
   ylab("emotional valance") +
   xlab("") +
-  ggtitle("Candidate emotional valance during debates") +
- geom_line(aes(y = score, colour="Clinton")) + # I added for legend
-   geom_line(aes(y=score, colour ="Trump")) # I added for legend
+  ggtitle("Candidate emotional valance during debates") 
+ 
 
 
 ```
