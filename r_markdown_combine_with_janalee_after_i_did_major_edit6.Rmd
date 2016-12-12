@@ -5,6 +5,7 @@ date: "December 5, 2016"
 output: html_document
 ---
 
+
 The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the
 bittersweet end trying to convince the American people that they were the better-suited candidate to lead
 our country. According to [CNN.com](http://money.cnn.com/2016/09/27/media/debate-ratings-record-viewershi
@@ -527,8 +528,8 @@ debates were grouped into the category "trust."
 `rownames(trump_emo)` = "what_emotion"))
 ggplot(trump_emo_plot_this_stuff, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
 geom_bar(position="dodge", stat="identity") +
-  ggtitle("Trump Sentiment")+
-  scale_y_continuous(name = "Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30), labels = c("0", "5%", "10%", "15%", "20%", "25%", "30%")) +
+    ggtitle("Trump Sentiment")+
+  scale_y_continuous(name = "Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25), labels = c("0", "5%", "10%", "15%", "20%", "25%")) +
   xlab("Sentiment") +
 scale_fill_discrete(name = "Debate")+
 theme(plot.title = element_text(hjust = .5))
@@ -544,10 +545,10 @@ steady during the three debates, whereas fear fluctuated thrououghout the debate
 ggplot(clinton_emo_plot_this_stuff, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
   geom_bar(position="dodge", stat="identity") +
   ggtitle("Clinton Sentiment")+
-  scale_y_continuous(name = "Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30), labels = c("0", "5%", "10%", "15%", "20%", "25%", "30%")) +
+  #scale_y_continuous(name = "Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30), labels = c("0", "5%", "10%", "15%", "20%", "25%", "30%")) +
   xlab("Sentiment") +
 scale_fill_discrete(name = "Debate") +
-theme(plot.title = element_text(hjust = .5))
+theme(plot.title = element_text(hjust = .5)) 
 ```
 
 
@@ -565,6 +566,8 @@ of analysis. Computers do not have the ability to distinguish between words the 
 way that humans do, especially in terms of context. For example, "cool" could be
 interpreted in a couple different ways. It could be interpreted as relating to being
 cold, or it could be used as slang like "that's cool man." 
+  
+  
   
   
   

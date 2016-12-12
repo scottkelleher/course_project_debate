@@ -5,6 +5,7 @@ library(gtrendsR)
 library(stringr)
 library(choroplethr)
 
+load("big_word_frame.RData")
 
 
 usr <- ("535rprogram@gmail.com")
@@ -65,7 +66,7 @@ ch <- gconnect(usr, psw)
  tabPanel("State-Level",
            sidebarLayout(
               sidebarPanel(
-              p("Enter word to evaluate Google Trends by state"),
+              p("Enter a word to evaluate Google Trends by state"),
               textInput("state", label = h4("Google Search By State"), value = "deplorables"),
               hr() 
               # fluidRow(column(3, verbatimTextOutput("value")
@@ -85,15 +86,13 @@ ch <- gconnect(usr, psw)
             
               
               ##  Main Panel
-              mainPanel(DT::dataTableOutput("high_frequency_words")
+              mainPanel(p("Enter a word that was said during the debates by either candidtate in the search box to view frequency of the word"),
+                        DT::dataTableOutput("high_frequency_words")
                        )
               
   )
  
          )))
-
-    
- 
 
 
 
