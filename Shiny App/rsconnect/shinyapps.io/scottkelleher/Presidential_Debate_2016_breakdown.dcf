@@ -1,0 +1,11 @@
+name: Presidential_Debate_2016_breakdown
+title:
+account: scottkelleher
+server: shinyapps.io
+appId: 144082
+bundleId: 644654
+url: https://scottkelleher.shinyapps.io/Presidential_Debate_2016_breakdown/
+when: 1481513979.08811
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: big_word_frame.RData|ui2..R|resource to look back at/big_frame.RData|resource to look back at/classify_emotion.R|resource to look back at/sentiment.tar.gz|resource to look back at/server_12_6_16_this_atleast_words_renaming_to_cover_up.R|resource to look back at/server2.R|resource to look back at/this is the original server file to resort back to.R|www/bootstrap.css|www/debate_pic.jpg
