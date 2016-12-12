@@ -2,7 +2,7 @@
 title: '2016 Presidential Debate: Content Breakdown'
 author: "Scott Kelleher, Tulsi Ram Gompo, Janalee Thompson"
 date: "December 5, 2016"
-output: html_document
+output: md_document
 ---
 
 
@@ -428,10 +428,9 @@ ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
 ```
 
 ```{r  echo = FALSE, message = FALSE, fig.width = 6, fig.height=3}
-
 trump_y$debate <- as.factor(trump_y$debate)
 ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
-  scale_fill_manual(name = "Debate")+
+  scale_color_discrete(name = "Debate")+
   geom_line()+
   #scale_fill_discrete(name = "Debate") +
   ylab("Emotional Valence")+
@@ -445,7 +444,7 @@ ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
 clinton_y$debate <- as.factor(clinton_y$debate)
 ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate)))+
   geom_line()+
-  scale_fill_discrete(name = "Debate") +
+  scale_color_discrete(name = "Debate") +
   ylab("Emotional Valence")+
   xlab("Position in Debate")+
   ggtitle("Clinton Emotional Valence") +
