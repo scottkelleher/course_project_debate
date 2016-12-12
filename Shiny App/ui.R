@@ -4,8 +4,9 @@ library(DT)
 library(gtrendsR)
 library(stringr)
 library(choroplethr)
-#load("big_word_frame.RData")
+
 load("big_word_frame.RData")
+
 
 usr <- ("535rprogram@gmail.com")
 psw <- ("groupproject")
@@ -93,6 +94,6 @@ ch <- gconnect(usr, psw)
  
          )))
 
-    
+
 
  

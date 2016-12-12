@@ -1,6 +1,6 @@
 ---
 title: '2016 Presidential Debate: Content Breakdown'
-author: "Scott Kelleher, Tulsi Gompo, Janalee Thompson"
+author: "Scott Kelleher, Tulsi Ram Gompo, Janalee Thompson"
 date: "December 5, 2016"
 output: html_document
 ---
@@ -89,6 +89,7 @@ library(DT)
 library(choroplethr)
 library(choroplethrMaps)
 library(syuzhet)
+library(zoo)
 
 usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
@@ -122,7 +123,7 @@ google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-
    
 ```
    
-   
+  
 
 Additionally, we were interested in specific terminology searched in Google at the
 state level. Specifically, which states were Googling some terms more than
@@ -138,6 +139,7 @@ term data by state for "bigly".
   state_choropleth(by_state)
 ```
 
+Lets give some meaning as to how to interpret the scales shown in the gtrends plot from Google results as well as the choropleth map. The scale ranging from 0% to 100% and represents the percentage of searches for that word or pharase with respect to the total searches in that region. So for example, if the word "bigly", has a value of %50 on the plot that means that during the specified period of time it accounted for %50 percent of the total searches in Google.  
 
 We were also curious about the emotional context of each speaker during the three debates. Did one
 candidate speak in a more positive context than the other? We used the Syuzhet package from R to conduct
@@ -152,9 +154,9 @@ broad range of emotions during each debate. From this exploratory analysis, we c
 candidate did not speak in a more positive emotional context than the other. 
 
 ```{r echo = FALSE, include = FALSE, message = FALSE}
-#all emotional context code adapted from Matthew Jockers syuzhet code ftp://cran.r-project.org/pub/R/web/packages/syuzhet/vignettes/syuzhet-vignette.html
 for (i in (1:3)) {     
   
+  #tidy text mining http://tidytextmining.com/
   ##Getting the chunks of text and assigning the speaker, this just defines a function and we can place this actual code somewhere else later as long as we call the function 
   text <- w[i]
   getLines <- function(person){
@@ -167,30 +169,20 @@ for (i in (1:3)) {
   ##Creating an object called debate_lines that has two parts, one for clinton and one for trump
   debate_lines <- lapply(c("CLINTON:", "TRUMP:"), getLines) 
   
-  
   ##Created two separate objects with "chunks" of text in each one, one for clinton and one for trump
   clinton_lines <- debate_lines[1] 
   trump_lines <- debate_lines[2] 
   
-  
-  
-  
-  
   #break into clinton lines
   text_clinton <- data_frame(text_c = clinton_lines[[1]]) 
  
-  
-  
   #break into trump lines 
   text_trump <- data_frame(text_t = trump_lines[[1]]) 
-  
-  
   
   ##Breaking trump lines into individual words
   trump_words <- text_trump %>%
     unnest_tokens(word, text_t)  
   #trump_words  
-  
   
   #filter out the stopwords, add which debate it was and the day and time
   trump_words_unique <- !(trump_words$word %in% stopwords())
@@ -203,13 +195,10 @@ for (i in (1:3)) {
     all_debate_words_trump <- bind_rows(all_debate_words_trump, trump_words)
   }
   
-  
   ##Breaking clinton lines into individual words
   clinton_words <- text_clinton %>%
     unnest_tokens(word, text_c)  
   #clinton_words
-  
-  
   
   #filter out the stopwords, add which debate it was and what day and time
   clinton_words_unique <- !(clinton_words$word %in% stopwords())
@@ -326,7 +315,7 @@ if(i == 1){
     
   } 
 
-
+#to see each plot for each debate, uncomment the rest of the chunk
 # plot(clinton_list$x[poa_sample], 
 #      clinton_list$z[poa_sample], 
 #      type="l", 
@@ -373,25 +362,76 @@ names(df_c) <- c("clinton_plot_x", "debate", "clinton_plot_y")
 df_t <- data.frame(trump_x, trump_y)
 names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
 
-# all debates strug together
-# ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y_getting$score))))+
-#   geom_line(color = "blue", size = 2, alpha = .4)+
-#   geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 2, alpha = .4, color = "red")+
-#   #geom_vline(xintercept = 100, size = 2, linetype = "dashed")+
-#   #geom_vline(xintercept = 200, size = 2, linetype = "dashed")+
-#   #scale_x_continuous(breaks=c(0,100,200), labels=c("debate 1", "debate 2", "debate 3"))+
-#   ylab("emotional valance")+
-#   xlab("")+
-#   ggtitle("Candidate emotional valance during debates")
-#   
+
+```
+
+```{r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 6, fig.height=3}
+df <- list(trump = all_debate_words_trump, 
+                       clinton = all_debate_words_clinton) %>%
+      bind_rows(.id = "speaker") %>%
+      group_by(speaker, debate) %>%
+      dplyr::mutate(n = 1:n(),
+                                     perc_debate = n / n()) %>%
+      ungroup() %>%
+      mutate(emo_var = get_sentiment(word)) %>%
+      group_by(speaker, debate) %>%
+      mutate(smooth_emo_var = zoo::rollmean(emo_var, k = bwdw, fill = NA)) %>%
+      ungroup() %>%
+      mutate(scale_emo_var = 2 * (smooth_emo_var - 
+                                                                     min(smooth_emo_var, na.rm = TRUE)) / 
+                             (max(smooth_emo_var, na.rm = TRUE) - 
+                                                 min(smooth_emo_var, na.rm = TRUE)) - 1)
+ggplot(df, aes(x = perc_debate, y = scale_emo_var, color = speaker)) + 
+      geom_line() + 
+      # geom_smooth(se = FALSE, alpha = 0.8, span = 0.05) + 
+      facet_wrap(~ debate, ncol = 1) + 
+      theme_minimal() + 
+      xlab("Order of Word in Debate") + 
+      ylab("Emotional valence")
+  
+```
+
+
+```{r   echo = FALSE, message = FALSE, eval= FALSE, include = FALSE, fig.width = 6, fig.height=3}
+# not really using this one for anything but do not erase 
+clinton_x <- rename(clinton_x, c(`clinton_list_getting$x` = "score"))
+clinton_y <- rename(clinton_y, c(`clinton_list_getting$z` = "score"))
+
+trump_x <- rename(trump_x, c(`trump_list_getting$x` = "score"))
+trump_y <- rename(trump_y, c(`trump_list_getting$z` = "score"))
+
+df_c <- data.frame(clinton_x, clinton_y)
+names(df_c) <- c("clinton_plot_x", "debate", "clinton_plot_y")
+
+df_t <- data.frame(trump_x, trump_y)
+names(df_t) <- c("trump_plot_x", "debate", "trump_plot_y")
+
+break1 <- nrow(filter(clinton_y, clinton_y$debate == "1"))
+break2 <- nrow(filter(clinton_y, clinton_y$debate == "2"))
+break3 <- nrow(filter(clinton_y, clinton_y$debate == "3"))
+
+# all debates strug together                                                  ####### this plot needs a legend
+ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
+  geom_line(color = "blue", size = 1, alpha = .4)+
+  geom_line(data = trump_y, aes(y = score, x = seq(1, length(trump_y$score))), size = 1, alpha = .4, color = "red") +
+  geom_vline(xintercept =(break1), size = 2, linetype = "dashed")+
+  geom_vline(xintercept = (break1 + break2) , size = 2, linetype = "dashed")+
+  geom_vline(xintercept = (break1 + break2+ break3) , size = 2, linetype = "dashed")+
+  scale_x_continuous(breaks=c(break1, break1 + break2,break1+ break2+ break3), labels=c("debate 1", "debate 2", "debate 3"))+
+  ylab("emotional valance") +
+  xlab("") +
+  ggtitle("Candidate emotional valance during debates") +
+ geom_line(aes(y = score, colour="Clinton")) + # I added for legend
+   geom_line(aes(y=score, colour ="Trump")) # I added for legend
 ```
 
 ```{r  echo = FALSE, message = FALSE, fig.width = 6, fig.height=3}
 
 trump_y$debate <- as.factor(trump_y$debate)
 ggplot(df_t, aes(y= trump_plot_y, x = trump_plot_x, colour = factor(debate)))+
+  scale_fill_manual(name = "Debate")+
   geom_line()+
-  scale_fill_discrete(name = "Debate") +
+  #scale_fill_discrete(name = "Debate") +
   ylab("Emotional Valence")+
   xlab("Position in Debate")+
   ggtitle("Trump Emotional Valence") +
@@ -411,25 +451,6 @@ ggplot(df_c, aes(y= clinton_plot_y, x = clinton_plot_x, colour = factor(debate))
   
 ```
   
-```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE}
-  #this chuck just makes a datatable of the words and can be hidden
-
- #  if(Speaker == "Donald_Trump"){top_used_words <- trump_most_words}
- #  if(Speaker =="Hilary_Clinton"){top_used_words<- clinton_most_words}
- # 
- # DT::datatable(as.data.frame(top_used_words), options = list(pageLength = 25))
- #  
- #  plot(top_used_words)
- #  
- #  
- #  if(Speaker == "Donald_Trump"){
- #    lines_go <- trump_lines
- #  } else if(Speaker =="Hilary_Clinton"){
- #    lines_go <- clinton_lines} 
-
-```
-
-
   
 ```{r echo=FALSE, message = FALSE, error= FALSE, warning = FALSE, eval = FALSE, fig.width = 6, fig.height=3}
 
@@ -466,7 +487,7 @@ bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
 #      )
 # lines(trump_list$x[bov_sample], trump_list$z[bov_sample], col="red")
 # 
-# #################################################################################################################
+# ##feel fre to unomment some code to see more plots pop up
 # 
 # plot(
 #   s_v_sentiment_c, 
@@ -528,9 +549,9 @@ debates were grouped into the category "trust."
 `rownames(trump_emo)` = "what_emotion"))
 ggplot(trump_emo_plot_this_stuff, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
 geom_bar(position="dodge", stat="identity") +
-  ggtitle("Trump Sentiment")+
-  scale_y_continuous(name = "Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30), labels = c("0", "5%", "10%", "15%", "20%", "25%", "30%")) +
-  xlab("Sentiment") +
+  scale_y_continuous("Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25), 
+                     labels = c("0", "5%", "10%", "15%", "20%", "25%")) +
+  ggtitle("Trump Sentiment") +
 scale_fill_discrete(name = "Debate")+
 theme(plot.title = element_text(hjust = .5))
 
@@ -544,12 +565,15 @@ steady during the three debates, whereas fear fluctuated thrououghout the debate
  clinton_emo_plot_this_stuff <- rename(clinton_emo, c(`colSums(prop.table(nrc_data_c[, 1:8]))` = "emo_val", `rownames(clinton_emo)` = "what_emotion"))
 ggplot(clinton_emo_plot_this_stuff, aes(y = emo_val, x = what_emotion, fill = factor(debate)))+
   geom_bar(position="dodge", stat="identity") +
-  ggtitle("Clinton Sentiment")+
-  scale_y_continuous(name = "Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30), labels = c("0", "5%", "10%", "15%", "20%", "25%", "30%")) +
-  xlab("Sentiment") +
+  scale_y_continuous("Percent of Total", breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30), 
+                     labels = c("0", "5%", "10%", "15%", "20%", "25%", "30%")) +
+  labs(x = "Sentiment", y = "Fractional Amount of Total") +
+  ggtitle("Clinton Sentiment") +
 scale_fill_discrete(name = "Debate") +
 theme(plot.title = element_text(hjust = .5))
 ```
+
+
 
 
 As with any research, there are some limitations to this analysis. The data
@@ -566,8 +590,5 @@ of analysis. Computers do not have the ability to distinguish between words the 
 way that humans do, especially in terms of context. For example, "cool" could be
 interpreted in a couple different ways. It could be interpreted as relating to being
 cold, or it could be used as slang like "that's cool man." 
-  
-  
-  
   
   
