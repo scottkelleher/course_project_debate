@@ -311,8 +311,7 @@ if(i == 1){
      clinton_emo2 <- mutate(clinton_emo2, debate = i)
     trump_emo2 <- as.data.frame(colSums(prop.table(nrc_data_t[, 1:8])))
     trump_emo2 <- mutate(trump_emo2, debate = i)
-    # names2 <- rownames(trump_emo2)
-    # names3 <- rownames(clinton_emo2)
+   
     
       names2 <- as.data.frame(rownames(trump_emo2))
       names3 <- as.data.frame(rownames(clinton_emo2))
