@@ -148,12 +148,12 @@ developed at Stanford. The purpose of this package is to extract words and assig
 from the sentiment dictionaries and plot them based on speaker. This package assigns words a sentiment
 score based on overall positivity and negativity. There is not a numerical limit on scores, though
 negative words will tend to have negative sentiment scores and positive words will have positive
-sentiment scores. As shown here, each speaker is plotted with respect to the first, second or third
+sentiment scores. As shown below, each speaker is plotted with respect to the first, second or third
 debate with normalized emotional valence scores. As you can see, both Clinton and Trump had a pretty
 broad range of emotions during each debate. From this exploratory analysis, we can report that one
-candidate did not speak in a more positive emotional context than the other. 
+candidate seemed to speak in a more negative emotional context than the other. Can you see which?
 
-This first plot displays the emotional valence of both candidates during each of the three debates. Comparing one candidtate's emotional valence to the other. Emotional valence scores range from -1.0 to +1.0 and are assigned based on how negative or how positive a word is. For example, "ecstatic" would be rated a +1.0, whereas "horrible" would be rated a -1.0. 
+This first plot displays the emotional valence of both candidates during each of the three debates, comparing one candidtate's emotional valence to the other. Emotional valence scores range from -1.0 to +1.0 and are assigned based on how negative or how positive a word is. For example, "ecstatic" would be rated a +1.0, whereas "horrible" would be rated a -1.0. 
 
 ```{r echo = FALSE, include = FALSE, message = FALSE}
 for (i in (1:3)) {     
@@ -392,7 +392,7 @@ ggplot(df, aes(x = perc_debate, y = scale_emo_var, color = speaker)) +
   
 ```
 
-The following two plots display emotional valence per speaker across the three debates. These plots compare the speaker's individual emotional valence across the three debates. 
+The following two plots display emotional valence per speaker across the three debates. These plots compare the speaker's individual emotional valence across the three debates. See any interesting trends or patterns? 
 
 ```{r   echo = FALSE, message = FALSE, eval= FALSE, include = FALSE, fig.width = 6, fig.height=3}
 # not really using this one for anything but do not erase 
@@ -543,8 +543,8 @@ bov_sample <- seq(1, length(trump_list$x), by=round(length(trump_list$x)/100))
 
 Next, we plotted words based on the seven types of sentiment categories. Individual
 words are categorized based on sentiment and candidate. This plot displays the
-sentiment in Donald Trump's words for all three debates. Most of Trump's words in both
-debates were grouped into the category "trust." 
+sentiment in Donald Trump's words for all three debates. The highest percentage of Trump's words all three
+debates fell into the  category "trust." 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height=3}
  trump_emo_plot_this_stuff <- rename(trump_emo, c(`colSums(prop.table(nrc_data_t[, 1:8]))` = "emo_val",
@@ -561,7 +561,7 @@ theme(plot.title = element_text(hjust = .5))
 
 Similarly, this plot displays the sentiment in Hillary Clinton's words for all three
 debates. Based solely on the plot, Clinton's anger, anticipation and sadness remained
-steady during the three debates, whereas fear fluctuated thrououghout the debates. 
+steady during the three debates, whereas fear fluctuated thrououghout the debates. It's interesting to see the candidates emotional patterns as the debates progress becasue some would argue this are political stragery emerging. 
 
 ```{r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 6, fig.height=3}
  clinton_emo_plot_this_stuff <- rename(clinton_emo, c(`colSums(prop.table(nrc_data_c[, 1:8]))` = "emo_val", `rownames(clinton_emo)` = "what_emotion"))
@@ -591,6 +591,7 @@ Our analysis only used individual words, not sentences which are also used in th
 of analysis. Computers do not have the ability to distinguish between words the same
 way that humans do, especially in terms of context. For example, "cool" could be
 interpreted in a couple different ways. It could be interpreted as relating to being
-cold, or it could be used as slang like "that's cool man." 
-  
+cold, or it could be used as slang like "that's cool man." A computer can not detect sarcasm. 
+
+Now that you have seen how the candidates represented themselves by thier words, in a contextual analysis, presenting in a simplified format. You gotta ask yourself, are those the results you would have maybe guessed prior to reading this? 
   
