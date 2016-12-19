@@ -1,0 +1,95 @@
+---
+title: "2016 Presidential Debate: Content Breakdown"
+author: Scott Kelleher, Tulsi Ram Gompo, Janalee Thompson
+date: "11/16/2016"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+===========================================================
+Introduction
+- Research Question
+- Significance
+- Methods
+- Results
+- Conclsion
+_ Tutorial
+
+
+
+
+#notes: add which of the three sentiment packages we chose and why
+
+
+# Overview of the Presentation
+
+
+
+
+
+## 
+
+
+
+- **Research Question**
+
+
+- **Introduction**
+
+
+- **Methods**
+
+
+- **Results**
+
+
+- **Conclusions**
+ 
+## 
+
+**Research Question**
+
+
+
+Do the words spoken  by the presidental candidates at the debates matter a lot?
+
+
+##
+
+**Introduction**
+
+The Presidential debates are most popular program in US and every body cares about what each presidential candidate said during the debates. While the presidential candiates are firing up with new words,the viewers either applauded them or booed widely.For example, the candidates Donald Trump used very strong words to address the opposition leader Hilary Clinton. Later, his words like “deplorable”, “wall” "nasty women " went viral and there was spike in search of those words in internet.The cliches and the hackneyed expresion not only creates boredome to viewer but also judge the quality of speech by debators .So, we are curious which president used what type of words and we decided to isolate top words that each president used in debates except the stop words.
+
+
+
+
+
+##
+**Methods**
+
+We retrieve all three debates data  from the [American Presidential Project](http://www.presidency.ucsb.edu/ws/index.php?pid=119038) and follow the online tutorial of [Tidy Text Mining](http://tidytextmining.com/) with R to create the algorithum and sytax.
+
+
+These data are appropriate because the data has scripts of each candidates speech such that we can extract the common words and measure their frequencies.
+
+To determine the frequency of the words used by each candidate, we use the gtrend R packages to create trends. We see the spikes over a set words that each presidential candidate used for the debates.
+
+ We also analysed the sentiments of each words by the candiadates and classified it under the category of joy,anger,disgust,sadness,surprise and fear. 
+
+We create an intereactive graphics the shiny apps  to illustrate our study findings.
+
+
+
+
+
+
+
+
+```{r pressure, message = FALSE, warning = FALSE}
+library(plotly)
+plot_ly(z = ~volcano)
+```
+
