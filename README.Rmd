@@ -88,35 +88,38 @@ from CRAN, which displays the Google search trends for those specific words.
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
 
 
+## Load the three debates and isolate the text
+root_page <- "http://www.presidency.ucsb.edu/ws/index.php?"
+text_debate1 <- read_html(paste0(root_page, "pid=118971")) %>%
+  html_node(".displaytext") %>%
+  html_text()
+text_debate2 <- read_html(paste0(root_page, "pid=119038")) %>%
+  html_node(".displaytext") %>%
+  html_text()
+text_debate3 <- read_html(paste0(root_page, "pid=119039")) %>%
+  html_node(".displaytext") %>%
+  html_text()
 
-  text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
-  text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")  # load the second debate page
-  text_debate3 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119039")# load the third debate page 
+## Join all words into one vector
+w <- c(text_debate1, text_debate2, text_debate3)
   
-  text_debate1 <- html_nodes(text_debate1, ".displaytext") %>% # isloate the text
-    html_text() # get the text
-  
-  text_debate2 <- html_nodes(text_debate2, ".displaytext") %>% # isloate the text
-    html_text() # get the text
-  
-  text_debate3 <- html_nodes(text_debate3, ".displaytext") %>% # isloate the text
-    html_text() # get the text
-  w <- c(text_debate1, text_debate2, text_debate3)
-  
-  db1 <- ymd_hms(160927020000, tz = "UTC")
-  db2 <- ymd_hms(161009020000, tz = "UTC")
-  db3 <-ymd_hms(161029020000, tz = "UTC")
-  date_time <-c(db1, db2, db3)
+## Get the dates for each debate
+db1 <- ymd_hms(160927020000, tz = "UTC")
+db2 <- ymd_hms(161009020000, tz = "UTC")
+db3 <-ymd_hms(161029020000, tz = "UTC")
+date_time <-c(db1, db2, db3)
 ```
 
 ```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height=4}
 usr <- ("535rprogram@gmail.com")
 psw <- ("groupproject")
 ch <- gconnect(usr, psw)
+
 google_these_words = c("Melania", "email scandal",
                        "bigly", "nasty woman", "benghazi") 
 google_results <- gtrends(google_these_words, geo = "US",
                           start_date = "2016-09-01", end_date = "2016-11-15")
+
 plot(google_results)
 ```
    
