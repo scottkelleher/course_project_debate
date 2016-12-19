@@ -4,12 +4,9 @@ library(googleVis)
 library(DT)
 library(dplyr)
 library(choroplethr)
-<<<<<<< HEAD
-#will need to wrap the "this makes the data sets to put in shiny" file into a function or something and then load at the beginning here
-#load("big_word_frame.RData")
-=======
+
 load("big_word_frame3.RData")
->>>>>>> upstream/master
+
 
 shinyServer(function(input, output){  
   

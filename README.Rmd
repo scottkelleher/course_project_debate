@@ -2,9 +2,20 @@
 title: '2016 Presidential Debate: Content Breakdown'
 author: "Scott Kelleher, Tulsi Ram Gompo, Janalee Thompson"
 date: "December 5, 2016"
-output: md_document
+output:
+  md_document:
+    variant: markdown_github
 ---
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
 
 The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the
 bittersweet end trying to convince the American people that they were the better-suited candidate to lead

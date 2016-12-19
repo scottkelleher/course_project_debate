@@ -93,7 +93,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                              
                              )))
 
-<<<<<<< HEAD
+
  ##start user interface
  shinyUI(fluidPage(
    theme = "bootstrap.css",
@@ -226,8 +226,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
     # #          
     #  ))))
  
-=======
->>>>>>> upstream/master
+
 
 
 
