@@ -5,7 +5,7 @@ library(DT)
 library(dplyr)
 library(choroplethr)
 
-load("big_word_frame3.RData")
+load("big_word_frame.RData")
 
 
 shinyServer(function(input, output){  
