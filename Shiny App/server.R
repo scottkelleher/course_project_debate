@@ -11,7 +11,8 @@ load("big_word_frame.RData")
 shinyServer(function(input, output){  
   
   google_results <- reactive({
-    gtrends(c(input$text1, input$text2, input$text3, input$text4), geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+    gtrends(c(input$text1, input$text2, input$text3, input$text4),
+            geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
   }) 
   
   
@@ -30,8 +31,12 @@ shinyServer(function(input, output){
   
 
   frequency1 <- reactive({table(words_speaker_debate())})
-  top_used_words <- reactive({frequency1() %>% tbl_df() %>% arrange(desc(n)) %>%
-      dplyr::select(word, n)})
+  top_used_words <- reactive({
+    frequency1() %>% 
+      tbl_df() %>% 
+      arrange(desc(n)) %>%
+      dplyr::select(word, n)
+    })
   
   # the below function was developed from 
   #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
@@ -44,7 +49,9 @@ shinyServer(function(input, output){
  output$word_plot <- renderPlot({plot(as.data.frame(top_used_words))})
   
   
-   google_breakdown <- reactive({gtrends(input$state, geo = "US", start_date = "2016-09-01", end_date = "2016-11-15")
+   google_breakdown <- reactive({
+     gtrends(input$state, geo = "US", start_date = "2016-09-01", 
+             end_date = "2016-11-15")
    })
    by_state1 <- reactive({
      google_breakdown()$Top.subregions.for.United.States %>%
