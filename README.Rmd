@@ -104,9 +104,9 @@ text_debate3 <- read_html(paste0(root_page, "pid=119039")) %>%
 w <- c(text_debate1, text_debate2, text_debate3)
   
 ## Get the dates for each debate
-db1 <- ymd_hms(160927020000, tz = "UTC")
-db2 <- ymd_hms(161009020000, tz = "UTC")
-db3 <-ymd_hms(161029020000, tz = "UTC")
+db1 <- ymd_hm("2016-09-27 02:00", tz = "UTC")
+db2 <- ymd_hm("2016-10-09 02:00", tz = "UTC")
+db3 <- ymd_hm("2016-10-29 02:00", tz = "UTC")
 date_time <-c(db1, db2, db3)
 ```
 
