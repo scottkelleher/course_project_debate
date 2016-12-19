@@ -36,17 +36,6 @@ shinyServer(function(input, output){
   # the below function was developed from 
   #http://www.rdatascientists.com/2016/08/intro-to-text-analysis-with-r.html
   
-
-  #still need to trim down columns to eliminate unnecesary columns in shiny table
-  
-  # dd <- reactive ({as.data.frame(top_used_words())})
-  # ddd <- reactive({select(dd(), word, n)})
-  # output$high_frequency_words <- DT::renderDataTable( 
-  #   DT::datatable(ddd,
-  #                 options = list(pageLength = 10))
-  # )  
-  
-  
   output$high_frequency_words <- DT::renderDataTable( 
     DT::datatable(as.data.frame(top_used_words()),
                   options = list(pageLength = 10))
