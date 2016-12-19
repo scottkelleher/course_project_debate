@@ -11,7 +11,9 @@ Here are some of the top words and phrases that had interesting search trends. A
 
 ![](README-unnamed-chunk-3-1.png)
 
-Additionally, we were interested in specific terminology searched in Google at the state level. Specifically, which states were Googling some terms more than others? The following graphic is categorized by state using Google Trends search term data and the choroplethrMaps package in R. This example displays the state-level search term data by state for "bigly". ![](README-unnamed-chunk-4-1.png)
+Additionally, we were interested in specific terminology searched in Google at the state level. Specifically, which states were Googling some terms more than others? The following graphic is categorized by state using Google Trends search term data and the choroplethrMaps package in R. This example displays the state-level search term data by state for "bigly".
+
+![](README-unnamed-chunk-4-1.png)
 
 Lets give some meaning as to how to interpret the scales shown in the gtrends plot from Google results as well as the choropleth map. The scale ranging from 0% to 100% and represents the percentage of searches for that word or pharase with respect to the total searches in that region. So for example, if the word "bigly", has a value of %50 on the plot that means that during the specified period of time it accounted for %50 percent of the total searches in Google.
 
