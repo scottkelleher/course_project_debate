@@ -87,9 +87,7 @@ from CRAN, which displays the Google search trends for those specific words.
   Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
 
-usr <- ("535rprogram@gmail.com")
-  psw <- ("groupproject")
-  ch <- gconnect(usr, psw)
+
 
   text_debate1 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=118971") # load the first debate page
   text_debate2 <- read_html("http://www.presidency.ucsb.edu/ws/index.php?pid=119038")  # load the second debate page
@@ -112,6 +110,9 @@ usr <- ("535rprogram@gmail.com")
 ```
 
 ```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height=4}
+usr <- ("535rprogram@gmail.com")
+psw <- ("groupproject")
+ch <- gconnect(usr, psw)
 google_these_words = c("Melania", "email scandal",
                        "bigly", "nasty woman", "benghazi") 
 google_results <- gtrends(google_these_words, geo = "US",
@@ -132,7 +133,7 @@ google_states = c("bigly")
 google_breakdown <- gtrends(google_states, geo = "US",
                             start_date = "2016-09-01", end_date = "2016-11-15")
 
-by_state <-google_breakdown[[5]]
+by_state <- google_breakdown[[5]]
 by_state$Subregion <- tolower(by_state$Subregion)
 by_state <- rename(by_state, c(Subregion = "region",
                                `United.States` = "value"))
