@@ -86,8 +86,7 @@ from CRAN, which displays the Google search trends for those specific words.
 ## specify inputs
   Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
   Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
-  google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends andresults
-  # enter one phrase you would like to see broken down by state
+  
   google_states = c("bigly")
 
 usr <- ("535rprogram@gmail.com")
@@ -115,11 +114,11 @@ usr <- ("535rprogram@gmail.com")
 ```
 
 ```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height=4}
-
-google_results <- gtrends(google_these_words, geo = "US", start_date = "2016-09-01", end_date = 
-                            "2016-11-15")
-   plot(google_results)
-   
+google_these_words = c("Melania", "email scandal",
+                       "bigly", "nasty woman", "benghazi") 
+google_results <- gtrends(google_these_words, geo = "US",
+                          start_date = "2016-09-01", end_date = "2016-11-15")
+plot(google_results)
 ```
    
   
