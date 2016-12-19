@@ -9,12 +9,40 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "README-"
 )
+
+##Loading libraries
+library(rvest)
+library(stringr)
+library(tidytext)
+library(gtrendsR)
+library(tokenizers)
+library(dplyr)
+library(tm)
+library(SnowballC)
+library(wordcloud)
+library(sentimentr)
+library(lubridate)
+library(ggplot2)
+library(readr)
+library(gtrendsR)
+library(xml2)
+library(devtools)
+library(RTextTools)
+library(googleVis)
+library(syuzhet)
+library(RTextTools)
+library(googleVis)
+library(DT)
+library(choroplethr)
+library(choroplethrMaps)
+library(syuzhet)
+library(zoo)
 ```
 
 The 2016 presidential debates unfolded slowly as November approached. We watched candidates battle to the
@@ -68,39 +96,6 @@ from CRAN, which displays the Google search trends for those specific words.
   google_these_words = c("Melania", "email scandal", "bigly", "nasty woman", "benghazi")  # enter up to five phrases to google in gtrends andresults
   # enter one phrase you would like to see broken down by state
   google_states = c("bigly")
-
-##Loading libraries
-library(rvest)
-#library(tidyverse)
-library(stringr)
-library(tidytext)
-library(gtrendsR)
-library(tokenizers)
-library(dplyr)
-library(tm)
-library(SnowballC)
-library(wordcloud)
-library(sentimentr)
-library(lubridate)
-library(ggplot2)
-library(readr)
-library(gtrendsR)
-library(xml2)
-#library(shiny)
-library(devtools)
-ls("package:gtrendsR")
-library(RTextTools)
-library(googleVis)
-library(syuzhet)
-
-
-library(RTextTools)
-library(googleVis)
-library(DT)
-library(choroplethr)
-library(choroplethrMaps)
-library(syuzhet)
-library(zoo)
 
 usr <- ("535rprogram@gmail.com")
   psw <- ("groupproject")
