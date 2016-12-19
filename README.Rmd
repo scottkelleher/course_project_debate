@@ -75,11 +75,7 @@ Donald Trump during the second debate. The terms *Melania*, *e-mail scandal*, *b
 confusion, Google Trends reported that "Bigly" had become the top trending search on all of Google. Check
 out the Tweet [here](http://www.aol.com/article/news/2016/10/19/1-word-most-searched-term-during-pres
 idential-debate/21587735/). 
-  
-Here are some of the top words and phrases that had interesting search trends. After webscraping the
-three presidential debates, we broke down the debate into individual words said by each speaker (Donald
-Trump or Hillary Clinton). The following results were then generated using the R package Googletrendsr
-from CRAN, which displays the Google search trends for those specific words. 
+
 
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
 
@@ -109,6 +105,11 @@ db2 <- ymd_hm("2016-10-09 02:00", tz = "UTC")
 db3 <- ymd_hm("2016-10-29 02:00", tz = "UTC")
 date_time <-c(db1, db2, db3)
 ```
+  
+Here are some of the top words and phrases that had interesting search trends. After webscraping the
+three presidential debates, we broke down the debate into individual words said by each speaker (Donald
+Trump or Hillary Clinton). The following results were then generated using the R package Googletrendsr
+from CRAN, which displays the Google search trends for those specific words. 
 
 ```{r  echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height=4}
 usr <- ("535rprogram@gmail.com")
