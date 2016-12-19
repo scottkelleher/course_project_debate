@@ -78,12 +78,6 @@ idential-debate/21587735/).
 
 
 ```{r echo = FALSE, include = FALSE, message = FALSE, results = "hide"}
-
-## specify inputs
-  Speaker <- "Hilary_Clinton"  # enter Donald_Trump or Hilary_Clinton
-  Debate = "Second_Debate"   # enter First_Debate or Second_Debate or Third_Debate
-
-
 ## Load the three debates and isolate the text
 root_page <- "http://www.presidency.ucsb.edu/ws/index.php?"
 text_debate1 <- read_html(paste0(root_page, "pid=118971")) %>%
@@ -98,12 +92,6 @@ text_debate3 <- read_html(paste0(root_page, "pid=119039")) %>%
 
 ## Join all words into one vector
 w <- c(text_debate1, text_debate2, text_debate3)
-  
-## Get the dates for each debate
-db1 <- ymd_hm("2016-09-27 02:00", tz = "UTC")
-db2 <- ymd_hm("2016-10-09 02:00", tz = "UTC")
-db3 <- ymd_hm("2016-10-29 02:00", tz = "UTC")
-date_time <-c(db1, db2, db3)
 ```
   
 Here are some of the top words and phrases that had interesting search trends. After webscraping the
@@ -121,7 +109,18 @@ google_these_words = c("Melania", "email scandal",
 google_results <- gtrends(google_these_words, geo = "US",
                           start_date = "2016-09-01", end_date = "2016-11-15")
 
-plot(google_results)
+## Get the dates for each debate
+debate_dates <- data.frame(number = c(1, 2, 3),
+                           date = ymd(c("2016-09-27", "2016-10-09",
+                                        "2016-10-29")))
+
+google_results$trend %>%
+  mutate(start = ymd(start)) %>%
+  ggplot(aes(x = start, y = hits, color = keyword)) + 
+  geom_line() + 
+  theme_classic() + 
+  xlab("Date") + 
+  geom_vline(data = debate_dates, aes(xintercept = as.numeric(date)))
 ```
    
   
