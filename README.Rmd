@@ -122,7 +122,8 @@ google_results$trend %>%
   xlab("Date") + ylab("Google Trend Hits") + 
   ggtitle("Interest over time") + 
   facet_wrap(~ keyword, scales = "free_y") + 
-  geom_vline(data = debate_dates, aes(xintercept = as.numeric(date)))
+  geom_vline(data = debate_dates, aes(xintercept = as.numeric(date)),
+             alpha = 0.5)
 ```
    
 
