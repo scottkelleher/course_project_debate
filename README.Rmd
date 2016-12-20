@@ -397,7 +397,7 @@ ggplot(df, aes(x = perc_debate, y = scale_emo_var, color = speaker)) +
       geom_line() + 
       # geom_smooth(se = FALSE, alpha = 0.8, span = 0.05) + 
       facet_wrap(~ debate, ncol = 1) + 
-      theme_minimal() + 
+      theme_classic() + 
       xlab("Order of Word in Debate") + 
       ylab("Emotional valence")
   
@@ -435,7 +435,8 @@ ggplot(clinton_y, aes(y= score, x = seq(1, length(clinton_y$score))))+
   xlab("") +
   ggtitle("Candidate emotional valance during debates") +
  geom_line(aes(y = score, colour="Clinton")) + # I added for legend
-   geom_line(aes(y=score, colour ="Trump")) # I added for legend
+   geom_line(aes(y=score, colour ="Trump")) + # I added for legend 
+  theme_classic()
 ```
 
 ```{r  echo = FALSE, message = FALSE, fig.width = 6, fig.height=3}
