@@ -195,7 +195,7 @@ debate_text <- data_frame(debate, speaker, lines) %>%
   ungroup()
 ```
 
-```{r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 7.5, fig.height = 6, out.width = 12}
+```{r echo = FALSE, warning = FALSE, message = FALSE, fig.width = 7.5, fig.height = 6, out.width = "12in"}
 set.seed(21)
 sample_words <- debate_text %>%
   filter(abs(sentiment) > 0.05) %>%
@@ -243,7 +243,7 @@ words are categorized based on sentiment and candidate. This plot displays the
 sentiment in Donald Trump's words for all three debates. The highest percentage of Trump's words all three
 debates fell into the  category "trust." 
 
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height=3}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.width = 10, fig.height=8}
 emo_data <- debate_text %>%
   select(debate, speaker, word) %>%
   bind_cols(prop.table(get_nrc_sentiment(debate_text$word)[ , 1:8])) %>%

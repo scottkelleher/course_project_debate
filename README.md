@@ -21,7 +21,7 @@ We were also curious about the emotional context of each speaker during the thre
 
 This first plot displays the emotional valence of both candidates during each of the three debates, comparing one candidtate's emotional valence to the other. Emotional valence scores range from -1.0 to +1.0 and are assigned based on how negative or how positive a word is. For example, "ecstatic" would be rated a +1.0, whereas "horrible" would be rated a -1.0.
 
-<img src="README-unnamed-chunk-6-1.png" width="12" />
+<img src="README-unnamed-chunk-6-1.png" width="12in" />
 
 The following two plots display emotional valence per speaker across the three debates. These plots compare the speaker's individual emotional valence across the three debates. See any interesting trends or patterns?
 
