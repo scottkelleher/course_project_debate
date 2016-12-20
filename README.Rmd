@@ -116,8 +116,8 @@ debate_dates <- data.frame(number = c(1, 2, 3),
 
 google_results$trend %>%
   mutate(start = ymd(start)) %>%
-  ggplot(aes(x = start, y = hits, color = keyword)) + 
-  geom_line() + 
+  ggplot(aes(x = start, y = hits)) + 
+  geom_line(color = "blue") + 
   theme_classic() + 
   xlab("Date") + ylab("Google Trend Hits") + 
   ggtitle("Interest over time") + 
