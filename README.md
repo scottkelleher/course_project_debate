@@ -21,21 +21,19 @@ We were also curious about the emotional context of each speaker during the thre
 
 This first plot displays the emotional valence of both candidates during each of the three debates, comparing one candidtate's emotional valence to the other. Emotional valence scores range from -1.0 to +1.0 and are assigned based on how negative or how positive a word is. For example, "ecstatic" would be rated a +1.0, whereas "horrible" would be rated a -1.0.
 
-![](README-unnamed-chunk-7-1.png)
+<img src="README-unnamed-chunk-6-1.png" width="12" />
 
 The following two plots display emotional valence per speaker across the three debates. These plots compare the speaker's individual emotional valence across the three debates. See any interesting trends or patterns?
 
-![](README-unnamed-chunk-9-1.png)
+![](README-unnamed-chunk-7-1.png)
 
-![](README-unnamed-chunk-10-1.png)
+![](README-unnamed-chunk-8-1.png)
 
 Next, we plotted words based on the seven types of sentiment categories. Individual words are categorized based on sentiment and candidate. This plot displays the sentiment in Donald Trump's words for all three debates. The highest percentage of Trump's words all three debates fell into the category "trust."
 
-![](README-unnamed-chunk-12-1.png)
+![](README-unnamed-chunk-9-1.png)
 
-Similarly, this plot displays the sentiment in Hillary Clinton's words for all three debates. Based solely on the plot, Clinton's anger, anticipation and sadness remained steady during the three debates, whereas fear fluctuated thrououghout the debates. It's interesting to see the candidates emotional patterns as the debates progress becasue some would argue this are political stragery emerging.
-
-![](README-unnamed-chunk-13-1.png)
+Similarly, the other plot in this output displays the sentiment in Hillary Clinton's words for all three debates. Based solely on the plot, Clinton's anger, anticipation and sadness remained steady during the three debates, whereas fear fluctuated thrououghout the debates. It's interesting to see the candidates emotional patterns as the debates progress becasue some would argue this are political stragery emerging.
 
 As with any research, there are some limitations to this analysis. The data is limited to people who use Google as their search engine. This would exclude non-internet users and people who use Yahoo or other search engines. Though this may seem like a daunting limitation, Google is the most popular search engine in the world fostering over 1.17 billion people. If you want to check out the statistics behind this, check out this [link](https://www.statista.com/chart/899/unique-users-of-search-%20engines-in-december-2012/).
 
